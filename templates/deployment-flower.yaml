@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flower
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: flower
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: flower
+        image: eanylin/airflow-helm:1.8.1-1.6.2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: AIRFLOW_HOME
+          value: "/usr/local/airflow"
+        # To prevent the error: ValueError: invalid literal for int() with base 10: 'tcp://10.0.0.83:5555'
+        - name: FLOWER_PORT
+          value: "5555"
+        ports:
+        - name: flower
+          containerPort: 5555
+        args: ["flower"]

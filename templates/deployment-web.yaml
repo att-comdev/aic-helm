@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: web
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: web
+        image: eanylin/airflow-helm:1.8.1-1.6.2
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: dags
+            mountPath: /usr/local/airflow/dags
+        env:
+        - name: AIRFLOW_HOME
+          value: "/usr/local/airflow"
+        ports:
+        - name: web
+          containerPort: 8080
+        args: ["webserver"]
+      volumes:
+      - name: dags
+        hostPath:
+          path: /home/ubuntu/workbench/dags

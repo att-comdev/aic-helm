@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: scheduler
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: scheduler
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: scheduler
+        image: eanylin/airflow-helm:1.8.1-1.6.2
+        volumeMounts:
+          - name: dags
+            mountPath: /usr/local/airflow/dags
+        env:
+        - name: AIRFLOW_HOME
+          value: "/usr/local/airflow"
+        args: ["scheduler", "-n", "5"]
+      volumes:
+      - name: dags
+        hostPath:
+          path: /home/ubuntu/workbench/dags
