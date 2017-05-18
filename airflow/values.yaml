@@ -1,0 +1,57 @@
+# Default values for airflow-helm
+
+images: 
+  airflow: docker.io/eanylin/airflow-helm:1.8.1-1.6.2
+  pull_policy: "IfNotPresent"
+
+network:
+  flower:
+    port: 5555
+    node_port: 32081
+    enable_node_port: true
+  web:
+    port: 8080
+    node_port: 32080
+    enable_node_port: true
+
+replicas:
+  web: 1
+  worker: 1
+  flower: 1
+  scheduler: 1
+
+volumes:
+  path: /home/ubuntu/workbench/dags
+  
+scheduler_args: "5"
+
+resources:
+  enabled: false
+  worker:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+  flower:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+  web:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+  scheduler:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"

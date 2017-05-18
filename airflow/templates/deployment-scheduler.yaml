@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: scheduler
+spec:
+  replicas: {{ .Values.replicas.scheduler }}
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: scheduler
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: scheduler
+        image: {{ .Values.images.airflow }}
+        volumeMounts:
+          - name: dags
+            mountPath: /usr/local/airflow/dags
+        env:
+        - name: AIRFLOW_HOME
+          value: "/usr/local/airflow"
+        args: ["scheduler", "-n", {{ .Values.scheduler_args }} ]
+      volumes:
+      - name: dags
+        hostPath:
+          path: {{ .Values.volumes.path }}

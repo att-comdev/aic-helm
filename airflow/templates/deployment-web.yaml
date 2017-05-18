@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: {{ .Values.replicas.web }}
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: web
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: web
+        image: {{ .Values.images.airflow }}
+        imagePullPolicy: {{ .Values.images.pull_policy }}
+        volumeMounts:
+          - name: dags
+            mountPath: /usr/local/airflow/dags
+        env:
+        - name: AIRFLOW_HOME
+          value: "/usr/local/airflow"
+        ports:
+        - name: web
+          containerPort: 8080
+        args: ["webserver"]
+      volumes:
+      - name: dags
+        hostPath:
+          path: {{ .Values.volumes.path }}
