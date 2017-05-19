@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: worker
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: worker
+        image: eanylin/airflow-helm:1.8.1-1.6.2
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: dags
+            mountPath: /usr/local/airflow/dags
+          - name: docker
+            mountPath: /var/run
+            readOnly: false
+          - name: pod-var-lib-docker
+            mountPath: /var/lib/docker
+            readOnly: false
+        env:
+        - name: AIRFLOW_HOME
+          value: "/usr/local/airflow"
+        args: ["worker"]
+        ports:
+        - name: worker
+          containerPort: 8793
+        securityContext:
+          privileged: true
+      volumes:
+      - name: dags
+        hostPath:
+          path: /home/ubuntu/workbench/dags
+      - name: docker
+        hostPath:
+          path: /var/run
+      - name: pod-var-lib-docker
+        hostPath:
+          path: /var/lib/docker
+
