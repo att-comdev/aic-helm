@@ -17,9 +17,6 @@ spec:
         volumeMounts:
           - name: dags
             mountPath: /usr/local/airflow/dags
-        env:
-        - name: AIRFLOW_HOME
-          value: "/usr/local/airflow"
         args: ["scheduler", "-n", {{ .Values.scheduler_args }} ]
       volumes:
       - name: dags

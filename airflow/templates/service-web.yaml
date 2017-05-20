@@ -3,7 +3,9 @@ kind: Service
 metadata:
   name: web
 spec:
+  {{ if .Values.network.web.enable_node_port }}
   type: NodePort
+  {{ end }}
   selector:
     app: airflow
     tier: web
@@ -11,11 +13,7 @@ spec:
     - name: web
     {{ if .Values.network.web.enable_node_port }}
       nodePort: {{ .Values.network.web.node_port }}
-      port: {{ .Values.network.web.port }}
-      protocol: TCP
-      targetPort: web
-    {{ else }}
-      port: {{ .Values.network.web.port }}
-      protocol: TCP
-      targetPort: web
     {{ end }}
+      port: {{ .Values.network.web.port }}
+      protocol: TCP
+      targetPort: web

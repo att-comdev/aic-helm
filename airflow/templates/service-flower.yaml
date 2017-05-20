@@ -3,7 +3,9 @@ kind: Service
 metadata:
   name: flower
 spec:
+  {{ if .Values.network.flower.enable_node_port }}
   type: NodePort
+  {{ end }}
   selector:
     app: airflow
     tier: flower
@@ -11,11 +13,7 @@ spec:
     - name: flower
     {{ if .Values.network.flower.enable_node_port }}
       nodePort: {{ .Values.network.flower.node_port }}
-      port: {{ .Values.network.flower.port }}
-      protocol: TCP
-      targetPort: flower
-    {{ else }}
-      port: {{ .Values.network.flower.port }}
-      protocol: TCP
-      targetPort: flower
     {{ end }}
+      port: {{ .Values.network.flower.port }}
+      protocol: TCP
+      targetPort: flower

@@ -24,9 +24,6 @@ spec:
           - name: pod-var-lib-docker
             mountPath: /var/lib/docker
             readOnly: false
-        env:
-        - name: AIRFLOW_HOME
-          value: "/usr/local/airflow"
         args: ["worker"]
         ports:
         - name: worker

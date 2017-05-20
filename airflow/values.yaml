@@ -25,6 +25,11 @@ volumes:
   
 scheduler_args: "5"
 
+database:
+  db_name: airflow
+  db_user: airflow
+  db_password: airflow
+
 conf:
   core:
     airflow_home: /usr/local/airflow

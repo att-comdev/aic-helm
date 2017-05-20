@@ -18,9 +18,6 @@ spec:
         volumeMounts:
           - name: dags
             mountPath: /usr/local/airflow/dags
-        env:
-        - name: AIRFLOW_HOME
-          value: "/usr/local/airflow"
         ports:
         - name: web
           containerPort: 8080
