@@ -25,6 +25,68 @@ volumes:
   
 scheduler_args: "5"
 
+conf:
+  core:
+    airflow_home: /usr/local/airflow
+    dags_folder: /usr/local/airflow/dags
+    base_log_folder: /usr/local/airflow/logs
+    remote_base_log_folder:
+    remote_log_conn_id:
+    encrypt_s3_logs: False
+    executor: CeleryExecutor
+    sql_alchemy_conn: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    sql_alchemy_pool_size: 5
+    sql_alchemy_pool_recycle: 3600
+    parallelism: 32
+    dag_concurrency: 16
+    dags_are_paused_at_creation: False
+    max_active_runs_per_dag: 16
+    load_examples: False
+    plugins_folder: /usr/local/airflow/plugins
+    fernet_key: $FERNET_KEY
+    donot_pickle: False
+    dagbag_import_timeout: 30
+  webserver:
+    base_url: http://localhost:8080
+    web_server_host: 0.0.0.0
+    web_server_port: 8080
+    web_server_worker_timeout: 120
+    secret_key: temporary_key
+    workers: 4
+    worker_class: sync
+    expose_config: true
+    authenticate: False
+    filter_by_owner: False
+  email:
+    email_backend: airflow.utils.send_email_smtp
+  smtp:
+    smtp_host: localhost
+    smtp_starttls: True
+    smtp_ssl: False
+    smtp_user: airflow
+    smtp_port: 25
+    smtp_password: airflow
+    smtp_mail_from: airflow@airflow.local
+  celery:
+    celery_app_name: airflow.executors.celery_executor
+    celeryd_concurrency: 16
+    worker_log_server_port: 8793
+    broker_url: amqp://airflow:airflow@rabbitmq:5672/airflow
+    celery_result_backend: amqp://airflow:airflow@rabbitmq:5672/airflow
+    flower_port: 5555
+    default_queue: default
+  scheduler:
+    job_heartbeat_sec: 5
+    scheduler_heartbeat_sec: 5
+    max_threads: 2
+  mesos:
+    master: localhost:5050
+    framework_name: Airflow
+    task_cpu: 1
+    task_memory: 256
+    checkpoint: False
+    authenticate: False
+
 resources:
   enabled: false
   worker:
