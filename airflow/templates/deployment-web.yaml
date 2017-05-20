@@ -15,6 +15,15 @@ spec:
       - name: web
         image: {{ .Values.images.airflow }}
         imagePullPolicy: {{ .Values.images.pull_policy }}
+        {{- if .Values.resources.enabled }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.web.requests.memory | quote }}
+            cpu: {{ .Values.resources.web.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.resources.web.limits.memory | quote }}
+            cpu: {{ .Values.resources.web.limits.cpu | quote }}
+        {{- end }}
         volumeMounts:
           - name: dags
             mountPath: /usr/local/airflow/dags
