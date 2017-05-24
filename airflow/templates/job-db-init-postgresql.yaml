@@ -20,17 +20,18 @@ spec:
           image: {{ .Values.images.db_init_postgresql | quote }}
           imagePullPolicy: {{ .Values.images.pull_policy | quote }}
           env:
-            - name: ROOT_DB_CONNECTION
-              valueFrom:
-                secretKeyRef:
-                  name: airflow-db-root
-                  key: DB_CONNECTION_POSTGRESQL
-            - name: AIRFLOW_CONFIG_FILE
-              value: /usr/local/airflow/airflow.cfg
-            - name: AIRFLOW_CONFIG_DB_SECTION
-              value: indexer
-            - name: AIRFLOW_CONFIG_DB_KEY
-              value: url
+            - name: DB_NAME
+              value: {{ .Values.database.db_name }}
+            - name: DB_USER
+              value: {{ .Values.database.db_user }}
+            - name: DB_PASS
+              value: {{ .Values.database.db_pass }}
+            - name: DB_PORT
+              value: {{ .Values.database.db_port }}
+            - name: DB_FQDN
+              value: {{ .Values.database.db_fqdn }}
+            - name: ROOT_DB_USER
+              value: {{ .Values.database.root_db_user }}
           command:
             - bash
             - /tmp/db-init.sh

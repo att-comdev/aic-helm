@@ -46,10 +46,17 @@ dependencies:
     - postgresql
   db_sync:
     jobs:
-    - airflow-db-init-keystone
     - airflow-db-init-postgresql
     service:
     - postgresql
+
+database:
+  db_name: airflow
+  db_user: airflow
+  db_pass: airflow
+  db_port: '5432'
+  db_fqdn: postgresql.airflow
+  root_db_user: postgres
 
 conf:
   core:

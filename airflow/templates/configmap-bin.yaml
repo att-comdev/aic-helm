@@ -5,7 +5,5 @@ metadata:
 data:
   db-init.sh: |+
 {{ tuple "bin/_db-init.sh.tpl" . | include "helm-toolkit.template" | indent 4 }}
-  db-init.py: |+
-{{- include "helm-toolkit.db_init" . | indent 4 }}
   db-sync.sh: |+
 {{ tuple "bin/_db-sync.sh.tpl" . | include "helm-toolkit.template" | indent 4 }}
