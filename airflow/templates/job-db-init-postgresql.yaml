@@ -1,0 +1,51 @@
+{{- $envAll := . }}
+{{- $dependencies := .Values.dependencies.init }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: airflow-db-init-postgresql
+spec:
+  template:
+    metadata:
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+{{ tuple $envAll $dependencies "[]" | include "helm-toolkit.kubernetes_entrypoint_init_container" | indent 10 }}
+        ]'
+    spec:
+      restartPolicy: OnFailure
+      nodeSelector:
+        {{ .Values.labels.node_selector_key }}: {{ .Values.labels.node_selector_value }}
+      containers:
+        - name: airflow-db-init-postgresql
+          image: {{ .Values.images.db_init_postgresql | quote }}
+          imagePullPolicy: {{ .Values.images.pull_policy | quote }}
+          env:
+            - name: ROOT_DB_CONNECTION
+              valueFrom:
+                secretKeyRef:
+                  name: airflow-db-root
+                  key: DB_CONNECTION_POSTGRESQL
+            - name: AIRFLOW_CONFIG_FILE
+              value: /usr/local/airflow/airflow.cfg
+            - name: AIRFLOW_CONFIG_DB_SECTION
+              value: indexer
+            - name: AIRFLOW_CONFIG_DB_KEY
+              value: url
+          command:
+            - bash
+            - /tmp/db-init.sh
+          volumeMounts:
+            - name: airflow-etc
+              mountPath: /usr/local/airflow/airflow.cfg
+              subPath: airflow.cfg
+            - name: airflow-bin
+              mountPath: /tmp/db-init.sh
+              subPath: db-init.sh
+              readOnly: true
+      volumes:
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc
+        - name: airflow-bin
+          configMap:
+            name: airflow-bin

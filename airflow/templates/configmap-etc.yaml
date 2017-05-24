@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: airflow-etc
+data:
+  airflow.cfg: |+
+{{ tuple "etc/_airflow.cfg.tpl" . | include "helm-toolkit.template" | indent 4 }}
