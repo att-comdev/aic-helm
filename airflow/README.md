@@ -2,7 +2,7 @@
 
 This chart installs airflow on kubernetes
 
-###Quickstart###
+### Quickstart ###
 
 This chart requires a postgresql instance and rabbitmq to be running
 
