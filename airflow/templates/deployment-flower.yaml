@@ -15,6 +15,10 @@ spec:
       - name: flower
         image: {{ .Values.images.airflow }}
         imagePullPolicy: {{ .Values.images.pull_policy }}
+        env:
+        # To prevent the error: ValueError: invalid literal for int() with base 10: 'tcp://10.0.0.83:5555'
+        - name: FLOWER_PORT
+          value: "5555"
         {{- if .Values.resources.enabled }}
         resources:
           requests:
