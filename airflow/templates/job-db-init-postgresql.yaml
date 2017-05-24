@@ -27,7 +27,7 @@ spec:
             - name: DB_PASS
               value: {{ .Values.database.db_pass }}
             - name: DB_PORT
-              value: {{ .Values.database.db_port }}
+              value: '5432'
             - name: DB_FQDN
               value: {{ .Values.database.db_fqdn }}
             - name: ROOT_DB_USER

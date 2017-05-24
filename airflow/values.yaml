@@ -54,7 +54,6 @@ database:
   db_name: airflow
   db_user: airflow
   db_pass: airflow
-  db_port: '5432'
   db_fqdn: postgresql.airflow
   root_db_user: postgres
 
