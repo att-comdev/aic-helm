@@ -40,13 +40,21 @@ upgrades:
     max_surge: 3
 
 dependencies:
-  db_init_postgresql:
+  db_init:
     service:
     - postgresql
   db_sync:
     jobs:
     - airflow-db-init-postgresql
     service:
+    - postgresql
+  server:
+    jobs:
+    - airflow-db-init-postgresql
+    - airflow-db-sync
+    service:
+    - etcd
+    - rabbitmq
     - postgresql
 
 conf:

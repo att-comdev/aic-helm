@@ -1,3 +1,5 @@
+{{- $envAll := . }}
+{{- $dependencies := .Values.dependencies.server }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -9,6 +11,10 @@ spec:
       labels:
         app: airflow
         tier: worker
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+{{ tuple $envAll $dependencies | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
+        ]'
     spec:
       restartPolicy: Always
       containers:
