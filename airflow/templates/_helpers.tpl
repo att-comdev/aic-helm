@@ -12,31 +12,53 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# fqdn
-{{- define "helm-toolkit.region"}}cluster{{- end}}
-{{- define "helm-toolkit.tld"}}local{{- end}}
+#-----------------------------------------
+# endpoints
+#-----------------------------------------
+# this function helps resolve database style endpoints, which really follow the same
+# pattern as above, except they have a username and password component
+#
+# presuming that .Values contains an endpoint: definition for 'neutron-db' with the
+# appropriate attributes, a call such as:
+#
+# { tuple "neutron-db" "internal" "userClass" "portName" . | include "helper.authenticated_endpoint_uri_lookup" }
+#
+# where portName is optional if a default port has been defined in .Values
+#
+# returns: mysql+pymysql://username:password@internal_host:3306/dbname
 
-{{- define "helm-toolkit.fqdn" -}}
-{{- $fqdn := .Release.Namespace -}}
-{{- if .Values.endpoints.fqdn -}}
-{{- $fqdn := .Values.endpoints.fqdn -}}
+{{- define "helper.authenticated_endpoint_uri_lookup" -}}
+{{- $type := index . 0 -}}
+{{- $endpoint := index . 1 -}}
+{{- $userclass := index . 2 -}}
+{{- $port := index . 3 -}}
+{{- $context := index . 4 -}}
+{{- $endpointMap := index $context.Values.endpoints $type }}
+{{- $userMap := index $endpointMap.auth $userclass }}
+{{- $fqdn := $context.Release.Namespace -}}
+{{- if $context.Values.endpoints.fqdn -}}
+{{- $fqdn := $context.Values.endpoints.fqdn -}}
 {{- end -}}
-{{- $fqdn -}}
+{{- with $endpointMap -}}
+{{- $endpointScheme := .scheme }}
+{{- $endpointUser := index $userMap "username" }}
+{{- $endpointPass := index $userMap "password" }}
+{{- $endpointHost := index .hosts $endpoint | default .hosts.default}}
+{{- $endpointPort := index .port $port | default .port.default }}
+{{- $endpointPath := .path | default "" }}
+{{- printf "%s://%s:%s@%s.%s:%1.f%s" $endpointScheme $endpointUser $endpointPass $endpointHost $fqdn $endpointPort $endpointPath -}}
 {{- end -}}
+{{- end -}}
+
 
 #-----------------------------------------
-# hosts
+# Functions
 #-----------------------------------------
-
-# infrastructure services
-{{- define "helm-toolkit.postgresql_host"}}postgresql.{{.Release.Namespace}}.svc.{{ include "helm-toolkit.region" . }}.{{ include "helm-toolkit.tld" . }}{{- end}}
-
-
-{{- define "helm-toolkit.joinListWithComma" -}}
+{{- define "helper.joinListWithComma" -}}
 {{ range $k, $v := . }}{{ if $k }},{{ end }}{{ $v }}{{ end }}
 {{- end -}}
 
-{{- define "helm-toolkit.template" -}}
+{{- define "helper.template" -}}
 {{- $name := index . 0 -}}
 {{- $context := index . 1 -}}
 {{- $v:= $context.Template.Name | split "/" -}}
@@ -46,18 +68,11 @@
 {{ include $wtf $context }}
 {{- end -}}
 
-{{- define "helm-toolkit.hash" -}}
-{{- $name := index . 0 -}}
-{{- $context := index . 1 -}}
-{{- $v:= $context.Template.Name | split "/" -}}
-{{- $n := len $v -}}
-{{- $last := sub $n 1 | printf "_%d" | index $v -}}
-{{- $wtf := $context.Template.Name | replace $last $name -}}
-{{- include $wtf $context | sha256sum | quote -}}
-{{- end -}}
 
-
-{{- define "helm-toolkit.kubernetes_entrypoint_init_container" -}}
+#-----------------------------------------
+# Kubernetes Entry Init Container
+#-----------------------------------------
+{{- define "helper.kubernetes_entrypoint_init_container" -}}
 {{- $envAll := index . 0 -}}
 {{- $deps := index . 1 -}}
 {
@@ -89,19 +104,19 @@
     },
     {
       "name": "DEPENDENCY_SERVICE",
-      "value": "{{  include "helm-toolkit.joinListWithComma"  $deps.service }}"
+      "value": "{{  include "helper.joinListWithComma"  $deps.service }}"
     },
     {
       "name": "DEPENDENCY_JOBS",
-      "value": "{{  include "helm-toolkit.joinListWithComma" $deps.jobs }}"
+      "value": "{{  include "helper.joinListWithComma" $deps.jobs }}"
     },
     {
       "name": "DEPENDENCY_DAEMONSET",
-      "value": "{{  include "helm-toolkit.joinListWithComma" $deps.daemonset }}"
+      "value": "{{  include "helper.joinListWithComma" $deps.daemonset }}"
     },
     {
       "name": "DEPENDENCY_CONTAINER",
-      "value": "{{  include "helm-toolkit.joinListWithComma" $deps.container }}"
+      "value": "{{  include "helper.joinListWithComma" $deps.container }}"
     },
     {
       "name": "COMMAND",

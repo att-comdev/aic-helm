@@ -4,4 +4,4 @@ metadata:
   name: airflow-etc
 data:
   airflow.cfg: |+
-{{ tuple "etc/_airflow.cfg.tpl" . | include "helm-toolkit.template" | indent 4 }}
+{{ tuple "etc/_airflow.cfg.tpl" . | include "helper.template" | indent 4 }}

@@ -41,7 +41,6 @@ upgrades:
 
 dependencies:
   db_init_postgresql:
-    jobs:
     service:
     - postgresql
   db_sync:
@@ -49,13 +48,6 @@ dependencies:
     - airflow-db-init-postgresql
     service:
     - postgresql
-
-database:
-  db_name: airflow
-  db_user: airflow
-  db_pass: airflow
-  db_fqdn: postgresql.airflow
-  root_db_user: postgres
 
 conf:
   core:
@@ -66,7 +58,6 @@ conf:
     remote_log_conn_id:
     encrypt_s3_logs: False
     executor: CeleryExecutor
-    sql_alchemy_conn: postgresql+psycopg2://airflow:airflow@postgresql.airflow/airflow
     sql_alchemy_pool_size: 5
     sql_alchemy_pool_recycle: 3600
     parallelism: 32
@@ -79,7 +70,7 @@ conf:
     donot_pickle: False
     dagbag_import_timeout: 30
   webserver:
-    base_url: http://localhost:8080
+    base_url: http://web.airflow:8080
     web_server_host: 0.0.0.0
     web_server_port: 8080
     web_server_worker_timeout: 120
@@ -103,8 +94,6 @@ conf:
     celery_app_name: airflow.executors.celery_executor
     celeryd_concurrency: 16
     worker_log_server_port: 8793
-    broker_url: amqp://airflow:airflow@rabbitmq.airflow:5672/airflow
-    celery_result_backend: amqp://airflow:airflow@rabbitmq.airflow:5672/airflow
     flower_port: 5555
     default_queue: default
   scheduler:
@@ -119,8 +108,12 @@ conf:
     checkpoint: False
     authenticate: False
 
+
+# typically overriden by environmental
+# values, but should include all endpoints
+# required by this chart
 endpoints:
-  oslo_db_postgresql:
+  postgresql:
     auth:
       admin:
         username: airflow
@@ -130,10 +123,25 @@ endpoints:
         password: airflow
     hosts:
       default: postgresql
-    path: /usr/local/airflow
-    scheme: postgresql
+    path: /airflow
+    scheme: postgresql+psycopg2
     port:
       postgresql: 5432
+  messaging:
+    auth:
+      admin:
+        username: airflow
+        password: airflow
+      user:
+        username: airflow
+        password: airflow
+    hosts:
+      default: rabbitmq
+    path: /airflow
+    scheme: rabbit
+    port:
+      amqp: 5672
+
 
 resources:
   enabled: false

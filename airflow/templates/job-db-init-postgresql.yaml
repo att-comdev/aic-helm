@@ -9,7 +9,7 @@ spec:
     metadata:
       annotations:
         pod.beta.kubernetes.io/init-containers: '[
-{{ tuple $envAll $dependencies "[]" | include "helm-toolkit.kubernetes_entrypoint_init_container" | indent 10 }}
+{{ tuple $envAll $dependencies "[]" | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
         ]'
     spec:
       restartPolicy: OnFailure
@@ -21,17 +21,17 @@ spec:
           imagePullPolicy: {{ .Values.images.pull_policy | quote }}
           env:
             - name: DB_NAME
-              value: {{ .Values.database.db_name }}
+              value: airflow
             - name: DB_USER
-              value: {{ .Values.database.db_user }}
+              value: {{ .Values.endpoints.postgresql.auth.user.username }}
             - name: DB_PASS
-              value: {{ .Values.database.db_pass }}
+              value: {{ .Values.endpoints.postgresql.auth.user.password }}
             - name: DB_PORT
               value: '5432'
             - name: DB_FQDN
-              value: {{ .Values.database.db_fqdn }}
+              value: {{ .Values.endpoints.postgresql.hosts.default }}
             - name: ROOT_DB_USER
-              value: {{ .Values.database.root_db_user }}
+              value: postgres
           command:
             - bash
             - /tmp/db-init.sh

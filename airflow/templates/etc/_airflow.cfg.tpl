@@ -27,7 +27,7 @@ executor = {{ .Values.conf.core.executor }}
 # The SqlAlchemy connection string to the metadata database.
 # SqlAlchemy supports many different database engine, more information
 # their website
-sql_alchemy_conn = {{ .Values.conf.core.sql_alchemy_conn }}
+sql_alchemy_conn = {{ tuple "postgresql" "internal" "user" "postgresql" . | include "helper.authenticated_endpoint_uri_lookup" }}
 
 # The SqlAlchemy pool size is the maximum number of database connections
 # in the pool.
@@ -141,10 +141,10 @@ worker_log_server_port = {{ .Values.conf.celery.worker_log_server_port }}
 # The Celery broker URL. Celery supports RabbitMQ, Redis and experimentally
 # a sqlalchemy database. Refer to the Celery documentation for more
 # information.
-broker_url = {{ .Values.conf.celery.broker_url }}
+broker_url = {{ tuple "postgresql" "internal" "user" "amqp" . | include "helper.authenticated_endpoint_uri_lookup" }}
 
 # Another key Celery setting
-celery_result_backend = {{ .Values.conf.celery.celery_result_backend }}
+celery_result_backend = {{ tuple "postgresql" "internal" "user" "amqp" . | include "helper.authenticated_endpoint_uri_lookup" }}
 
 # Celery Flower is a sweet UI for Celery. Airflow has a shortcut to start
 # it `airflow flower`. This defines the port that Celery Flower runs on
