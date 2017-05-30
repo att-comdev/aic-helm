@@ -12,6 +12,7 @@ spec:
         app: airflow
         tier: flower
       annotations:
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helper.hash" }}
         pod.beta.kubernetes.io/init-containers: '[
 {{ tuple $envAll $dependencies | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
         ]'
@@ -38,3 +39,12 @@ spec:
         - name: flower
           containerPort: 5555
         args: ["flower"]
+        volumeMounts:
+          - name: airflow-etc
+            mountPath: /usr/local/airflow/airflow.cfg
+            subPath: airflow.cfg
+            readOnly: true
+      volumes:
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc
