@@ -39,6 +39,10 @@ spec:
           - name: pod-var-lib-docker
             mountPath: /var/lib/docker
             readOnly: false
+          - name: airflow-etc
+            mountPath: /airflow.cfg
+            subPath: airflow.cfg
+            readOnly: false
         args: ["worker"]
         ports:
         - name: worker
@@ -46,13 +50,15 @@ spec:
         securityContext:
           privileged: true
       volumes:
-      - name: dags
-        hostPath:
-          path: {{ .Values.volumes.path }}
-      - name: docker
-        hostPath:
-          path: /var/run
-      - name: pod-var-lib-docker
-        hostPath:
-          path: /var/lib/docker
-
+        - name: dags
+          hostPath:
+            path: {{ .Values.volumes.path }}
+        - name: docker
+          hostPath:
+            path: /var/run
+        - name: pod-var-lib-docker
+          hostPath:
+            path: /var/lib/docker
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc

@@ -12,6 +12,7 @@ spec:
         app: airflow
         tier: web
       annotations:
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helper.hash" }}
         pod.beta.kubernetes.io/init-containers: '[
 {{ tuple $envAll $dependencies | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
         ]'
@@ -33,11 +34,18 @@ spec:
         volumeMounts:
           - name: dags
             mountPath: /usr/local/airflow/dags
+          - name: airflow-etc
+            mountPath: /airflow.cfg
+            subPath: airflow.cfg
+            readOnly: false
         ports:
         - name: web
           containerPort: 8080
         args: ["webserver"]
       volumes:
-      - name: dags
-        hostPath:
-          path: {{ .Values.volumes.path }}
+        - name: dags
+          hostPath:
+            path: {{ .Values.volumes.path }}
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc

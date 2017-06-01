@@ -22,6 +22,15 @@ spec:
           command:
             - bash
             - /tmp/db-sync.sh
+          {{- if .Values.resources.enabled }}
+          resources:
+            limits:
+              cpu: {{ .Values.resources.jobs.db_sync.limits.cpu | quote }}
+              memory: {{ .Values.resources.jobs.db_sync.limits.memory | quote }}
+            requests:
+              cpu: {{ .Values.resources.jobs.db_sync.requests.cpu | quote }}
+              memory: {{ .Values.resources.jobs.db_sync.requests.memory | quote }}
+          {{- end }}
           volumeMounts:
             - name: airflow-etc
               mountPath: /usr/local/airflow/airflow.cfg
