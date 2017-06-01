@@ -30,11 +30,16 @@ postgresql-0                 1/1       Running       0          1m
 
 To install rabbitmq:
 
-Go to the openstack-helm directory and execute the following commands:
+Go to the openstack-helm directory
+
+Update the values.yaml of the rabbitmq charts to reflect the appropriate username and password for the
+environment, e.g. airflow / airflow
+
+Execute the following commands:
 
 ```
-helm install --name=airflow-etcd-rabbitmq local/etcd --namespace=airflow
-helm install --name=airflow-rabbitmq local/rabbitmq --namespace=airflow
+helm install --name=airflow-etcd-rabbitmq etcd --namespace=airflow
+helm install --name=airflow-rabbitmq rabbitmq --namespace=airflow
 ```
 
 Note: We need to make sure that the etcd chart is executed before the rabbitmq chart due to dependencies

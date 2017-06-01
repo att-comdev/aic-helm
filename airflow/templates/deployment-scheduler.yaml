@@ -12,6 +12,7 @@ spec:
         app: airflow
         tier: scheduler
       annotations:
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helper.hash" }}
         pod.beta.kubernetes.io/init-containers: '[
 {{ tuple $envAll $dependencies | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
         ]'
@@ -33,8 +34,16 @@ spec:
         volumeMounts:
           - name: dags
             mountPath: /usr/local/airflow/dags
-        args: ["scheduler", "-n", "5" ]
+          - name: airflow-etc
+            mountPath: /airflow.cfg
+            subPath: airflow.cfg
+            readOnly: false
+        # Set to -1 so that scheduler will not go into crash loops
+        args: ["scheduler", "-n", "-1" ]
       volumes:
-      - name: dags
-        hostPath:
-          path: {{ .Values.volumes.path }}
+        - name: dags
+          hostPath:
+            path: {{ .Values.volumes.path }}
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc

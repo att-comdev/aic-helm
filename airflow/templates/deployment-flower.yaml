@@ -41,9 +41,9 @@ spec:
         args: ["flower"]
         volumeMounts:
           - name: airflow-etc
-            mountPath: /usr/local/airflow/airflow.cfg
+            mountPath: /airflow.cfg
             subPath: airflow.cfg
-            readOnly: true
+            readOnly: false
       volumes:
         - name: airflow-etc
           configMap:

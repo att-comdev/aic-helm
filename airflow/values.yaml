@@ -11,10 +11,10 @@ labels:
   node_selector_value: enabled
 
 images:
-  airflow: docker.io/eanylin/airflow-helm:1.8.1-1.6.2-0.8
+  airflow: docker.io/eanylin/airflow-helm:1.8.1-1.6.2-0.9
   dep_check: quay.io/stackanetes/kubernetes-entrypoint:v0.1.1
   db_init_postgresql: docker.io/postgres:9.5
-  db_sync: docker.io/eanylin/airflow-helm:1.8.1-1.6.2-0.8
+  db_sync: docker.io/eanylin/airflow-helm:1.8.1-1.6.2-0.9
   pull_policy: "IfNotPresent"
 
 network:
@@ -139,7 +139,7 @@ endpoints:
         password: airflow
     hosts:
       default: postgresql
-    path: /airflow
+    path: /
     scheme: postgresql+psycopg2
     port:
       postgresql: 5432
@@ -153,8 +153,8 @@ endpoints:
         password: airflow
     hosts:
       default: rabbitmq
-    path: /airflow
-    scheme: rabbit
+    path: /
+    scheme: amqp
     port:
       amqp: 5672
 
@@ -189,3 +189,18 @@ resources:
     requests:
       memory: "128Mi"
       cpu: "100m"
+  jobs:
+    db_sync:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+      requests:
+        memory: "128Mi"
+        cpu: "500m"
+    init:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+      requests:
+        memory: "128Mi"
+        cpu: "500m"

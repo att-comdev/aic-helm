@@ -23,11 +23,9 @@
 
 # The folder where your airflow pipelines live, most likely a
 # subfolder in a code repository
-dags_folder = {{ .Values.conf.core.dags_folder }}
 {{ if not .default.core.dags_folder }}#{{ end }}dags_folder = {{ .default.core.dags_folder | default "/usr/local/airflow/dags" }}
 
 # The folder where airflow should store its log files. This location
-base_log_folder =  {{ .Values.conf.core.base_log_folder }}
 {{ if not .default.core.base_log_folder }}#{{ end }}base_log_folder = {{ .default.core.base_log_folder | default "/usr/local/airflow/logs" }}
 
 # Airflow can store logs remotely in AWS S3 or Google Cloud Storage. Users
@@ -48,7 +46,7 @@ base_log_folder =  {{ .Values.conf.core.base_log_folder }}
 # The SqlAlchemy connection string to the metadata database.
 # SqlAlchemy supports many different database engine, more information
 # their website
-{{ if not .default.core.sql_alchemy_conn }}#{{ end }}sql_alchemy_conn = {{ .default.core.sql_alchemy_conn | default "postgresql+psycopg2://airflow:airflow@postgresql/airflow" }}
+{{ if not .default.core.sql_alchemy_conn }}#{{ end }}sql_alchemy_conn = {{ .default.core.sql_alchemy_conn | default "postgresql+psycopg2://airflow:airflow@postgresql/" }}
 
 # The SqlAlchemy pool size is the maximum number of database connections
 # in the pool.
@@ -94,35 +92,35 @@ base_log_folder =  {{ .Values.conf.core.base_log_folder }}
 # The base url of your website as airflow cannot guess what domain or
 # cname you are using. This is use in automated emails that
 # airflow sends to point links to the right web server
-{{ if not .default.web.base_url }}#{{ end }}base_url = {{ .default.web.base_url | default "http://web.airflow:8080" }}
+{{ if not .default.webserver.base_url }}#{{ end }}base_url = {{ .default.webserver.base_url | default "http://web.airflow:8080" }}
 
 # The ip specified when starting the web server
-{{ if not .default.web.web_server_host }}#{{ end }}web_server_host = {{ .default.web.web_server_host | default "0.0.0.0" }}
+{{ if not .default.webserver.web_server_host }}#{{ end }}web_server_host = {{ .default.webserver.web_server_host | default "0.0.0.0" }}
 
 # The port on which to run the web server
-{{ if not .default.web.web_server_port }}#{{ end }}web_server_port = {{ .default.web.web_server_port | default "8080" }}
+{{ if not .default.webserver.web_server_port }}#{{ end }}web_server_port = {{ .default.webserver.web_server_port | default "8080" }}
 
 # The time the gunicorn webserver waits before timing out on a worker
-{{ if not .default.web.web_server_worker_timeout }}#{{ end }}web_server_worker_timeout = {{ .default.web.web_server_worker_timeout | default "120" }}
+{{ if not .default.webserver.web_server_worker_timeout }}#{{ end }}web_server_worker_timeout = {{ .default.webserver.web_server_worker_timeout | default "120" }}
 
 # Secret key used to run your flask app
-{{ if not .default.web.secret_key }}#{{ end }}secret_key = {{ .default.web.secret_key | default "temporary_key" }}
+{{ if not .default.webserver.secret_key }}#{{ end }}secret_key = {{ .default.webserver.secret_key | default "temporary_key" }}
 
 # Number of workers to run the Gunicorn web server
-{{ if not .default.web.workers }}#{{ end }}workers = {{ .default.web.workers | default "4" }}
+{{ if not .default.webserver.workers }}#{{ end }}workers = {{ .default.webserver.workers | default "4" }}
 
 # The worker class gunicorn should use. Choices include
 # sync (default), eventlet, gevent
-{{ if not .default.web.worker_class }}#{{ end }}worker_class = {{ .default.web.worker_class | default "sync" }}
+{{ if not .default.webserver.worker_class }}#{{ end }}worker_class = {{ .default.webserver.worker_class | default "sync" }}
 
 # Expose the configuration file in the web server
-{{ if not .default.web.expose_config }}#{{ end }}expose_config = {{ .default.web.expose_config | default "true" }}
+{{ if not .default.webserver.expose_config }}#{{ end }}expose_config = {{ .default.webserver.expose_config | default "true" }}
 
 # Set to true to turn on authentication : http://pythonhosted.org/airflow/installation.html#web-authentication
-{{ if not .default.web.authenticate }}#{{ end }}authenticate = {{ .default.web.authenticate | default "False" }}
+{{ if not .default.webserver.authenticate }}#{{ end }}authenticate = {{ .default.webserver.authenticate | default "False" }}
 
 # Filter the list of dags by owner name (requires authentication to be enabled)
-{{ if not .default.web.filter_by_owner }}#{{ end }}filter_by_owner = {{ .default.web.filter_by_owner | default "False" }}
+{{ if not .default.webserver.filter_by_owner }}#{{ end }}filter_by_owner = {{ .default.webserver.filter_by_owner | default "False" }}
 
 [email]
 {{ if not .default.email.email_backend }}#{{ end }}email_backend = {{ .default.email.email_backend | default "airflow.utils.send_email_smtp" }}
@@ -162,10 +160,10 @@ base_log_folder =  {{ .Values.conf.core.base_log_folder }}
 # The Celery broker URL. Celery supports RabbitMQ, Redis and experimentally
 # a sqlalchemy database. Refer to the Celery documentation for more
 # information.
-{{ if not .default.celery.broker_url }}#{{ end }}broker_url = {{ .default.celery.broker_url | default "amqp://airflow:airflow@rabbitmq:5672/airflow" }}
+{{ if not .default.celery.broker_url }}#{{ end }}broker_url = {{ .default.celery.broker_url | default "amqp://airflow:airflow@rabbitmq:5672/" }}
 
 # Another key Celery setting
-{{ if not .default.celery.celery_result_backend }}#{{ end }}celery_result_backend = {{ .default.celery.celery_result_backend | default "amqp://airflow:airflow@rabbitmq:5672/airflow" }}
+{{ if not .default.celery.celery_result_backend }}#{{ end }}celery_result_backend = {{ .default.celery.celery_result_backend | default "amqp://airflow:airflow@rabbitmq:5672/" }}
 
 # Celery Flower is a sweet UI for Celery. Airflow has a shortcut to start
 # it `airflow flower`. This defines the port that Celery Flower runs on
