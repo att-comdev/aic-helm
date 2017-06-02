@@ -38,7 +38,7 @@ spec:
             mountPath: /airflow.cfg
             subPath: airflow.cfg
             readOnly: false
-        # Set to -1 so that scheduler will not go into crash loops
+        # Set to -1 to stop scheduler from going into crash loops
         args: ["scheduler", "-n", "-1" ]
       volumes:
         - name: dags
