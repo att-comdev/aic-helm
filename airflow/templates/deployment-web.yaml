@@ -1,0 +1,51 @@
+{{- $envAll := . }}
+{{- $dependencies := .Values.dependencies.server }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: {{ .Values.replicas.web }}
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: web
+      annotations:
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helper.hash" }}
+        pod.beta.kubernetes.io/init-containers: '[
+{{ tuple $envAll $dependencies | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
+        ]'
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: web
+        image: {{ .Values.images.airflow }}
+        imagePullPolicy: {{ .Values.images.pull_policy }}
+        {{- if .Values.resources.enabled }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.web.requests.memory | quote }}
+            cpu: {{ .Values.resources.web.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.resources.web.limits.memory | quote }}
+            cpu: {{ .Values.resources.web.limits.cpu | quote }}
+        {{- end }}
+        volumeMounts:
+          - name: dags
+            mountPath: /usr/local/airflow/dags
+          - name: airflow-etc
+            mountPath: /airflow.cfg
+            subPath: airflow.cfg
+            readOnly: false
+        ports:
+        - name: web
+          containerPort: 8080
+        args: ["webserver"]
+      volumes:
+        - name: dags
+          hostPath:
+            path: {{ .Values.volumes.path }}
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc
