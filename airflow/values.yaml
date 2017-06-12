@@ -1,0 +1,206 @@
+# Default values for airflow-helm
+
+replicas:
+  web: 1
+  worker: 1
+  flower: 1
+  scheduler: 1
+
+labels:
+  node_selector_key: openstack-control-plane
+  node_selector_value: enabled
+
+images:
+  airflow: docker.io/eanylin/airflow-helm:1.8.1-1.6.2-0.9
+  dep_check: quay.io/stackanetes/kubernetes-entrypoint:v0.1.1
+  db_init_postgresql: docker.io/postgres:9.5
+  db_sync: docker.io/eanylin/airflow-helm:1.8.1-1.6.2-0.9
+  pull_policy: "IfNotPresent"
+
+network:
+  flower:
+    name: "flower"
+    port: 5555
+    node_port:
+      enabled: true
+      port: 32081
+  web:
+    name: "web"
+    port: 8080
+    node_port:
+      enabled: true
+      port: 32080
+
+volumes:
+  path: /home/ubuntu/workbench/dags
+
+scheduler_args: '5'
+
+upgrades:
+  revision_history: 3
+  pod_replacement_strategy: RollingUpdate
+  rolling_update:
+    max_unavailable: 1
+    max_surge: 3
+
+dependencies:
+  db_init:
+    service:
+    - postgresql
+  db_sync:
+    jobs:
+    - airflow-db-init-postgresql
+    service:
+    - postgresql
+  server:
+    jobs:
+    - airflow-db-init-postgresql
+    - airflow-db-sync
+    service:
+    - etcd
+    - rabbitmq
+    - postgresql
+
+conf:
+  airflow:
+    override:
+    append:
+    default:
+      core:
+        airflow_home: /usr/local/airflow
+        dags_folder: /usr/local/airflow/dags
+        base_log_folder: /usr/local/airflow/logs
+        remote_base_log_folder:
+        remote_log_conn_id:
+        encrypt_s3_logs: False
+        executor: CeleryExecutor
+        sql_alchemy_pool_size: 5
+        sql_alchemy_pool_recycle: 3600
+        parallelism: 32
+        dag_concurrency: 16
+        dags_are_paused_at_creation: False
+        max_active_runs_per_dag: 16
+        load_examples: False
+        plugins_folder: /usr/local/airflow/plugins
+        fernet_key: fKp7omMJ4QlTxfZzVBSiyXVgeCK-6epRjGgMpEIsjvs=
+        donot_pickle: False
+        dagbag_import_timeout: 30
+      webserver:
+        base_url: http://web.airflow:8080
+        web_server_host: 0.0.0.0
+        web_server_port: 8080
+        web_server_worker_timeout: 120
+        secret_key: temporary_key
+        workers: 4
+        worker_class: sync
+        expose_config: true
+        authenticate: False
+        filter_by_owner: False
+      email:
+        email_backend: airflow.utils.send_email_smtp
+      smtp:
+        smtp_host: localhost
+        smtp_starttls: True
+        smtp_ssl: False
+        smtp_user: airflow
+        smtp_port: 25
+        smtp_password: airflow
+        smtp_mail_from: airflow@airflow.local
+      celery:
+        celery_app_name: airflow.executors.celery_executor
+        celeryd_concurrency: 16
+        worker_log_server_port: 8793
+        flower_port: 5555
+        default_queue: default
+      scheduler:
+        job_heartbeat_sec: 5
+        scheduler_heartbeat_sec: 5
+        max_threads: 2
+      mesos:
+        master: localhost:5050
+        framework_name: Airflow
+        task_cpu: 1
+        task_memory: 256
+        checkpoint: False
+        authenticate: False
+    
+
+# typically overriden by environmental
+# values, but should include all endpoints
+# required by this chart
+endpoints:
+  postgresql:
+    auth:
+      admin:
+        username: airflow
+        password: airflow
+      user:
+        username: airflow
+        password: airflow
+    hosts:
+      default: postgresql
+    path: /
+    scheme: postgresql+psycopg2
+    port:
+      postgresql: 5432
+  messaging:
+    auth:
+      admin:
+        username: airflow
+        password: airflow
+      user:
+        username: airflow
+        password: airflow
+    hosts:
+      default: rabbitmq
+    path: /
+    scheme: amqp
+    port:
+      amqp: 5672
+
+
+resources:
+  enabled: false
+  worker:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+  flower:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+  web:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+  scheduler:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+  jobs:
+    db_sync:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+      requests:
+        memory: "128Mi"
+        cpu: "500m"
+    init:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+      requests:
+        memory: "128Mi"
+        cpu: "500m"

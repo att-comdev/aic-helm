@@ -1,0 +1,49 @@
+{{- $envAll := . }}
+{{- $dependencies := .Values.dependencies.server }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: scheduler
+spec:
+  replicas: {{ .Values.replicas.scheduler }}
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: scheduler
+      annotations:
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helper.hash" }}
+        pod.beta.kubernetes.io/init-containers: '[
+{{ tuple $envAll $dependencies | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
+        ]'
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: scheduler
+        image: {{ .Values.images.airflow }}
+        imagePullPolicy: {{ .Values.images.pull_policy }}
+        {{- if .Values.resources.enabled }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.scheduler.requests.memory | quote }}
+            cpu: {{ .Values.resources.scheduler.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.resources.scheduler.limits.memory | quote }}
+            cpu: {{ .Values.resources.scheduler.limits.cpu | quote }}
+        {{- end }}
+        volumeMounts:
+          - name: dags
+            mountPath: /usr/local/airflow/dags
+          - name: airflow-etc
+            mountPath: /airflow.cfg
+            subPath: airflow.cfg
+            readOnly: false
+        # Set to -1 to stop scheduler from going into crash loops
+        args: ["scheduler", "-n", "-1" ]
+      volumes:
+        - name: dags
+          hostPath:
+            path: {{ .Values.volumes.path }}
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc

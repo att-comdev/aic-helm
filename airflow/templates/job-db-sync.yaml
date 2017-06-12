@@ -1,0 +1,47 @@
+{{- $envAll := . }}
+{{- $dependencies := .Values.dependencies.db_sync }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: airflow-db-sync
+spec:
+  template:
+    metadata:
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+{{ tuple $envAll $dependencies "[]" | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
+        ]'
+    spec:
+      restartPolicy: OnFailure
+      nodeSelector:
+        {{ .Values.labels.node_selector_key }}: {{ .Values.labels.node_selector_value }}
+      containers:
+        - name: airflow-db-sync
+          image: {{ .Values.images.db_sync }}
+          imagePullPolicy: {{ .Values.images.pull_policy }}
+          command:
+            - bash
+            - /tmp/db-sync.sh
+          {{- if .Values.resources.enabled }}
+          resources:
+            limits:
+              cpu: {{ .Values.resources.jobs.db_sync.limits.cpu | quote }}
+              memory: {{ .Values.resources.jobs.db_sync.limits.memory | quote }}
+            requests:
+              cpu: {{ .Values.resources.jobs.db_sync.requests.cpu | quote }}
+              memory: {{ .Values.resources.jobs.db_sync.requests.memory | quote }}
+          {{- end }}
+          volumeMounts:
+            - name: airflow-etc
+              mountPath: /usr/local/airflow/airflow.cfg
+              subPath: airflow.cfg
+            - name: airflow-bin
+              mountPath: /tmp/db-sync.sh
+              subPath: db-sync.sh
+      volumes:
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc
+        - name: airflow-bin
+          configMap:
+            name: airflow-bin

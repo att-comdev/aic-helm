@@ -1,0 +1,50 @@
+{{- $envAll := . }}
+{{- $dependencies := .Values.dependencies.server }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: flower
+spec:
+  replicas: {{ .Values.replicas.flower }}
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: flower
+      annotations:
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helper.hash" }}
+        pod.beta.kubernetes.io/init-containers: '[
+{{ tuple $envAll $dependencies | include "helper.kubernetes_entrypoint_init_container" | indent 10 }}
+        ]'
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: flower
+        image: {{ .Values.images.airflow }}
+        imagePullPolicy: {{ .Values.images.pull_policy }}
+        env:
+        # To prevent the error: ValueError: invalid literal for int() with base 10: 'tcp://10.0.0.83:5555'
+        - name: FLOWER_PORT
+          value: "5555"
+        {{- if .Values.resources.enabled }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.flower.requests.memory | quote }}
+            cpu: {{ .Values.resources.flower.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.resources.flower.limits.memory | quote }}
+            cpu: {{ .Values.resources.flower.limits.cpu | quote }}
+        {{- end }}
+        ports:
+        - name: flower
+          containerPort: 5555
+        args: ["flower"]
+        volumeMounts:
+          - name: airflow-etc
+            mountPath: /airflow.cfg
+            subPath: airflow.cfg
+            readOnly: false
+      volumes:
+        - name: airflow-etc
+          configMap:
+            name: airflow-etc
