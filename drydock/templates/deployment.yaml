@@ -1,0 +1,64 @@
+
+# Copyright 2017 The Openstack-Helm Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: drydock
+spec:
+  replicas: {{ .Values.replicas.drydock }}
+  revisionHistoryLimit: {{ .Values.upgrades.revision_history }}
+  strategy:
+    type: {{ .Values.upgrades.pod_replacement_strategy }}
+    {{ if eq .Values.upgrades.pod_replacement_strategy "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.upgrades.rolling_update.max_unavailable }}
+      maxSurge: {{ .Values.upgrades.rolling_update.max_surge }}
+    {{ end }}
+  template:
+    metadata:
+      labels:
+        app: drydock
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: drydock
+        image: {{ .Values.images.drydock }}
+        imagePullPolicy: {{ .Values.images.pull_policy }}
+        {{- if .Values.resources.enabled }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.drydock.requests.memory | quote }}
+            cpu: {{ .Values.resources.drydock.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.resources.drydock.limits.memory | quote }}
+            cpu: {{ .Values.resources.drydock.limits.cpu | quote }}
+        {{- end }}
+        ports:
+        - name: drydock-api
+          containerPort: {{ .Values.network.drydock.port }}
+        volumeMounts:
+          - name: etcdrydock
+            mountPath: /etc/drydock
+          - name: drydock-etc
+            mountPath: /etc/drydock/drydock.conf
+            subPath: drydock.conf
+            readOnly: true
+      volumes:
+        - name: etcdrydock
+          emptyDir: {}
+        - name: drydock-etc
+          configMap:
+            name: drydock-etc
