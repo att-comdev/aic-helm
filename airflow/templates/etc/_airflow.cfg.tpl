@@ -14,7 +14,6 @@
 
 {{- end -}}
 
-
 {{- define "airflow.cfg.airflow" -}}
 
 [core]
@@ -35,7 +34,7 @@
 {{ if not .default.core.remote_base_log_folder }}#{{ end }}remote_base_log_folder = {{ .default.core.remote_base_log_folder | default "" }}
 {{ if not .default.core.remote_log_conn_id }}#{{ end }}remote_log_conn_id = {{ .default.core.remote_log_conn_id | default "" }}
 # Use server-side encryption for logs stored in S3
-{{ if not .default.core.encrypt_s3_logs }}#{{ end }}encrypt_s3_logs = {{ .default.core.encrypt_s3_logs | default "False" }}
+encrypt_s3_logs = {{ .default.core.encrypt_s3_logs | default "False" }}
 # deprecated option for remote log storage, use remote_base_log_folder instead!
 # s3_log_folder =
 
@@ -66,7 +65,11 @@
 {{ if not .default.core.dag_concurrency }}#{{ end }}dag_concurrency = {{ .default.core.dag_concurrency | default "16" }}
 
 # Are DAGs paused by default at creation
-{{ if not .default.core.dags_are_paused_at_creation }}#{{ end }}dags_are_paused_at_creation = {{ .default.core.dags_are_paused_at_creation | default "False" }}
+dags_are_paused_at_creation = {{ .default.core.dags_are_paused_at_creation | default "False" }}
+
+# When not using pools, tasks are run in the "default pool",
+# whose size is guided by this config element
+{{ if not .default.core.non_pooled_task_slot_count }}#{{ end }}non_pooled_task_slot_count = {{ .default.core.non_pooled_task_slot_count | default "128" }}
 
 # The maximum number of active DAG runs per DAG
 {{ if not .default.core.max_active_runs_per_dag }}#{{ end }}max_active_runs_per_dag = {{ .default.core.max_active_runs_per_dag | default "16" }}
@@ -74,7 +77,7 @@
 # Whether to load the examples that ship with Airflow. It's good to
 # get started, but you probably want to set this to False in a production
 # environment
-{{ if not .default.core.load_examples }}#{{ end }}load_examples = {{ .default.core.load_examples | default "False" }}
+load_examples = {{ .default.core.load_examples | default "False" }}
 
 # Where your Airflow plugins are stored
 {{ if not .default.core.plugins_folder }}#{{ end }}plugins_folder = {{ .default.core.plugins_folder | default "/usr/local/airflow/plugins" }}
@@ -83,16 +86,50 @@
 {{ if not .default.core.fernet_key }}#{{ end }}fernet_key = {{ .default.core.fernet_key | default "fKp7omMJ4QlTxfZzVBSiyXVgeCK-6epRjGgMpEIsjvs=" }}
 
 # Whether to disable pickling dags
-{{ if not .default.core.donot_pickle }}#{{ end }}donot_pickle = {{ .default.core.donot_pickle | default "False" }}
+donot_pickle = {{ .default.core.donot_pickle | default "False" }}
 
 # How long before timing out a python file import while filling the DagBag
 {{ if not .default.core.dagbag_import_timeout }}#{{ end }}dagbag_import_timeout = {{ .default.core.dagbag_import_timeout | default "30" }}
+
+# The class to use for running task instances in a subprocess
+{{ if not .default.core.task_runner }}#{{ end }}task_runner = {{ .default.core.task_runner | default "BashTaskRunner" }}
+
+# If set, tasks without a `run_as_user` argument will be run with this user
+# Can be used to de-elevate a sudo user running Airflow when executing tasks
+{{ if not .default.core.default_impersonation }}#{{ end }}default_impersonation = {{ .default.core.default_impersonation | default "" }}
+
+# What security module to use (for example kerberos):
+{{ if not .default.core.security }}#{{ end }}security = {{ .default.core.security | default "" }}
+
+# Turn unit test mode on (overwrites many configuration options with test
+# values at runtime)
+unit_test_mode = {{ .default.core.unit_test_mode | default "False" }}
+
+[cli]
+# In what way should the cli access the API. The LocalClient will use the
+# database directly, while the json_client will use the api running on the
+# webserver
+{{ if not .default.cli.api_client }}#{{ end }}api_client = {{ .default.cli.api_client | default "airflow.api.client.local_client" }}
+{{ if not .default.cli.endpoint_url }}#{{ end }}endpoint_url = {{ .default.cli.endpoint_url | default "http://web.shipyard:8080" }}
+
+[api]
+# How to authenticate users of the API
+{{ if not .default.api.auth_backend }}#{{ end }}auth_backend = {{ .default.api.auth_backend | default "airflow.api.auth.backend.default" }}
+
+[operators]
+# The default owner assigned to each new operator, unless
+# provided explicitly or passed via `default_args`
+{{ if not .default.operators.default_owner }}#{{ end }}default_owner = {{ .default.operators.default_owner | default "Airflow" }}
+{{ if not .default.operators.default_cpus }}#{{ end }}default_cpus = {{ .default.operators.default_cpus | default "1" }}
+{{ if not .default.operators.default_ram }}#{{ end }}default_ram = {{ .default.operators.default_ram | default "512" }}
+{{ if not .default.operators.default_disk }}#{{ end }}default_disk = {{ .default.operators.default_disk | default "512" }}
+{{ if not .default.operators.default_gpus }}#{{ end }}default_gpus = {{ .default.operators.default_gpus | default "0" }}
 
 [webserver]
 # The base url of your website as airflow cannot guess what domain or
 # cname you are using. This is use in automated emails that
 # airflow sends to point links to the right web server
-{{ if not .default.webserver.base_url }}#{{ end }}base_url = {{ .default.webserver.base_url | default "http://web.airflow:8080" }}
+{{ if not .default.webserver.base_url }}#{{ end }}base_url = {{ .default.webserver.base_url | default "http://web.shipyard:8080" }}
 
 # The ip specified when starting the web server
 {{ if not .default.webserver.web_server_host }}#{{ end }}web_server_host = {{ .default.webserver.web_server_host | default "0.0.0.0" }}
@@ -100,8 +137,21 @@
 # The port on which to run the web server
 {{ if not .default.webserver.web_server_port }}#{{ end }}web_server_port = {{ .default.webserver.web_server_port | default "8080" }}
 
+# Paths to the SSL certificate and key for the web server. When both are
+# provided SSL will be enabled. This does not change the web server port.
+{{ if not .default.webserver.web_server_ssl_cert }}#{{ end }}web_server_ssl_cert = {{ .default.webserver.web_server_ssl_cert | default "" }}
+{{ if not .default.webserver.web_server_ssl_key }}#{{ end }}web_server_ssl_key = {{ .default.webserver.web_server_ssl_key | default "" }}
+
 # The time the gunicorn webserver waits before timing out on a worker
 {{ if not .default.webserver.web_server_worker_timeout }}#{{ end }}web_server_worker_timeout = {{ .default.webserver.web_server_worker_timeout | default "120" }}
+
+# Number of workers to refresh at a time. When set to 0, worker refresh is
+# disabled. When nonzero, airflow periodically refreshes webserver workers by
+# bringing up new ones and killing old ones.
+{{ if not .default.webserver.worker_refresh_batch_size }}#{{ end }}worker_refresh_batch_size = {{ .default.webserver.worker_refresh_batch_size | default "1" }}
+
+# Number of seconds to wait before refreshing a batch of workers.
+{{ if not .default.webserver.worker_refresh_interval }}#{{ end }}worker_refresh_interval = {{ .default.webserver.worker_refresh_interval | default "30" }}
 
 # Secret key used to run your flask app
 {{ if not .default.webserver.secret_key }}#{{ end }}secret_key = {{ .default.webserver.secret_key | default "temporary_key" }}
@@ -113,14 +163,41 @@
 # sync (default), eventlet, gevent
 {{ if not .default.webserver.worker_class }}#{{ end }}worker_class = {{ .default.webserver.worker_class | default "sync" }}
 
+# Log files for the gunicorn webserver. '-' means log to stderr.
+{{ if not .default.webserver.access_logfile }}#{{ end }}access_logfile = {{ .default.webserver.access_logfile | default "-" }}
+{{ if not .default.webserver.error_logfile }}#{{ end }}error_logfile = {{ .default.webserver.error_logfile | default "-" }}
+
 # Expose the configuration file in the web server
 {{ if not .default.webserver.expose_config }}#{{ end }}expose_config = {{ .default.webserver.expose_config | default "true" }}
 
 # Set to true to turn on authentication : http://pythonhosted.org/airflow/installation.html#web-authentication
-{{ if not .default.webserver.authenticate }}#{{ end }}authenticate = {{ .default.webserver.authenticate | default "False" }}
+authenticate = {{ .default.webserver.authenticate | default "False" }}
 
 # Filter the list of dags by owner name (requires authentication to be enabled)
-{{ if not .default.webserver.filter_by_owner }}#{{ end }}filter_by_owner = {{ .default.webserver.filter_by_owner | default "False" }}
+filter_by_owner = {{ .default.webserver.filter_by_owner | default "False" }}
+
+# Filtering mode. Choices include user (default) and ldapgroup.
+# Ldap group filtering requires using the ldap backend
+#
+# Note that the ldap server needs the "memberOf" overlay to be set up
+# in order to user the ldapgroup mode.
+{{ if not .default.webserver.owner_mode }}#{{ end }}owner_mode = {{ .default.webserver.owner_mode | default "user" }}
+
+# Default DAG orientation. Valid values are:
+# LR (Left->Right), TB (Top->Bottom), RL (Right->Left), BT (Bottom->Top)
+{{ if not .default.webserver.dag_orientation }}#{{ end }}dag_orientation = {{ .default.webserver.dag_orientation | default "LR" }}
+
+# Puts the webserver in demonstration mode; blurs the names of Operators for
+# privacy.
+demo_mode = {{ .default.webserver.demo_mode | default "False" }}
+
+# The amount of time (in secs) webserver will wait for initial handshake
+# while fetching logs from other worker machine
+{{ if not .default.webserver.log_fetch_timeout_sec }}#{{ end }}log_fetch_timeout_sec = {{ .default.webserver.log_fetch_timeout_sec | default "5" }}
+
+# By default, the webserver shows paused DAGs. Flip this to hide paused
+# DAGs by default
+hide_paused_dags_by_default = {{ .default.webserver.hide_paused_dags_by_default | default "False" }}
 
 [email]
 {{ if not .default.email.email_backend }}#{{ end }}email_backend = {{ .default.email.email_backend | default "airflow.utils.send_email_smtp" }}
@@ -130,8 +207,8 @@
 # the airflow.utils.send_email function, you have to configure an smtp
 # server here
 {{ if not .default.smtp.smtp_host }}#{{ end }}smtp_host = {{ .default.smtp.smtp_host | default "localhost" }}
-{{ if not .default.smtp.smtp_starttls }}#{{ end }}smtp_host = {{ .default.smtp.smtp_starttls | default "True" }}
-{{ if not .default.smtp.smtp_ssl }}#{{ end }}smtp_ssl = {{ .default.smtp.smtp_ssl | default "False" }}
+{{ if not .default.smtp.smtp_starttls }}#{{ end }}smtp_smtp_starttls = {{ .default.smtp.smtp_starttls | default "True" }}
+smtp_ssl = {{ .default.smtp.smtp_ssl | default "False" }}
 {{ if not .default.smtp.smtp_user }}#{{ end }}smtp_user = {{ .default.smtp.smtp_user | default "airflow" }}
 {{ if not .default.smtp.smtp_port }}#{{ end }}smtp_port = {{ .default.smtp.smtp_port | default "25" }}
 {{ if not .default.smtp.smtp_password }}#{{ end }}smtp_password = {{ .default.smtp.smtp_password | default "airflow" }}
@@ -166,7 +243,10 @@
 {{ if not .default.celery.celery_result_backend }}#{{ end }}celery_result_backend = {{ .default.celery.celery_result_backend | default "amqp://airflow:airflow@rabbitmq:5672/" }}
 
 # Celery Flower is a sweet UI for Celery. Airflow has a shortcut to start
-# it `airflow flower`. This defines the port that Celery Flower runs on
+# it `airflow flower`. This defines the IP that Celery Flower runs on
+{{ if not .default.celery.flower_host }}#{{ end }}flower_host = {{ .default.celery.flower_host | default "0.0.0.0" }}
+
+# This defines the port that Celery Flower runs on
 {{ if not .default.celery.flower_port }}#{{ end }}flower_port = {{ .default.celery.flower_port | default "5555" }}
 
 # Default queue that tasks get assigned to and that worker listen on.
@@ -183,16 +263,45 @@
 # how often the scheduler should run (in seconds).
 {{ if not .default.scheduler.scheduler_heartbeat_sec }}#{{ end }}scheduler_heartbeat_sec = {{ .default.scheduler.scheduler_heartbeat_sec | default "5" }}
 
+# after how much time should the scheduler terminate in seconds
+# -1 indicates to run continuously (see also num_runs)
+{{ if not .default.scheduler.run_duration }}#{{ end }}run_duration = {{ .default.scheduler.run_duration | default "-1" }}
+
+# after how much time a new DAGs should be picked up from the filesystem
+{{ if not .default.scheduler.min_file_process_interval }}#{{ end }}min_file_process_interval = {{ .default.scheduler.min_file_process_interval | default "0" }}
+
+{{ if not .default.scheduler.dag_dir_list_interval }}#{{ end }}dag_dir_list_interval = {{ .default.scheduler.dag_dir_list_interval | default "300" }}
+
+# How often should stats be printed to the logs
+{{ if not .default.scheduler.print_stats_interval }}#{{ end }}print_stats_interval = {{ .default.scheduler.print_stats_interval | default "30" }}
+
+{{ if not .default.scheduler.child_process_log_directory }}#{{ end }}child_process_log_directory = {{ .default.scheduler.child_process_log_directory | default "/usr/local/airflow/logs/scheduler" }}
+
+# Local task jobs periodically heartbeat to the DB. If the job has
+# not heartbeat in this many seconds, the scheduler will mark the
+# associated task instance as failed and will re-schedule the task.
+{{ if not .default.scheduler.scheduler_zombie_task_threshold }}#{{ end }}scheduler_zombie_task_threshold = {{ .default.scheduler.scheduler_zombie_task_threshold | default "300" }}
+
+# Turn off scheduler catchup by setting this to False.
+# Default behavior is unchanged and
+# Command Line Backfills still work, but the scheduler
+# will not do scheduler catchup if this is False,
+# however it can be set on a per DAG basis in the
+# DAG definition (catchup)
+{{ if not .default.scheduler.catchup_by_default }}#{{ end }}catchup_by_default = {{ .default.scheduler.catchup_by_default | default "True" }}
+
 # Statsd (https://github.com/etsy/statsd) integration settings
-# statsd_on =  False
-# statsd_host =  localhost
-# statsd_port =  8125
+# statsd_on = False
+# statsd_host = localhost
+# statsd_port = 8125
 # statsd_prefix = airflow
 
 # The scheduler can run multiple threads in parallel to schedule dags.
 # This defines how many threads will run. However airflow will never
 # use more threads than the amount of cpu cores available.
 {{ if not .default.scheduler.max_threads }}#{{ end }}max_threads = {{ .default.scheduler.max_threads | default "2" }}
+
+authenticate = {{ .default.scheduler.authenticate | default "False" }}
 
 [mesos]
 # Mesos master address which MesosExecutor will connect to.
@@ -213,7 +322,7 @@
 
 # Enable framework checkpointing for mesos
 # See http://mesos.apache.org/documentation/latest/slave-recovery/
-{{ if not .default.mesos.checkpoint }}#{{ end }}checkpoint = {{ .default.mesos.checkpoint | default "False" }}
+checkpoint = {{ .default.mesos.checkpoint | default "False" }}
 
 # Failover timeout in milliseconds.
 # When checkpointing is enabled and this option is set, Mesos waits
@@ -225,10 +334,25 @@
 
 # Enable framework authentication for mesos
 # See http://mesos.apache.org/documentation/latest/configuration/
-{{ if not .default.mesos.authenticate }}#{{ end }}authenticate = {{ .default.mesos.authenticate | default "False" }}
+authenticate = {{ .default.mesos.authenticate | default "False" }}
 
 # Mesos credentials, if authentication is enabled
 # default_principal = admin
 # default_secret = admin
+
+[kerberos]
+#ccache = /tmp/airflow_krb5_ccache
+# gets augmented with fqdn
+#principal = airflow
+#reinit_frequency = 3600
+#kinit_path = kinit
+#keytab = airflow.keytab
+
+[github_enterprise]
+#api_rev = v3
+
+[admin]
+# UI to hide sensitive variable fields when set to True
+{{ if not .default.admin.hide_sensitive_variable_fields }}#{{ end }}hide_sensitive_variable_fields = {{ .default.admin.hide_sensitive_variable_fields | default "True" }}
 
 {{- end -}}
