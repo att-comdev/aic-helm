@@ -19,7 +19,7 @@ replicas:
   drydock: 3
 
 images:
-  drydock: docker.io/srwilkers/drydock:v0.1.0
+  drydock: quay.io/attcomdev/drydock:1.0.1
   dep_check: docker.io/kolla/ubuntu-source-kubernetes-entrypoint:4.0.0
   pull_policy: "IfNotPresent"
 
