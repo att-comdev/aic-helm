@@ -102,11 +102,13 @@
 
 # Module path string of a input ingester to enable (multi valued)
 # from .plugins.drydock_provisioner.ingester (multiopt)
-{{ if not .plugins.drydock_provisioner.ingester }}#ingester = {{ .plugins.drydock_provisioner.ingester | default "drydock_provisioner.ingester.plugins.yaml.YamlIngester" }}{{ else }}{{ range .plugins.drydock_provisioner.ingester }}ingester = {{ . }}{{ end }}{{ end }}
+{{ if not .plugins.drydock_provisioner.ingester }}#ingester = {{ .plugins.drydock_provisioner.ingester | default "drydock_provisioner.ingester.plugins.yaml.YamlIngester" }}{{ else }}{{ range .plugins.drydock_provisioner.ingester }}ingester = {{ . }}
+{{ end }}{{ end }}
 
 # Module path string of a OOB driver to enable (multi valued)
 # from .plugins.drydock_provisioner.oob_driver (multiopt)
-{{ if not .plugins.drydock_provisioner.oob_driver }}#oob_driver = {{ .plugins.drydock_provisioner.oob_driver | default "drydock_provisioner.drivers.oob.pyghmi_driver.PyghmiDriver" }}{{ else }}{{ range .plugins.drydock_provisioner.oob_driver }}oob_driver = {{ . }}{{ end }}{{ end }}
+{{ if not .plugins.drydock_provisioner.oob_driver }}#oob_driver = {{ .plugins.drydock_provisioner.oob_driver | default "drydock_provisioner.drivers.oob.pyghmi_driver.PyghmiDriver" }}{{ else }}{{ range .plugins.drydock_provisioner.oob_driver }}oob_driver = {{ . }}
+{{ end }}{{ end }}
 
 # Module path string of the Node driver to enable (string value)
 # from .plugins.drydock_provisioner.node_driver

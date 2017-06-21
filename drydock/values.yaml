@@ -16,7 +16,7 @@
 # This file provides defaults for drydock
 
 replicas:
-  drydock: 3
+  drydock: 1
 
 images:
   drydock: quay.io/attcomdev/drydock:1.0.1
