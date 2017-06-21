@@ -39,39 +39,41 @@ upgrades:
     max_surge: 3
 
 # Settings for drydock.conf
-authentication:
-  drydock_provisioner:
-    admin_token: 'bigboss'
-    bypass_enabled: true
-logging:
-  drydock_provisioner:
-    log_level: 'DEBUG'
-    global_logger_name: 'drydock'
-    oobdriver_logger_name: '${global_logger_name}.oobdriver'
-    nodedriver_logger_name: '${global_logger_name}.nodedriver'
-    control_logger_name: '${global_logger_name}.control'
-maasdriver:
-  drydock_provisioner:
-    maas_api_key: 'override_this'
-    maas_api_url: 'override_this'
-plugins:
-  drydock_provisioner:
-    ingester:
-    - 'drydock_provisioner.ingester.plugins.yaml.YamlIngester'
-    oob_driver:
-    - 'drydock_provisioner.drivers.oob.pyghmi_driver.PyghmiDriver'
-    - 'drydock_provisioner.drivers.oob.manual_driver.driver.ManualDriver'
-    node_driver: 'drydock_provisioner.drivers.node.maasdriver.driver.MaasNodeDriver'
-    network_driver: null
-timeouts:
-  drydock_provisioner:
-    drydock_timeout: 5
-    create_network_template: 2
-    identify_node: 10
-    configure_hardware: 30
-    apply_node_networking: 5
-    apply_node_platform: 5
-    deploy_node: 45
+conf:
+  drydock:
+    authentication:
+      drydock_provisioner:
+        admin_token: 'bigboss'
+        bypass_enabled: true
+    logging:
+      drydock_provisioner:
+        log_level: 'DEBUG'
+        global_logger_name: 'drydock'
+        oobdriver_logger_name: '${global_logger_name}.oobdriver'
+        nodedriver_logger_name: '${global_logger_name}.nodedriver'
+        control_logger_name: '${global_logger_name}.control'
+    maasdriver:
+      drydock_provisioner:
+        maas_api_key: 'override_this'
+        maas_api_url: 'override_this'
+    plugins:
+      drydock_provisioner:
+        ingester:
+        - 'drydock_provisioner.ingester.plugins.yaml.YamlIngester'
+        oob_driver:
+        - 'drydock_provisioner.drivers.oob.pyghmi_driver.PyghmiDriver'
+        - 'drydock_provisioner.drivers.oob.manual_driver.driver.ManualDriver'
+        node_driver: 'drydock_provisioner.drivers.node.maasdriver.driver.MaasNodeDriver'
+        network_driver: null
+    timeouts:
+      drydock_provisioner:
+        drydock_timeout: 5
+        create_network_template: 2
+        identify_node: 10
+        configure_hardware: 30
+        apply_node_networking: 5
+        apply_node_platform: 5
+        deploy_node: 45
 # end drydock.conf
 
 resources:
