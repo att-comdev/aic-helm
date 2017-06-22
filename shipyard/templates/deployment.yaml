@@ -1,0 +1,63 @@
+# Copyright 2017 The Openstack-Helm Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: shipyard
+spec:
+  replicas: {{ .Values.replicas.shipyard }}
+  revisionHistoryLimit: {{ .Values.upgrades.revision_history }}
+  strategy:
+    type: {{ .Values.upgrades.pod_replacement_strategy }}
+    {{ if eq .Values.upgrades.pod_replacement_strategy "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.upgrades.rolling_update.max_unavailable }}
+      maxSurge: {{ .Values.upgrades.rolling_update.max_surge }}
+    {{ end }}
+  template:
+    metadata:
+      labels:
+        app: shipyard
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: shipyard
+        image: {{ .Values.images.shipyard }}
+        imagePullPolicy: {{ .Values.images.pull_policy }}
+        {{- if .Values.resources.enabled }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.shipyard.requests.memory | quote }}
+            cpu: {{ .Values.resources.shipyard.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.resources.shipyard.limits.memory | quote }}
+            cpu: {{ .Values.resources.shipyard.limits.cpu | quote }}
+        {{- end }}
+        ports:
+        - name: shipyard-api
+          containerPort: {{ .Values.network.shipyard.port }}
+        volumeMounts:
+          - name: etcshipyard
+            mountPath: /etc/shipyard
+          - name: shipyard-etc
+            mountPath: /etc/shipyard/shipyard.conf
+            subPath: shipyard.conf
+            readOnly: true
+      volumes:
+        - name: etcshipyard
+          emptyDir: {}
+        - name: shipyard-etc
+          configMap:
+            name: shipyard-etc
