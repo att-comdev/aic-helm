@@ -16,7 +16,7 @@
 # This file provides defaults for drydock
 
 replicas:
-  drydock: 3
+  drydock: 1
 
 images:
   drydock: quay.io/attcomdev/drydock:1.0.1
@@ -25,10 +25,9 @@ images:
 
 network:
   drydock:
-    name: drydock-api
     port: 9000
     node_port:
-      enabled: true
+      enabled: false
       port: 31900
 
 upgrades:
