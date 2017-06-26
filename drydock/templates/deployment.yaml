@@ -35,6 +35,12 @@ spec:
       restartPolicy: Always
       containers:
       - name: drydock
+        env:
+          - name: 'MAAS_API_KEY'
+            valueFrom:
+              secretKeyRef:
+                name: 'maas-api-key'
+                key: 'token'
         image: {{ .Values.images.drydock }}
         imagePullPolicy: {{ .Values.images.pull_policy }}
         {{- if .Values.resources.enabled }}
