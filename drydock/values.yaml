@@ -85,3 +85,10 @@ resources:
     requests:
       memory: "128Mi"
       cpu: "100m"
+
+files:
+  bootdata:
+    prominit: |
+      #!/bin/bash
+      echo "No prominit.sh file was specified in the Drydock chart for distribution"
+      exit -1
