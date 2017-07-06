@@ -62,9 +62,18 @@ spec:
             mountPath: /etc/drydock/drydock.conf
             subPath: drydock.conf
             readOnly: true
+          - name: etcdrydockbootdata
+            mountPath: /etc/drydock/bootdata
+          - name: drydock-bootdata-prominit
+            mountPath: /etc/drydock/bootdata/prominit
       volumes:
         - name: etcdrydock
           emptyDir: {}
         - name: drydock-etc
           configMap:
             name: drydock-etc
+        - name: etcdrydockbootdata
+          emptyDir: {}
+        - name: drydock-bootdata-prominit
+          configMap:
+            name: drydock-bootdata-prominit
