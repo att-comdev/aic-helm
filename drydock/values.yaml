@@ -74,6 +74,9 @@ conf:
         apply_node_networking: 5
         apply_node_platform: 5
         deploy_node: 45
+    bootdata:
+      drydock_provisioner:
+        prom_init: '/etc/drydock/bootdata/prominit'
 # end drydock.conf
 
 resources:
