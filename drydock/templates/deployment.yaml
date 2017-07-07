@@ -72,4 +72,4 @@ spec:
             name: drydock-etc
         - name: drydock-bootdata
           configMap:
-            name: drydock-bootdata
+            name: promenade-join-sh 

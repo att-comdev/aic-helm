@@ -76,7 +76,7 @@ conf:
         deploy_node: 45
     bootdata:
       drydock_provisioner:
-        prom_init: '/etc/drydock/bootdata/prominit'
+        prom_init: '/etc/drydock/bootdata/join.sh'
 # end drydock.conf
 
 resources:
@@ -88,10 +88,3 @@ resources:
     requests:
       memory: "128Mi"
       cpu: "100m"
-
-files:
-  bootdata:
-    prominit: |
-      #!/bin/bash
-      echo "No prominit.sh file was specified in the Drydock chart for distribution"
-      exit -1
