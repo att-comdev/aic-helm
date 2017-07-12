@@ -1,0 +1,90 @@
+
+# Copyright 2017 The Openstack-Helm Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This file provides defaults for drydock
+
+replicas:
+  drydock: 1
+
+images:
+  drydock: quay.io/attcomdev/drydock:1.0.1
+  dep_check: docker.io/kolla/ubuntu-source-kubernetes-entrypoint:4.0.0
+  pull_policy: "IfNotPresent"
+
+network:
+  drydock:
+    name: drydock-api
+    port: 9000
+    node_port:
+      enabled: true
+      port: 31900
+
+upgrades:
+  revision_history: 3
+  pod_replacement_strategy: RollingUpdate
+  rolling_update:
+    max_unavailable: 1
+    max_surge: 3
+
+# Settings for drydock.conf
+conf:
+  drydock:
+    authentication:
+      drydock_provisioner:
+        admin_token: 'bigboss'
+        bypass_enabled: true
+    logging:
+      drydock_provisioner:
+        log_level: 'DEBUG'
+        global_logger_name: 'drydock'
+        oobdriver_logger_name: '${global_logger_name}.oobdriver'
+        nodedriver_logger_name: '${global_logger_name}.nodedriver'
+        control_logger_name: '${global_logger_name}.control'
+    maasdriver:
+      drydock_provisioner:
+        maas_api_key: 'override_this'
+        maas_api_url: 'override_this'
+    plugins:
+      drydock_provisioner:
+        ingester:
+        - 'drydock_provisioner.ingester.plugins.yaml.YamlIngester'
+        oob_driver:
+        - 'drydock_provisioner.drivers.oob.pyghmi_driver.PyghmiDriver'
+        - 'drydock_provisioner.drivers.oob.manual_driver.driver.ManualDriver'
+        node_driver: 'drydock_provisioner.drivers.node.maasdriver.driver.MaasNodeDriver'
+        network_driver: null
+    timeouts:
+      drydock_provisioner:
+        drydock_timeout: 5
+        create_network_template: 2
+        identify_node: 10
+        configure_hardware: 30
+        apply_node_networking: 5
+        apply_node_platform: 5
+        deploy_node: 45
+    bootdata:
+      drydock_provisioner:
+        prom_init: '/etc/drydock/bootdata/join.sh'
+# end drydock.conf
+
+resources:
+  enabled: false
+  drydock:
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
