@@ -25,10 +25,9 @@ images:
 
 network:
   drydock:
-    name: drydock-api
     port: 9000
     node_port:
-      enabled: true
+      enabled: false
       port: 31900
 
 upgrades:
