@@ -31,6 +31,9 @@ spec:
     metadata:
       labels:
         app: drydock
+      annotations:
+        configmap-bin-hash: {{ tuple "configmap-bin.yaml" . | include "helm-toolkit.utils.hash" }}
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helm-toolkit.utils.hash" }}
     spec:
       restartPolicy: Always
       containers:
@@ -56,16 +59,21 @@ spec:
         - name: drydock-api
           containerPort: {{ .Values.network.drydock.port }}
         volumeMounts:
-          - name: etcdrydock
+          - name: etc-drydock
             mountPath: /etc/drydock
           - name: drydock-etc
-            mountPath: /etc/drydock/drydock.conf
             subPath: drydock.conf
-            readOnly: true
+            mountPath: /etc/drydock/drydock.conf
+          - name: drydock-etc
+            subPath: api-paste.ini
+            mountPath: /etc/drydock/api-paste.ini
+          - name: drydock-etc
+            subPath: policy.yaml
+            mountPath: /etc/drydock/policy.yaml
           - name: drydock-bootdata
             mountPath: /etc/drydock/bootdata
       volumes:
-        - name: etcdrydock
+        - name: etc-drydock
           emptyDir: {}
         - name: drydock-etc
           configMap:
