@@ -13,63 +13,65 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- $envAll := . -}}
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: drydock
 spec:
   replicas: {{ .Values.replicas.drydock }}
-  revisionHistoryLimit: {{ .Values.upgrades.revision_history }}
-  strategy:
-    type: {{ .Values.upgrades.pod_replacement_strategy }}
-    {{ if eq .Values.upgrades.pod_replacement_strategy "RollingUpdate" }}
-    rollingUpdate:
-      maxUnavailable: {{ .Values.upgrades.rolling_update.max_unavailable }}
-      maxSurge: {{ .Values.upgrades.rolling_update.max_surge }}
-    {{ end }}
+{{ tuple $envAll | include "helm-toolkit.snippets.kubernetes_upgrades_deployment" | indent 2 }}
   template:
     metadata:
       labels:
-        app: drydock
+{{ tuple $envAll "drydock" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
+      annotations:
+        configmap-bin-hash: {{ tuple "configmap-bin.yaml" . | include "helm-toolkit.utils.hash" }}
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helm-toolkit.utils.hash" }}
     spec:
       restartPolicy: Always
       containers:
-      - name: drydock
-        env:
-          - name: 'MAAS_API_KEY'
-            valueFrom:
-              secretKeyRef:
-                name: 'maas-api-key'
-                key: 'token'
-        image: {{ .Values.images.drydock }}
-        imagePullPolicy: {{ .Values.images.pull_policy }}
-        {{- if .Values.resources.enabled }}
-        resources:
-          requests:
-            memory: {{ .Values.resources.drydock.requests.memory | quote }}
-            cpu: {{ .Values.resources.drydock.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.resources.drydock.limits.memory | quote }}
-            cpu: {{ .Values.resources.drydock.limits.cpu | quote }}
-        {{- end }}
-        ports:
-        - name: drydock-api
-          containerPort: {{ .Values.network.drydock.port }}
-        volumeMounts:
-          - name: etcdrydock
-            mountPath: /etc/drydock
-          - name: drydock-etc
-            mountPath: /etc/drydock/drydock.conf
-            subPath: drydock.conf
-            readOnly: true
-          - name: drydock-bootdata
-            mountPath: /etc/drydock/bootdata
+        - name: drydock
+          env:
+            - name: 'MAAS_API_KEY'
+              valueFrom:
+                secretKeyRef:
+                  name: 'maas-api-key'
+                  key: 'token'
+          image: {{ .Values.images.drydock }}
+          imagePullPolicy: {{ .Values.images.pull_policy }}
+{{ tuple $envAll $envAll.Values.pod.resources.api | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+          ports:
+            - name: drydock-api
+              containerPort: {{ .Values.network.drydock.port }}
+          volumeMounts:
+            - name: etc-drydock
+              mountPath: /etc/drydock
+            - name: drydock-etc
+              subPath: drydock.conf
+              mountPath: /etc/drydock/drydock.conf
+              readOnly: true
+            - name: drydock-etc
+              subPath: api-paste.ini
+              mountPath: /etc/drydock/api-paste.ini
+              readOnly: true
+            - name: drydock-etc
+              subPath: policy.yaml
+              mountPath: /etc/drydock/policy.yaml
+              readOnly: true
+            - name: drydock-bootdata
+              mountPath: /etc/drydock/bootdata
+              readOnly: true
       volumes:
-        - name: etcdrydock
+        - name: etc-drydock
           emptyDir: {}
         - name: drydock-etc
           configMap:
             name: drydock-etc
+            defaultMode: 0444
         - name: drydock-bootdata
           configMap:
-            name: promenade-join-sh 
+            name: promenade-join-sh
+            defaultMode: 0555
+...

@@ -13,10 +13,71 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- $envAll := . }}
+
+{{- include "drydock.conf.drydock_values_skeleton" .Values.conf.drydock | trunc 0 -}}
+
+{{- if empty .Values.conf.drydock.keystone_authtoken.keystonemiddleware.auth_token.auth_uri -}}
+{{- tuple "identity" "internal" "api" . | include "helm-toolkit.endpoints.keystone_endpoint_uri_lookup" | set .Values.conf.drydock.keystone_authtoken.keystonemiddleware.auth_token "auth_uri" | quote | trunc 0 -}}
+{{- end -}}
+
+# FIXME(sh8121att) fix for broken keystonemiddleware oslo config gen in newton - will remove in future
+{{- if empty .Values.conf.drydock.keystone_authtoken.drydock_provisioner.auth_url -}}
+{{- tuple "identity" "internal" "api" . | include "helm-toolkit.endpoints.keystone_endpoint_uri_lookup"| set .Values.conf.drydock.keystone_authtoken.drydock_provisioner "auth_url" | quote | trunc 0 -}}
+{{- end -}}
+
+{{- $userIdentity := .Values.endpoints.identity.auth.user -}}
+
+{{- if empty .Values.conf.drydock.keystone_authtoken.drydock_provisioner.project_name -}}
+{{- set .Values.conf.drydock.keystone_authtoken.drydock_provisioner "project_name" $userIdentity.project_name | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.drydock.keystone_authtoken.drydock_provisioner.project_domain_name -}}
+{{- set .Values.conf.drydock.keystone_authtoken.drydock_provisioner "project_domain_name" $userIdentity.project_domain_name | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.drydock.keystone_authtoken.drydock_provisioner.user_domain_name -}}
+{{- set .Values.conf.drydock.keystone_authtoken.drydock_provisioner "user_domain_name" $userIdentity.user_domain_name | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.drydock.keystone_authtoken.drydock_provisioner.username -}}
+{{- set .Values.conf.drydock.keystone_authtoken.drydock_provisioner "username" $userIdentity.username | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.drydock.keystone_authtoken.drydock_provisioner.password -}}
+{{- set .Values.conf.drydock.keystone_authtoken.drydock_provisioner "password" $userIdentity.password | quote | trunc 0 -}}
+{{- end -}}
+
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: drydock-etc
 data:
   drydock.conf: |+
-{{ tuple "etc/_drydock.conf.tpl" . | include "drydock-helpers.template" | indent 4 }}
+{{ if .Values.conf.drydock.override -}}
+{{ .Values.conf.drydock.override | indent 4 }}
+{{- else -}}
+{{- if .Values.conf.drydock.prefix -}}
+{{ .Values.conf.drydock.prefix | indent 4 }}
+{{- end }}
+{{ tuple "etc/_drydock.conf.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+{{- if .Values.conf.drydock.append -}}
+{{ .Values.conf.drydock.append | indent 4 }}
+{{- end }}
+{{- end }}
+  api-paste.ini: |+
+{{ if .Values.conf.paste.override -}}
+{{ .Values.conf.paste.override | indent 4 }}
+{{- else -}}
+{{- if .Values.conf.paste.prefix -}}
+{{ .Values.conf.paste.prefix | indent 4 }}
+{{- end }}
+{{ tuple "etc/_api-paste.ini.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+{{- if .Values.conf.paste.append -}}
+{{ .Values.conf.paste.append | indent 4 }}
+{{- end }}
+{{- end }}
+  policy.yaml: |+
+{{ if .Values.conf.policy.override -}}
+{{ .Values.conf.policy.override | indent 4 }}
+{{- else -}}
+{{ tuple "etc/_policy.yaml.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+{{- end }}
+...

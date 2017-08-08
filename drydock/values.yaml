@@ -18,9 +18,16 @@
 replicas:
   drydock: 1
 
+labels:
+  node_selector_key: ucp-control-plane
+  node_selector_value: enabled
+
 images:
   drydock: quay.io/attcomdev/drydock:1.0.1
   dep_check: docker.io/kolla/ubuntu-source-kubernetes-entrypoint:4.0.0
+  ks_user: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
+  ks_service: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
+  ks_endpoints: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
   pull_policy: "IfNotPresent"
 
 network:
@@ -31,20 +38,130 @@ network:
       enabled: true
       port: 31900
 
-upgrades:
-  revision_history: 3
-  pod_replacement_strategy: RollingUpdate
-  rolling_update:
-    max_unavailable: 1
-    max_surge: 3
+pod:
+  lifecycle:
+    upgrades:
+      deployments:
+        revision_history: 3
+        pod_replacement_strategy: RollingUpdate
+        rolling_update:
+          max_unavailable: 1
+          max_surge: 3
+  resources:
+    enabled: false
+    api:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+    jobs:
+      ks_user:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+      ks_service:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+      ks_endpoints:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+
+manifests:
+  job_ks_service: true
+  job_ks_user: true
+  job_ks_endpoints: true
+  secret_keystone: true
+
+dependencies:
+  ks_user:
+    services:
+    - service: identity
+      endpoint: internal
+  ks_service:
+    services:
+    - service: identity
+      endpoint: internal
+  ks_endpoints:
+    jobs:
+    - drydock-ks-service
+    services:
+    - service: identity
+      endpoint: internal
+  drydock:
+    jobs:
+    - drydock-ks-endpoints
+    - drydock-ks-user
+    - drydock-ks-endpoints
+    - export-api-key
+    services:
+    - service: identity
+      endpoint: internal
+
+
+endpoints:
+  identity:
+    name: ucp-keystone
+    auth:
+      user:
+        region_name: RegionOne
+        role: admin
+        project_name: service
+        project_domain_name: default
+        user_domain_name: default
+        username: drydock
+        password: password
+      admin:
+        region_name: RegionOne
+        project_name: admin
+        password: password
+        username: admin
+        user_domain_name: default
+        project_domain_name: default
+    hosts:
+      default: keystone-api
+      public: keystone
+    path:
+      default: /v3
+    scheme:
+      default: http
+    port:
+      admin:
+        default: 35357
+      api:
+        default: 80
+  physicalprovisioner:
+    name: drydock
+    hosts:
+      default: drydock-api.drydock
+    port:
+      api:
+        default: 9000
+    path:
+      default: /api/v1.0
+    scheme:
+      default: http
+
+secrets:
+  identity:
+    admin: drydock-keystone-admin
+    user: drydock-keystone-user
 
 # Settings for drydock.conf
 conf:
   drydock:
-    authentication:
-      drydock_provisioner:
-        admin_token: 'bigboss'
-        bypass_enabled: true
     logging:
       drydock_provisioner:
         log_level: 'DEBUG'
@@ -77,14 +194,21 @@ conf:
     bootdata:
       drydock_provisioner:
         prom_init: '/etc/drydock/bootdata/join.sh'
+    keystone_authtoken:
+      keystonemiddleware:
+        auth_token:
+          delay_auth_decision: true
+          auth_type: password
+          auth_section: keystone_authtoken
 # end drydock.conf
+# configs for api-paste.ini
+  paste:
+    override:
+    append:
+# end api-paste.ini
+# configs for policy.yaml
+  policy:
+    override:
+    append:
+# end policy.yaml
 
-resources:
-  enabled: false
-  drydock:
-    limits:
-      memory: "128Mi"
-      cpu: "100m"
-    requests:
-      memory: "128Mi"
-      cpu: "100m"

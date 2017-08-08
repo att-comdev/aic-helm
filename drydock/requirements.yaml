@@ -12,19 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: drydock-api
-spec:
-  ports:
-  - name: drydock-api
-    port: {{ .Values.network.drydock.port }}
-    {{ if .Values.network.drydock.node_port.enabled }}
-    nodePort: {{ .Values.network.drydock.node_port.port }}
-    {{ end }}
-  selector:
-    application: drydock
-  {{ if .Values.network.drydock.node_port.enabled }}
-  type: NodePort
-  {{ end }}
+dependencies:
+  - name: helm-toolkit
+    repository: http://localhost:8879/charts
+    version: 0.1.0
