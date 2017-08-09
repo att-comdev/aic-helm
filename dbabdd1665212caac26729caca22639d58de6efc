@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db6801c4_2333f79a",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "I think what I am observing is that the \u0027if\u0027 condition, i.e. {{ if not .default.core.encrypt_s3_logs }}#{{ end }, will get triggered as the default value is False.  This will cause a hash tag to be placed in front of the variable in the actual config file.  For instance, in this case, the airflow config file will end up as\n\n#encrypt_s3_logs \u003d False\n\n\nwhich essentially comments out that definition.  Hence I removed that condition in the latest update.",
+      "parentUuid": "46b77a0d_fe1dd852",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d29623ed_9dd931fe",
         "filename": "airflow/templates/etc/_airflow.cfg.tpl",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T04:48:29Z",
       "side": 1,
       "message": "should this not be prefixed by a comment conditional as with other settings?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6457d5a_16a354fe",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "d29623ed_9dd931fe",
       "range": {
         "startLine": 68,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ad49f706_f142bb51",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "716fe331_6bc3e8a3",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 14
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ac86987_fad9506f",
         "filename": "airflow/templates/etc/_airflow.cfg.tpl",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-09T04:48:29Z",
       "side": 1,
       "message": "should this not be prefixed by a comment conditional as with other settings?",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 12
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0be50382_fb26f6fe",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "1ac86987_fad9506f",
       "range": {
         "startLine": 174,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8cbcca8b_3939f001",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "da11853d_cc56a4c4",
+      "range": {
+        "startLine": 177,
+        "startChar": 15,
+        "endLine": 177,
+        "endChar": 76
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c6cc1a7_ddf7e6c8",
         "filename": "airflow/templates/etc/_airflow.cfg.tpl",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-09T04:48:29Z",
       "side": 1,
       "message": "should this not be prefixed by a comment conditional as with other settings?",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 9
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a915ef24_6302a03d",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "4c6cc1a7_ddf7e6c8",
       "range": {
         "startLine": 192,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6fa003bc_0ddfb73e",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "635ade30_95f2044e",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 27
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "646f775e_9964d88d",
         "filename": "airflow/templates/etc/_airflow.cfg.tpl",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-09T04:48:29Z",
       "side": 1,
       "message": "should this not be prefixed by a comment conditional as with other settings?",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 8
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1fdc46d_48a57613",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "646f775e_9964d88d",
       "range": {
         "startLine": 211,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "93486c46_059d7915",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "e679f98b_17d7ea68",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 12
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266d33ff_ff13d948",
         "filename": "airflow/templates/etc/_airflow.cfg.tpl",
         "patchSetId": 1
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "b1cf8ed2_bf3f6649",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "266d33ff_ff13d948",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 10
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c94b5758_851535f8",
         "filename": "airflow/templates/etc/_airflow.cfg.tpl",
         "patchSetId": 1
@@ -243,6 +483,30 @@
       "writtenOn": "2017-08-09T04:48:29Z",
       "side": 1,
       "message": "should this not be prefixed by a comment conditional as with other settings?",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 12
+      },
+      "revId": "dbabdd1665212caac26729caca22639d58de6efc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "191751df_17a3ef4b",
+        "filename": "airflow/templates/etc/_airflow.cfg.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-09T14:01:30Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "c94b5758_851535f8",
       "range": {
         "startLine": 337,
         "startChar": 0,
