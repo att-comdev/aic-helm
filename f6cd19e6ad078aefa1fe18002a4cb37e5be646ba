@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "584c9502_ecb2953f",
+        "filename": "drydock/templates/configmap-etc.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "not required",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 3
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72fc1e93_738204b6",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "not required",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 3
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "562a1ee0_3a1142fa",
+        "filename": "drydock/templates/job-ks-service.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "nit: it would be better to use the same approach as in keystone-user. for os-h we moved away from defining defaults as much as possible in templates as much as possible. whatever you decide it would be good to be consistent throughout the chart.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 94
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78524ebd_db42c6f2",
+        "filename": "drydock/templates/service.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "if you use the lookup function (https://github.com/openstack/openstack-helm/blob/master/keystone/templates/service-api.yaml#L23) it will adjust this name as required when altering the endpoints.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a46fe32_c55b8d19",
+        "filename": "drydock/templates/service.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "if you use the lookup function it will ensure that this service only attaches to a drydock instance deployed by this chart. (https://github.com/openstack/openstack-helm/blob/master/keystone/templates/service-api.yaml#L37)",
+      "range": {
+        "startLine": 27,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33939adf_3f955775",
+        "filename": "drydock/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "is this used? if to it would be better to get from the endpoints section bellow.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "904e847a_63d6a5d1",
+        "filename": "drydock/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6605b121_7ac7914e",
+        "filename": "drydock/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "if using this it should cover all manifests.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 10
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70de215b_4b1027cd",
+        "filename": "drydock/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "I cannot find this job? If it is part of another chart it would be better to rely on the service it supports - as creating a dep like this can be difficult to manage - esp when the name is so generic.",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 20
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2795aec9_5166f359",
+        "filename": "drydock/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:50:31Z",
+      "side": 1,
+      "message": "should only be keystone, as this is describing the name/type of the service not the instance of it.",
+      "range": {
+        "startLine": 116,
+        "startChar": 10,
+        "endLine": 116,
+        "endChar": 14
+      },
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
