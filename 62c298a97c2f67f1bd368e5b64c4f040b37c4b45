@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b85b8b4f_e34d1302",
+        "filename": "drydock/templates/configmap-etc.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa999c0e_99eb8187",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 88
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81cdabf5_2089e765",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "cc02f5d9_e3e7c4c9",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Will remember this when drydock is capable of multiple instances",
+      "parentUuid": "81cdabf5_2089e765",
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0546d9ea_ba1f734c",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "This can be replaced by a common function: eg, https://github.com/openstack/openstack-helm/blob/master/cinder/templates/deployment-api.yaml#L29",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aefc8d6_99290bcd",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0546d9ea_ba1f734c",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "73b0741f_a58620fd",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ea8ca7_cbe69fa2",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b283b40_7114f34a",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 1
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "af50ec41_9185bc6a",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b283b40_7114f34a",
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbc6051a_d35ffd8b",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 1
@@ -116,6 +224,30 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "this can be replaced by a function: eg, https://github.com/openstack/openstack-helm/blob/master/cinder/templates/deployment-api.yaml#L49",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c06870a2_5eafe625",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbc6051a_d35ffd8b",
       "range": {
         "startLine": 49,
         "startChar": 0,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "992ef4d9_7b7e3f5c",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Config doesn\u0027t currently specify a port since it is defined on the uwsgi command. But will look at adding this to the Dockerfile environment.",
+      "parentUuid": "43d458ad_409114b8",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e2dac53_7b462faf",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 1
@@ -162,6 +318,30 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "should also specify read-only mount.",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "806518eb_833bc196",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e2dac53_7b462faf",
       "range": {
         "startLine": 66,
         "startChar": 12,
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "ed52e821_de1950e7",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af59750a_66f19f0e",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d1bb25e_4d6e7bad",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 1
@@ -208,6 +412,30 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "should also specify read-only mount",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 47
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d1fbfad_e28e1336",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d1bb25e_4d6e7bad",
       "range": {
         "startLine": 72,
         "startChar": 12,
@@ -243,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "6f75d7f2_4e72fd15",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbc94fb2_9d34a9a0",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14229f16_93276ba7",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 1
@@ -254,6 +506,30 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "we should specify the default mask applied to the mounted files.",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "285258ea_b4d05993",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14229f16_93276ba7",
       "range": {
         "startLine": 80,
         "startChar": 12,
@@ -312,6 +588,54 @@
     },
     {
       "key": {
+        "uuid": "37805f41_f38270a8",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4965e38_5a438315",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df96dbf3_b0076224",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1bb1fc1_79c43767",
+      "range": {
+        "startLine": 83,
+        "startChar": 35,
+        "endLine": 83,
+        "endChar": 36
+      },
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdbc7376_f7d9ee9b",
         "filename": "drydock/templates/job-ks-endpoints.yaml",
         "patchSetId": 1
@@ -323,6 +647,24 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "if you use the version of this file from osh, you will benefit from some cleanups. eg: https://github.com/openstack/openstack-helm/blob/master/cinder/templates/job-ks-endpoints.yaml",
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b43ddc63_55a1eb69",
+        "filename": "drydock/templates/job-ks-endpoints.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdbc7376_f7d9ee9b",
       "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
@@ -346,6 +688,24 @@
     },
     {
       "key": {
+        "uuid": "08dc6c7a_56cf26be",
+        "filename": "drydock/templates/job-ks-service.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1b5531b_4e5c66f9",
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2b043f1_1c52c921",
         "filename": "drydock/templates/job-ks-user.yaml",
         "patchSetId": 1
@@ -357,6 +717,24 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "if you use the version of this from osh you will benefit from some cleanups: https://github.com/openstack/openstack-helm/blob/master/cinder/templates/job-ks-user.yaml",
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b50ecfe_905287f7",
+        "filename": "drydock/templates/job-ks-user.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b043f1_1c52c921",
       "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
@@ -380,6 +758,24 @@
     },
     {
       "key": {
+        "uuid": "177d7ea3_fe5a929b",
+        "filename": "drydock/templates/secret-keystone-admin.env.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e7ce8a_053c5a9c",
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "260c1e2e_a9d2d6ac",
         "filename": "drydock/templates/secret-keystone-user.env.yaml",
         "patchSetId": 1
@@ -391,6 +787,24 @@
       "writtenOn": "2017-08-09T04:44:06Z",
       "side": 1,
       "message": "if you use the ks secret template from osh this file is not required. https://github.com/openstack/openstack-helm/blame/master/cinder/templates/secret-keystone.yaml",
+      "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc52de9a_ae00b1b5",
+        "filename": "drydock/templates/secret-keystone-user.env.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-12T03:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260c1e2e_a9d2d6ac",
       "revId": "62c298a97c2f67f1bd368e5b64c4f040b37c4b45",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
