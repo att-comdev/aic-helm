@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "edebf976_b2ebfc9d",
+        "filename": "drydock/templates/deployment.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-08-12T14:53:59Z",
+      "side": 1,
+      "message": "we should be specifying the startup script to run and commands via k8s directly - as this allows operators to control the deployment precisely to their needs - and makes the container essentially a binary bucket. \neg: https://github.com/openstack/openstack-helm/blob/master/ceph/templates/deployment-rbd-provisioner.yaml#L44-L55 \u0026 https://github.com/openstack/openstack-helm/blob/master/ceph/templates/bin/_rbd-provisioner.sh.tpl",
+      "revId": "f6cd19e6ad078aefa1fe18002a4cb37e5be646ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72fc1e93_738204b6",
         "filename": "drydock/templates/deployment.yaml",
         "patchSetId": 2
