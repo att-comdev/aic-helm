@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5530e991_18ac1cca",
+        "filename": "shipyard/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-14T21:27:03Z",
+      "side": 1,
+      "message": "Need to get this updated to the quay.io generated automatically based on merges.",
+      "revId": "a612714c712dae650d09d6bdc18f0769e8f97716",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
