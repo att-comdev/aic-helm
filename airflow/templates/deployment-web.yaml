@@ -34,8 +34,12 @@ spec:
         volumeMounts:
           - name: dags
             mountPath: /usr/local/airflow/dags
+          - name: plugins
+            mountPath: /usr/local/airflow/plugins
+          - name: logs
+            mountPath: /usr/local/airflow/logs
           - name: airflow-etc
-            mountPath: /airflow.cfg
+            mountPath: /usr/local/airflow/airflow.cfg
             subPath: airflow.cfg
             readOnly: false
         ports:
@@ -45,7 +49,14 @@ spec:
       volumes:
         - name: dags
           hostPath:
-            path: {{ .Values.volumes.path }}
+            path: {{ .Values.volumes.dag_path }}
+        - name: plugins
+          hostPath:
+            path: {{ .Values.volumes.plugin_path }}
+        - name: logs
+          hostPath:
+            path: {{ .Values.volumes.log_path }}
         - name: airflow-etc
           configMap:
             name: airflow-etc
+
