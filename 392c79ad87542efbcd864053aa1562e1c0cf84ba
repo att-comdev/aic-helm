@@ -22,6 +22,30 @@
       "revId": "392c79ad87542efbcd864053aa1562e1c0cf84ba",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b26ae716_86db10ed",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1008770
+      },
+      "writtenOn": "2017-08-21T04:15:21Z",
+      "side": 1,
+      "message": "It is an idiosyncrasy of Makefile that I\u0027m unsure if I want to pursue to replace these tabs into spaces.  Per [0], the latest version of GNU Make can be tweaked to use spaces, but it is probably not worth it to fight the Make syntax oddity.\n\n[0] https://stackoverflow.com/questions/2131213/can-you-make-valid-makefiles-without-tab-characters",
+      "parentUuid": "8b700372_f65c911b",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "392c79ad87542efbcd864053aa1562e1c0cf84ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
