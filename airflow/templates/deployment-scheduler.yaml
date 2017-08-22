@@ -22,6 +22,12 @@ spec:
       - name: scheduler
         image: {{ .Values.images.airflow }}
         imagePullPolicy: {{ .Values.images.pull_policy }}
+        env:
+          - name: AIRFLOW_CONN_AIRFLOWS_OWN_DB
+            valueFrom:
+                secretKeyRef:
+                    name: airflow-db-root
+                    key: DB_CONNECTION_POSTGRESQL
         {{- if .Values.resources.enabled }}
         resources:
           requests:
