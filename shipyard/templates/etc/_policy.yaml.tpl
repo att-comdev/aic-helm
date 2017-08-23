@@ -12,16 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: v1
-description: A Helm chart for Shipyard
-name: shipyard
-version: 0.1.0
-keywords:
-- shipyard
-home: https://github.com/att-comdev/shipyard
-sources:
-- https://github.com/att-comdev/aic-helm
-- https://git.openstack.org/cgit/openstack/openstack-helm
-maintainers:
-- name: att-comdev
-engine: gotpl
+# Actions requiring admin authority
+#"admin_required": "role:admin or is_admin:1"
+
