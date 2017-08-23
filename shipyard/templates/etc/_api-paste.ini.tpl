@@ -12,16 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: v1
-description: A Helm chart for Shipyard
-name: shipyard
-version: 0.1.0
-keywords:
-- shipyard
-home: https://github.com/att-comdev/shipyard
-sources:
-- https://github.com/att-comdev/aic-helm
-- https://git.openstack.org/cgit/openstack/openstack-helm
-maintainers:
-- name: att-comdev
-engine: gotpl
+[app:shipyard-api]
+paste.app_factory = shipyard_airflow.shipyard:paste_start_shipyard
+
+[pipeline:main]
+pipeline = authtoken shipyard-api
+
+[filter:authtoken]
+paste.filter_factory = keystonemiddleware.auth_token:filter_factory

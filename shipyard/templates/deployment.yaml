@@ -12,53 +12,51 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- $envAll := . -}}
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: shipyard
 spec:
   replicas: {{ .Values.replicas.shipyard }}
-  revisionHistoryLimit: {{ .Values.upgrades.revision_history }}
-  strategy:
-    type: {{ .Values.upgrades.pod_replacement_strategy }}
-    {{ if eq .Values.upgrades.pod_replacement_strategy "RollingUpdate" }}
-    rollingUpdate:
-      maxUnavailable: {{ .Values.upgrades.rolling_update.max_unavailable }}
-      maxSurge: {{ .Values.upgrades.rolling_update.max_surge }}
-    {{ end }}
+{{ tuple $envAll | include "helm-toolkit.snippets.kubernetes_upgrades_deployment" | indent 2 }}
   template:
     metadata:
       labels:
-        app: shipyard
+{{ tuple $envAll "shipyard" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
+      annotations:
+        configmap-bin-hash: {{ tuple "configmap-bin.yaml" . | include "helm-toolkit.utils.hash" }}
+        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helm-toolkit.utils.hash" }}
     spec:
       restartPolicy: Always
       containers:
-      - name: shipyard
-        image: {{ .Values.images.shipyard }}
-        imagePullPolicy: {{ .Values.images.pull_policy }}
-        {{- if .Values.resources.enabled }}
-        resources:
-          requests:
-            memory: {{ .Values.resources.shipyard.requests.memory | quote }}
-            cpu: {{ .Values.resources.shipyard.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.resources.shipyard.limits.memory | quote }}
-            cpu: {{ .Values.resources.shipyard.limits.cpu | quote }}
-        {{- end }}
-        ports:
-        - name: shipyard-api
-          containerPort: {{ .Values.network.shipyard.port }}
-        volumeMounts:
-          - name: etcshipyard
-            mountPath: /etc/shipyard
-          - name: shipyard-etc
-            mountPath: /etc/shipyard/shipyard.conf
-            subPath: shipyard.conf
-            readOnly: true
+        - name: shipyard
+          image: {{ .Values.images.shipyard }}
+          imagePullPolicy: {{ .Values.images.pull_policy }}
+{{ tuple $envAll $envAll.Values.pod.resources.api | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+          ports:
+          - name: shipyard-api
+            containerPort: {{ .Values.network.shipyard.port }}
+          volumeMounts:
+            - name: etc-shipyard
+              mountPath: /etc/shipyard
+            - name: shipyard-etc
+              mountPath: /etc/shipyard/shipyard.conf
+              subPath: shipyard.conf
+              readOnly: true
+            - name: shipyard-etc
+              subPath: api-paste.ini
+              mountPath: /etc/shipyard/api-paste.ini
+              readOnly: true
+            - name: shipyard-etc
+              subPath: policy.yaml
+              mountPath: /etc/shipyard/policy.yaml
+              readOnly: true
       volumes:
-        - name: etcshipyard
+        - name: etc-shipyard
           emptyDir: {}
         - name: shipyard-etc
           configMap:
             name: shipyard-etc
-
+            defaultMode: 0444
