@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa105715_7867a12c",
+        "filename": "shipyard/values.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-24T15:52:32Z",
+      "side": 1,
+      "message": "This should be ucp-control-plane for UCP services.",
+      "revId": "802d7e4b2f386a7a32791944095f3ffddba4ab61",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7db800e1_962fa9fc",
+        "filename": "shipyard/values.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-24T15:52:32Z",
+      "side": 1,
+      "message": "Need to use the quay.io/attcomdev image. Can be overridden until that image is usable.",
+      "revId": "802d7e4b2f386a7a32791944095f3ffddba4ab61",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
