@@ -69,6 +69,24 @@
       "revId": "802d7e4b2f386a7a32791944095f3ffddba4ab61",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f85bdef1_0a38d1a1",
+        "filename": "shipyard/values.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-24T18:38:08Z",
+      "side": 1,
+      "message": "One of the folks w/ quay.io admin access will need to setup workflow to build images on commits to github.com/att-comdev/shipyard",
+      "parentUuid": "8ba5c80c_ec3200fb",
+      "revId": "802d7e4b2f386a7a32791944095f3ffddba4ab61",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
