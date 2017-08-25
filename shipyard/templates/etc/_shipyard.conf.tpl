@@ -34,6 +34,8 @@
 
 [base]
 {{ if not .base.web_server }}#{{ end }}web_server = {{ .base.web_server | default "<None>" }}
+{{ if not .base.postgresql_db }}#{{ end }}postgresql_db = {{ .base.postgresql_db | default "<None>" }}
+{{ if not .base.postgresql_airflow_db }}#{{ end }}postgresql_airflow_db = {{ .base.postgresql_airflow_db | default "<None>" }}
 
 [keystone_authtoken]
 
