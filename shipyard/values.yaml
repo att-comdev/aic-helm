@@ -24,6 +24,8 @@ labels:
 images:
   shipyard: docker.io/eanylin/shipyard:v0.4.0
   dep_check: docker.io/kolla/ubuntu-source-kubernetes-entrypoint:4.0.0
+  db_init: docker.io/postgres:9.5
+  db_sync: docker.io/postgres:9.5
   ks_user: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
   ks_service: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
   ks_endpoints: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
@@ -37,14 +39,13 @@ network:
       enabled: true
       port: 31901
 
-manifests:
-  job_ks_service: true
-  job_ks_user: true
-  job_ks_endpoints: true
-  secret_keystone: true
-  service_api: true
-
 dependencies:
+  db_sync:
+    jobs:
+    - shipyard-db-init
+    services:
+    - service: oslo_db
+      endpoint: internal
   ks_user:
     services:
     - service: identity
@@ -68,6 +69,9 @@ dependencies:
     - service: identity
       endpoint: internal
 
+# typically overriden by environmental
+# values, but should include all endpoints
+# required by this chart
 endpoints:
   identity:
     name: keystone
@@ -110,28 +114,50 @@ endpoints:
       default: /api/v1.0
     scheme:
       default: http
+  oslo_db:
+    auth:
+      admin:
+        username: airflow
+        password: airflow
+      user:
+        username: shipyard
+        password: password
+    hosts:
+      default: postgresql
+    path: /shipyard
+    scheme: postgresql+psycopg2
+    port:
+      postgresql:
+        default: 5432
 
 secrets:
   identity:
     admin: shipyard-keystone-admin
     user: shipyard-keystone-user
+  oslo_db:
+    admin: shipyard-db-admin
+    user: shipyard-db-user
 
 conf:
+  policy:
+    override:
+    append:
+  paste:
+    override:
+    append:
   shipyard:
     base:
       web_server: http://web.shipyard:8080
+    database:
+      oslo:
+        db:
+          max_retries: -1
     keystone_authtoken:
       keystonemiddleware:
         auth_token:
           delay_auth_decision: true
           auth_type: password
           auth_section: keystone_authtoken
-  paste:
-    override:
-    append:
-  policy:
-    override:
-    append:
 
 pod:
   lifecycle:
@@ -173,3 +199,15 @@ pod:
         requests:
           memory: "128Mi"
           cpu: "100m"
+
+manifests:
+  configmap_bin: true
+  configmap_etc: true
+  job_db_init: true
+  job_db_sync: true
+  job_ks_endpoints: true
+  job_ks_service: true
+  job_ks_user: true
+  secret_db: true
+  secret_keystone: true
+  service_api: true

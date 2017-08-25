@@ -23,3 +23,7 @@ data:
 {{- include "helm-toolkit.scripts.keystone_user" . | indent 4 }}
   ks-domain-user.sh: |
 {{- include "helm-toolkit.scripts.keystone_domain_user" . | indent 4 }}
+  db-init.sh: |+
+{{ tuple "bin/_db-init.sh.tpl" . | include "helper.template" | indent 4 }}
+  db-sync.sh: |+
+{{ tuple "bin/_db-sync.sh.tpl" . | include "helper.template" | indent 4 }}
