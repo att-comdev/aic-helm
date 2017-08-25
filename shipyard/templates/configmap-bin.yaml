@@ -1,5 +1,3 @@
-# Copyright 2017 The Openstack-Helm Authors.
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,15 +11,15 @@
 # limitations under the License.
 
 apiVersion: v1
-description: A Helm chart for Shipyard
-name: shipyard
-version: 0.1.0
-keywords:
-- shipyard
-home: https://github.com/att-comdev/shipyard
-sources:
-- https://github.com/att-comdev/aic-helm
-- https://git.openstack.org/cgit/openstack/openstack-helm
-maintainers:
-- name: att-comdev
-engine: gotpl
+kind: ConfigMap
+metadata:
+  name: shipyard-bin
+data:
+  ks-service.sh: |
+{{- include "helm-toolkit.scripts.keystone_service" . | indent 4 }}
+  ks-endpoints.sh: |
+{{- include "helm-toolkit.scripts.keystone_endpoints" . | indent 4 }}
+  ks-user.sh: |
+{{- include "helm-toolkit.scripts.keystone_user" . | indent 4 }}
+  ks-domain-user.sh: |
+{{- include "helm-toolkit.scripts.keystone_domain_user" . | indent 4 }}
