@@ -35,6 +35,17 @@ spec:
           image: {{ .Values.images.shipyard }}
           imagePullPolicy: {{ .Values.images.pull_policy }}
 {{ tuple $envAll $envAll.Values.pod.resources.api | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+          env:
+          - name: DB_CONN_SHIPYARD
+            valueFrom:
+                secretKeyRef:
+                    name: {{ .Values.secrets.postgresql_db.user }}
+                    key: DB_CONNECTION_POSTGRESQL
+          - name: DB_CONN_AIRFLOW
+            valueFrom:
+                secretKeyRef:
+                    name: {{ .Values.secrets.postgresql_airflow_db.user }}
+                    key: DB_CONNECTION_AIRFLOW_POSTGRESQL
           ports:
           - name: shipyard-api
             containerPort: {{ .Values.network.shipyard.port }}
