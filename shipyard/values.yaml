@@ -22,8 +22,10 @@ labels:
   node_selector_value: enabled
 
 images:
-  shipyard: docker.io/eanylin/shipyard:v0.4.0
+  shipyard: quay.io/attcomdev/shipyard:latest
   dep_check: docker.io/kolla/ubuntu-source-kubernetes-entrypoint:4.0.0
+  db_init: docker.io/postgres:9.5
+  db_sync: docker.io/postgres:9.5
   ks_user: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
   ks_service: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
   ks_endpoints: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
@@ -37,14 +39,15 @@ network:
       enabled: true
       port: 31901
 
-manifests:
-  job_ks_service: true
-  job_ks_user: true
-  job_ks_endpoints: true
-  secret_keystone: true
-  service_api: true
-
 dependencies:
+  db_init:
+    services:
+    - service: postgresql
+  db_sync:
+    jobs:
+    - shipyard-db-init
+    services:
+    - service: postgresql
   ks_user:
     services:
     - service: identity
@@ -68,6 +71,9 @@ dependencies:
     - service: identity
       endpoint: internal
 
+# typically overriden by environmental
+# values, but should include all endpoints
+# required by this chart
 endpoints:
   identity:
     name: keystone
@@ -110,16 +116,73 @@ endpoints:
       default: /api/v1.0
     scheme:
       default: http
+  airflow:
+    name: airflow_webserver
+    hosts:
+      default: web
+    port:
+      api:
+        default: 8080
+    path:
+      default: /
+    scheme:
+      default: http
+  postgresql_db:
+    name: postgresql_db
+    auth:
+      admin:
+        username: airflow
+        password: airflow
+      user:
+        username: shipyard
+        password: password
+    hosts:
+      default: postgresql
+    path:
+      default: /shipyard
+    scheme:
+      default: postgresql+psycopg2
+    port:
+      postgresql:
+        default: 5432
+  postgresql_airflow_db:
+    name: postgresql_airflow_db
+    auth:
+      admin:
+        username: airflow
+        password: airflow
+      user:
+        username: shipyard
+        password: password
+    hosts:
+      default: postgresql
+    path:
+      default: /airflow
+    scheme:
+      default: postgresql+psycopg2
+    port:
+      postgresql:
+        default: 5432
 
 secrets:
   identity:
     admin: shipyard-keystone-admin
     user: shipyard-keystone-user
+  postgresql_db:
+    admin: shipyard-db-admin
+    user: shipyard-db-user
+  postgresql_airflow_db:
+    admin: shipyard-airflow-db-admin
+    user: shipyard-airflow-db-user
+
+database:
+  postgresql:
+    db_name: shipyard
+    db_root_user: postgres
 
 conf:
   shipyard:
     base:
-      web_server: http://web.shipyard:8080
     keystone_authtoken:
       keystonemiddleware:
         auth_token:
@@ -173,3 +236,15 @@ pod:
         requests:
           memory: "128Mi"
           cpu: "100m"
+
+manifests:
+  configmap_bin: true
+  configmap_etc: true
+  job_db_init: true
+  job_db_sync: true
+  job_ks_endpoints: true
+  job_ks_service: true
+  job_ks_user: true
+  secret_db: true
+  secret_keystone: true
+  service_api: true

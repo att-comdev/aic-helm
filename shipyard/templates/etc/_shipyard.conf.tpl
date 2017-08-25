@@ -17,8 +17,7 @@
 
 {{- define "shipyard.conf.shipyard_values_skeleton" -}}
 
-{{- if not .default -}}{{- set . "default" dict -}}{{- end -}}
-{{- if not .default.base -}}{{- set .default "base" dict -}}{{- end -}}
+{{- if not .base -}}{{- set . "base" dict -}}{{- end -}}
 {{- if not .keystone_authtoken -}}{{- set . "keystone_authtoken" dict -}}{{- end -}}
 {{- if not .keystone_authtoken.keystonemiddleware -}}{{- set .keystone_authtoken "keystonemiddleware" dict -}}{{- end -}}
 {{- if not .keystone_authtoken.keystonemiddleware.auth_token -}}{{- set .keystone_authtoken.keystonemiddleware "auth_token" dict -}}{{- end -}}
@@ -34,7 +33,9 @@
 
 
 [base]
-{{ if not .default.base.web_server }}#{{ end }}web_server = {{ .default.base.web_server | default "http://web.shipyard:8080" }}
+{{ if not .base.web_server }}#{{ end }}web_server = {{ .base.web_server | default "<None>" }}
+{{ if not .base.postgresql_db }}#{{ end }}postgresql_db = {{ .base.postgresql_db | default "<None>" }}
+{{ if not .base.postgresql_airflow_db }}#{{ end }}postgresql_airflow_db = {{ .base.postgresql_airflow_db | default "<None>" }}
 
 [keystone_authtoken]
 
