@@ -110,6 +110,17 @@ endpoints:
       default: /api/v1.0
     scheme:
       default: http
+  airflow:
+    name: airflow_webserver
+    hosts:
+      default: web
+    port:
+      api:
+        default: 8080
+    path:
+      default: /
+    scheme:
+      default: http
 
 secrets:
   identity:
@@ -119,7 +130,6 @@ secrets:
 conf:
   shipyard:
     base:
-      web_server: http://web.shipyard:8080
     keystone_authtoken:
       keystonemiddleware:
         auth_token:
