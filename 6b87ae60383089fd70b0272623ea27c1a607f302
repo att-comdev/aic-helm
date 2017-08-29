@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d7772d_6151186d",
+        "filename": "shipyard/templates/_helpers.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-29T21:13:12Z",
+      "side": 1,
+      "message": "the _helpers.tpl pattern is non-standard now. Instead you should use the helm-toolkit chart which should have the corresponding helper snippets.",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ceadd6a_b78dff29",
+        "filename": "shipyard/templates/bin/_db-sync.sh.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-29T21:13:12Z",
+      "side": 1,
+      "message": "Not sure if this is following a sample pattern, but I think the chart should probably create the user and schema/database, but the table definitions should reside in the code.",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1eb690f8_8918e0fe",
+        "filename": "shipyard/templates/job-db-init.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-29T21:13:12Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be hardcoded, should come from endpoints.",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89634f49_f6d96d2a",
+        "filename": "shipyard/templates/job-db-init.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-29T21:13:12Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be hardcoded, should come from endpoints.",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15eecc4b_3cd94951",
+        "filename": "shipyard/templates/job-db-sync.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-08-29T21:13:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be hardcoded",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
