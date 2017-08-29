@@ -34,6 +34,24 @@
       "revId": "3405792dae9d467ceb645b871d18067e540ade7a",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "123f007f_c2a13f52",
+        "filename": "shipyard/templates/etc/_shipyard.conf.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-29T23:55:53Z",
+      "side": 1,
+      "message": "@Scott, good point.  I agree with you and have updated my patch set to reflect that.\n\n@Mark, Scott\u0027s suggestion will ensure that we have the correct namespace and proper values for the Airflow Web Server endpoint.",
+      "parentUuid": "d5a27561_4bda096d",
+      "revId": "3405792dae9d467ceb645b871d18067e540ade7a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
