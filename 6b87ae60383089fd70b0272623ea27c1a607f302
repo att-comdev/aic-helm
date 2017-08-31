@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85fa8684_3f68d7bd",
+        "filename": "shipyard/templates/_helpers.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-31T02:29:28Z",
+      "side": 1,
+      "message": "Agree. Have removed _helpers.tpl and used the helm-toolkit chart instead in the new PS.",
+      "parentUuid": "59d7772d_6151186d",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ceadd6a_b78dff29",
         "filename": "shipyard/templates/bin/_db-sync.sh.tpl",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T21:13:12Z",
       "side": 1,
       "message": "Not sure if this is following a sample pattern, but I think the chart should probably create the user and schema/database, but the table definitions should reside in the code.",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "371ece3a_4403224d",
+        "filename": "shipyard/templates/bin/_db-sync.sh.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-31T02:29:28Z",
+      "side": 1,
+      "message": "I think we can have further discussions on this as we are still in the process of designing the database.  I think schema creation will be useful as you pointed out.",
+      "parentUuid": "9ceadd6a_b78dff29",
       "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "32fc093b_3690e842",
+        "filename": "shipyard/templates/job-db-init.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-31T02:29:28Z",
+      "side": 1,
+      "message": "Agree.  Have updated in latest PS.",
+      "parentUuid": "1eb690f8_8918e0fe",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89634f49_f6d96d2a",
         "filename": "shipyard/templates/job-db-init.yaml",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b48909cd_29bcc859",
+        "filename": "shipyard/templates/job-db-init.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-31T02:29:28Z",
+      "side": 1,
+      "message": "Have updated values.yaml to retrieve the value from {{ .Values.database.postgresql.db_root_user }} instead",
+      "parentUuid": "89634f49_f6d96d2a",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15eecc4b_3cd94951",
         "filename": "shipyard/templates/job-db-sync.yaml",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-29T21:13:12Z",
       "side": 1,
       "message": "Shouldn\u0027t be hardcoded",
+      "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb8b179a_ea133535",
+        "filename": "shipyard/templates/job-db-sync.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-08-31T02:29:28Z",
+      "side": 1,
+      "message": "Agree.  Have updated in latest PS.",
+      "parentUuid": "15eecc4b_3cd94951",
       "revId": "6b87ae60383089fd70b0272623ea27c1a607f302",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
