@@ -45,7 +45,7 @@ encrypt_s3_logs = {{ .default.core.encrypt_s3_logs | default "False" }}
 # The SqlAlchemy connection string to the metadata database.
 # SqlAlchemy supports many different database engine, more information
 # their website
-{{ if not .default.core.sql_alchemy_conn }}#{{ end }}sql_alchemy_conn = {{ .default.core.sql_alchemy_conn | default "postgresql+psycopg2://airflow:airflow@postgresql/" }}
+{{ if not .default.core.sql_alchemy_conn }}#{{ end }}sql_alchemy_conn = {{ .default.core.sql_alchemy_conn | default "postgresql+psycopg2://airflow:airflow@postgresql.ucp/" }}
 
 # The SqlAlchemy pool size is the maximum number of database connections
 # in the pool.
@@ -110,7 +110,7 @@ unit_test_mode = {{ .default.core.unit_test_mode | default "False" }}
 # database directly, while the json_client will use the api running on the
 # webserver
 {{ if not .default.cli.api_client }}#{{ end }}api_client = {{ .default.cli.api_client | default "airflow.api.client.local_client" }}
-{{ if not .default.cli.endpoint_url }}#{{ end }}endpoint_url = {{ .default.cli.endpoint_url | default "http://web.shipyard:8080" }}
+{{ if not .default.cli.endpoint_url }}#{{ end }}endpoint_url = {{ .default.cli.endpoint_url | default "http://web.ucp:8080" }}
 
 [api]
 # How to authenticate users of the API
@@ -129,7 +129,7 @@ unit_test_mode = {{ .default.core.unit_test_mode | default "False" }}
 # The base url of your website as airflow cannot guess what domain or
 # cname you are using. This is use in automated emails that
 # airflow sends to point links to the right web server
-{{ if not .default.webserver.base_url }}#{{ end }}base_url = {{ .default.webserver.base_url | default "http://web.shipyard:8080" }}
+{{ if not .default.webserver.base_url }}#{{ end }}base_url = {{ .default.webserver.base_url | default "http://web.ucp:8080" }}
 
 # The ip specified when starting the web server
 {{ if not .default.webserver.web_server_host }}#{{ end }}web_server_host = {{ .default.webserver.web_server_host | default "0.0.0.0" }}
@@ -237,10 +237,10 @@ smtp_ssl = {{ .default.smtp.smtp_ssl | default "False" }}
 # The Celery broker URL. Celery supports RabbitMQ, Redis and experimentally
 # a sqlalchemy database. Refer to the Celery documentation for more
 # information.
-{{ if not .default.celery.broker_url }}#{{ end }}broker_url = {{ .default.celery.broker_url | default "amqp://airflow:airflow@rabbitmq:5672/" }}
+{{ if not .default.celery.broker_url }}#{{ end }}broker_url = {{ .default.celery.broker_url | default "amqp://rabbitmq:password@rabbitmq.ucp:5672/" }}
 
 # Another key Celery setting
-{{ if not .default.celery.celery_result_backend }}#{{ end }}celery_result_backend = {{ .default.celery.celery_result_backend | default "amqp://airflow:airflow@rabbitmq:5672/" }}
+{{ if not .default.celery.celery_result_backend }}#{{ end }}celery_result_backend = {{ .default.celery.celery_result_backend | default "amqp://rabbitmq:password@rabbitmq.ucp:5672/" }}
 
 # Celery Flower is a sweet UI for Celery. Airflow has a shortcut to start
 # it `airflow flower`. This defines the IP that Celery Flower runs on

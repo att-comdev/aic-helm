@@ -94,7 +94,7 @@ conf:
         unit_test_mode: False
       cli:
         api_client: airflow.api.client.local_client
-        endpoint_url: http://web.shipyard:8080
+        endpoint_url: http://web.ucp:8080
       api:
         auth_backend: airflow.api.auth.backend.default
       operators:
@@ -104,7 +104,7 @@ conf:
         default_disk: 512
         default_igpus: 0
       webserver:
-        base_url: http://web.shipyard:8080
+        base_url: http://web.ucp:8080
         web_server_host: 0.0.0.0
         web_server_port: 8080
         web_server_ssl_cert:
@@ -184,11 +184,11 @@ endpoints:
   messaging:
     auth:
       admin:
-        username: airflow
-        password: airflow
+        username: admin
+        password: password
       user:
-        username: airflow
-        password: airflow
+        username: rabbitmq
+        password: password
     hosts:
       default: rabbitmq
     path: /
