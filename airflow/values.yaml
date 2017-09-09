@@ -1,178 +1,176 @@
-# Default values for airflow-helm
+# Copyright 2017 The Openstack-Helm Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-replicas:
-  web: 1
-  worker: 1
-  flower: 1
-  scheduler: 1
+# This file provides defaults for airflow-helm
 
 labels:
-  node_selector_key: openstack-control-plane
+  node_selector_key: ucp-control-plane
   node_selector_value: enabled
 
 images:
   airflow: docker.io/eanylin/airflow-helm:1.8.1-1.6.8-v0.6.0
   dep_check: quay.io/stackanetes/kubernetes-entrypoint:v0.1.1
-  db_init_postgresql: docker.io/postgres:9.5
+  db_init: docker.io/postgres:9.5
   db_sync: docker.io/eanylin/airflow-helm:1.8.1-1.6.8-v0.6.0
   pull_policy: "IfNotPresent"
 
-network:
-  flower:
-    name: "flower"
-    port: 5555
-    node_port:
-      enabled: true
-      port: 32081
-  web:
-    name: "web"
-    port: 8080
-    node_port:
-      enabled: true
-      port: 32080
+release_group: null
 
-volumes:
-  dag_path: /home/ubuntu/workbench/dags
-  plugin_path: /home/ubuntu/workbench/plugins
-  log_path: /home/ubuntu/workbench/logs
+network:
+  airflow:
+    flower:
+      name: airflow-flower
+      port: 5555
+      node_port: 32081
+      enable_node_port: true
+    web:
+      name: airflow-web
+      port: 8080
+      node_port: 32080
+      enable_node_port: true
+    worker:
+      name: airflow-worker
+      port: 8793
+      enable_node_port: false
 
 scheduler_args: '5'
 
-upgrades:
-  revision_history: 3
-  pod_replacement_strategy: RollingUpdate
-  rolling_update:
-    max_unavailable: 1
-    max_surge: 3
-
 dependencies:
   db_init:
-    service:
-    - postgresql
+    services:
+    - service: postgresql
+      endpoint: internal
   db_sync:
     jobs:
-    - airflow-db-init-postgresql
-    service:
-    - postgresql
+    - airflow-db-init
+    services:
+    - service: postgresql
+      endpoint: internal
   server:
     jobs:
-    - airflow-db-init-postgresql
+    - airflow-db-init
     - airflow-db-sync
-    service:
-    - etcd
-    - rabbitmq
-    - postgresql
+    services:
+    - service: postgresql
+      endpoint: internal
 
 conf:
   airflow:
-    override:
-    append:
-    default:
-      core:
-        airflow_home: /usr/local/airflow
-        dags_folder: /usr/local/airflow/dags
-        base_log_folder: /usr/local/airflow/logs
-        remote_base_log_folder:
-        remote_log_conn_id:
-        encrypt_s3_logs: False
-        executor: CeleryExecutor
-        sql_alchemy_pool_size: 5
-        sql_alchemy_pool_recycle: 3600
-        parallelism: 32
-        dag_concurrency: 16
-        dags_are_paused_at_creation: False
-        non_pooled_task_slot_count: 128
-        max_active_runs_per_dag: 16
-        load_examples: False
-        plugins_folder: /usr/local/airflow/plugins
-        fernet_key: fKp7omMJ4QlTxfZzVBSiyXVgeCK-6epRjGgMpEIsjvs=
-        donot_pickle: False
-        dagbag_import_timeout: 30
-        task_runner: BashTaskRunner
-        default_impersonation:
-        security:
-        unit_test_mode: False
-      cli:
-        api_client: airflow.api.client.local_client
-        endpoint_url: http://web.ucp:8080
-      api:
-        auth_backend: airflow.api.auth.backend.default
-      operators:
-        default_owner: Airflow
-        default_cpus: 1
-        default_ram: 512
-        default_disk: 512
-        default_igpus: 0
-      webserver:
-        base_url: http://web.ucp:8080
-        web_server_host: 0.0.0.0
-        web_server_port: 8080
-        web_server_ssl_cert:
-        web_server_ssl_key:
-        web_server_worker_timeout: 120
-        worker_refresh_batch_size: 1
-        secret_key: temporary_key
-        workers: 4
-        worker_class: sync
-        access_logfile: '-'
-        error_logfile: '-'
-        expose_config: true
-        authenticate: False
-        filter_by_owner: False
-        owner_mode: user
-        dag_orientation: LR
-        demo_mode: False
-        log_fetch_timeout_sec: 5
-        hide_paused_dags_by_default: False
-      email:
-        email_backend: airflow.utils.send_email_smtp
-      smtp:
-        smtp_host: localhost
-        smtp_starttls: True
-        smtp_ssl: False
-        smtp_user: airflow
-        smtp_port: 25
-        smtp_password: airflow
-        smtp_mail_from: airflow@airflow.local
-      celery:
-        celery_app_name: airflow.executors.celery_executor
-        celeryd_concurrency: 16
-        worker_log_server_port: 8793
-        flower_host: 0.0.0.0
-        flower_port: 5555
-        default_queue: default
-      scheduler:
-        job_heartbeat_sec: 5
-        scheduler_heartbeat_sec: 5
-        run_duration: -1
-        min_file_process_interval: 0
-        dag_dir_list_interval: 300
-        print_stats_interval: 30
-        child_process_log_directory: /usr/local/airflow/logs/scheduler
-        scheduler_zombie_task_threshold: 300
-        catchup_by_default: True
-        max_threads: 2
-        authenticate: False
-      mesos:
-        master: localhost:5050
-        framework_name: Airflow
-        task_cpu: 1
-        task_memory: 256
-        checkpoint: False
-        authenticate: False
-      admin:
-        hide_sensitive_variable_fields: True
-
+    core:
+      airflow_home: /usr/local/airflow
+      dags_folder: /usr/local/airflow/dags
+      base_log_folder: /usr/local/airflow/logs
+      remote_base_log_folder:
+      remote_log_conn_id:
+      encrypt_s3_logs: "False"
+      executor: CeleryExecutor
+      sql_alchemy_pool_size: 5
+      sql_alchemy_pool_recycle: 3600
+      parallelism: 32
+      dag_concurrency: 16
+      dags_are_paused_at_creation: "False"
+      non_pooled_task_slot_count: 128
+      max_active_runs_per_dag: 16
+      load_examples: "False"
+      plugins_folder: /usr/local/airflow/plugins
+      fernet_key: fKp7omMJ4QlTxfZzVBSiyXVgeCK-6epRjGgMpEIsjvs=
+      donot_pickle: "False"
+      dagbag_import_timeout: 30
+      task_runner: BashTaskRunner
+      default_impersonation:
+      security:
+      unit_test_mode: "False"
+    cli:
+      api_client: airflow.api.client.local_client
+    api:
+      auth_backend: airflow.api.auth.backend.default
+    operators:
+      default_owner: Airflow
+      default_cpus: 1
+      default_ram: 512
+      default_disk: 512
+      default_igpus: 0
+    webserver:
+      web_server_host: 0.0.0.0
+      web_server_port: 8080
+      web_server_ssl_cert:
+      web_server_ssl_key:
+      web_server_worker_timeout: 120
+      worker_refresh_batch_size: 1
+      secret_key: temporary_key
+      workers: 4
+      worker_class: sync
+      access_logfile: "-"
+      error_logfile: "-"
+      expose_config: "True"
+      authenticate: "False"
+      filter_by_owner: "False"
+      owner_mode: user
+      dag_orientation: LR
+      demo_mode: "False"
+      log_fetch_timeout_sec: 5
+      hide_paused_dags_by_default: "False"
+    email:
+      email_backend: airflow.utils.send_email_smtp
+    smtp:
+      smtp_host: localhost
+      smtp_starttls: "True"
+      smtp_ssl: "False"
+      smtp_user: airflow
+      smtp_port: 25
+      smtp_password: airflow
+      smtp_mail_from: airflow@airflow.local
+    celery:
+      celery_app_name: airflow.executors.celery_executor
+      celeryd_concurrency: 16
+      worker_log_server_port: 8793
+      flower_host: 0.0.0.0
+      flower_port: 5555
+      default_queue: default
+    scheduler:
+      job_heartbeat_sec: 5
+      scheduler_heartbeat_sec: 5
+      run_duration: -1
+      min_file_process_interval: 0
+      dag_dir_list_interval: 300
+      print_stats_interval: 30
+      child_process_log_directory: /usr/local/airflow/logs/scheduler
+      scheduler_zombie_task_threshold: 300
+      catchup_by_default: "True"
+      max_threads: 2
+      authenticate: "False"
+    mesos:
+      master: localhost:5050
+      framework_name: Airflow
+      task_cpu: 1
+      task_memory: 256
+      checkpoint: "False"
+      authenticate: "False"
+    admin:
+      hide_sensitive_variable_fields: "True"
+  
 # typically overriden by environmental
 # values, but should include all endpoints
 # required by this chart
 endpoints:
+  cluster_domain_suffix: cluster.local
   postgresql:
     auth:
-      admin:
+      user:
         username: airflow
         password: airflow
-      user:
+      admin:
         username: airflow
         password: airflow
     hosts:
@@ -180,7 +178,10 @@ endpoints:
     path: /
     scheme: postgresql+psycopg2
     port:
-      postgresql: 5432
+      postgresql:
+        default: 5432
+    host_fqdn_override:
+      default: null
   messaging:
     auth:
       admin:
@@ -194,51 +195,138 @@ endpoints:
     path: /
     scheme: amqp
     port:
-      amqp: 5672
+      amqp:
+        default: 5672
+    host_fqdn_override:
+      default: null
+  airflow_web:
+    name: airflow-web
+    hosts:
+      default: airflow-web
+    port:
+      airflow_web:
+        default: 8080
+        public: 32080
+    path:
+     default: /
+    scheme:
+      default: http
+    host_fqdn_override:
+      default: null
+  airflow_flower:
+    name: airflow-flower
+    hosts:
+      default: airflow-flower
+    port:
+      airflow_flower:
+        default: 5555
+    path:
+     default: /
+    scheme:
+      default: http
+    host_fqdn_override:
+      default: null
 
-resources:
-  enabled: false
-  worker:
-    limits:
-      memory: "128Mi"
-      cpu: "100m"
-    requests:
-      memory: "128Mi"
-      cpu: "100m"
-  flower:
-    limits:
-      memory: "128Mi"
-      cpu: "100m"
-    requests:
-      memory: "128Mi"
-      cpu: "100m"
-  web:
-    limits:
-      memory: "128Mi"
-      cpu: "100m"
-    requests:
-      memory: "128Mi"
-      cpu: "100m"
-  scheduler:
-    limits:
-      memory: "128Mi"
-      cpu: "100m"
-    requests:
-      memory: "128Mi"
-      cpu: "100m"
-  jobs:
-    db_sync:
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
-      requests:
-        memory: "128Mi"
-        cpu: "500m"
-    init:
-      limits:
-        memory: "128Mi"
-        cpu: "500m"
-      requests:
-        memory: "128Mi"
-        cpu: "500m"
+secrets:
+  postgresql:
+    admin: airflow-db-admin
+    user: airflow-db-user
 
+database:
+  postgresql:
+    db_name: airflow
+    db_root_user: postgres
+
+pod:
+  mounts:
+    dag_path: /home/ubuntu/workbench/dags
+    plugin_path: /home/ubuntu/workbench/plugins
+    log_path: /home/ubuntu/workbench/logs
+    airflow_flower:
+      init_container: null
+      airflow_flower:
+    airflow_scheduler:
+      init_container: null
+      airflow_scheduler:
+    airflow_worker:
+      init_container: null
+      airflow_worker:
+    airflow_web:
+      init_container: null
+      airflow_web:
+  replicas:
+    airflow:
+      web: 1
+      worker: 1
+      flower: 1
+      scheduler: 1
+  lifecycle:
+    upgrades:
+      deployments:
+        revision_history: 3
+        pod_replacement_strategy: RollingUpdate
+        rolling_update:
+          max_unavailable: 1
+          max_surge: 3
+    termination_grace_period:
+      server:
+        timeout: 30
+  resources:
+    enabled: false
+    airflow:
+      worker:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+      flower:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+      web:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+      scheduler:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+    jobs:
+      db_sync:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        requests:
+          memory: "128Mi"
+          cpu: "500m"
+      db_init:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+        requests:
+          memory: "128Mi"
+          cpu: "500m"
+
+manifests:
+  configmap_bin: true
+  configmap_etc: true
+  job_db_init: true
+  job_db_sync: true
+  secret_db: true
+  service_web: true
+  service_flower: true
+  deployment_web: true
+  deployment_flower: true
+  deployment_worker: true
+  deployment_scheduler: true
