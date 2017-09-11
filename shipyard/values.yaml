@@ -76,6 +76,7 @@ dependencies:
 # values, but should include all endpoints
 # required by this chart
 endpoints:
+  cluster_domain_suffix: cluster.local
   identity:
     name: keystone
     auth:
@@ -106,6 +107,8 @@ endpoints:
         default: 35357
       api:
         default: 80
+    host_fqdn_override:
+      default: null
   orchestrator:
     name: shipyard
     hosts:
@@ -118,6 +121,8 @@ endpoints:
       default: /api/v1.0
     scheme:
       default: http
+    host_fqdn_override:
+      default: null
   airflow:
     name: airflow_webserver
     hosts:
@@ -129,6 +134,8 @@ endpoints:
       default: /
     scheme:
       default: http
+    host_fqdn_override:
+      default: null
   postgresql_db:
     name: postgresql_db
     auth:
@@ -147,6 +154,8 @@ endpoints:
     port:
       postgresql:
         default: 5432
+    host_fqdn_override:
+      default: null
   postgresql_airflow_db:
     name: postgresql_airflow_db
     auth:
@@ -165,6 +174,8 @@ endpoints:
     port:
       postgresql:
         default: 5432
+    host_fqdn_override:
+      default: null
 
 secrets:
   identity:
