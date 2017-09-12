@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "496bb5de_0266909a",
+        "filename": "airflow/templates/bin/_db-init.sh.tpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-09-12T12:38:41Z",
+      "side": 1,
+      "message": "Could setup this in the environment of the db-init container from Helm values.",
+      "revId": "1fc22ed31bb4c4d174537eaabff51a385eff93ef",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d52aceb_27919c8c",
+        "filename": "airflow/templates/deployment-flower.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-09-12T12:38:41Z",
+      "side": 1,
+      "message": "should this be hard-coded or sourced from Values?",
+      "revId": "1fc22ed31bb4c4d174537eaabff51a385eff93ef",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8a21720_2aef00c5",
+        "filename": "airflow/templates/deployment-scheduler.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-09-12T12:38:41Z",
+      "side": 1,
+      "message": "Long term I think the desire is to get all containers to log to stdout/stderr.",
+      "revId": "1fc22ed31bb4c4d174537eaabff51a385eff93ef",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b90a2d2d_42c38059",
+        "filename": "airflow/templates/deployment-worker.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-09-12T12:38:41Z",
+      "side": 1,
+      "message": "This seems awfully dangerous.",
+      "revId": "1fc22ed31bb4c4d174537eaabff51a385eff93ef",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfa59b01_b06b9513",
+        "filename": "airflow/values.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1011939
+      },
+      "writtenOn": "2017-09-12T12:38:41Z",
+      "side": 1,
+      "message": "I think the convention is to put this data in the endpoints section to avoid duplication",
+      "revId": "1fc22ed31bb4c4d174537eaabff51a385eff93ef",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
