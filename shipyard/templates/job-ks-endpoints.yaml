@@ -30,7 +30,7 @@ spec:
       initContainers:
 {{ tuple $envAll $dependencies "[]" | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
       containers:
-{{- range $key1, $osServiceType := tuple "orchestrator" }}
+{{- range $key1, $osServiceType := tuple "shipyard" }}
 {{- range $key2, $osServiceEndPoint := tuple "admin" "internal" "public" }}
         - name: {{ $osServiceType }}-ks-endpoints-{{ $osServiceEndPoint }}
           image: {{ $envAll.Values.images.ks_endpoints }}
@@ -63,4 +63,3 @@ spec:
             name: shipyard-bin
             defaultMode: 0555
 {{- end -}}
-

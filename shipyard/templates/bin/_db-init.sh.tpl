@@ -6,8 +6,8 @@ export HOME=/tmp
 # Extract the DB string from shipyard.conf and get the
 # value of the DB host and port
 db_string=`grep -i postgresql_db ${SHIPYARD_CONFIG_FILE}`
-db_fqdn=`echo ${db_string#*://} | cut -f1 -d"."`
-db_port=`echo ${db_string#*://} | grep -o "[0-9]\+"`
+db_fqdn=`echo ${db_string#*@} | cut -f1 -d"."`
+db_port=`echo ${db_string#*@} | grep -o "[0-9]\+"`
 
 pgsql_superuser_cmd () {
   DB_COMMAND="$1"

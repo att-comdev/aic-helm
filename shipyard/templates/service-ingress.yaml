@@ -21,7 +21,7 @@ limitations under the License.
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ tuple "orchestrator" "public" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
+  name: {{ tuple "shipyard" "public" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
 spec:
   ports:
   - name: http

@@ -32,7 +32,7 @@ spec:
       initContainers:
 {{ tuple $envAll $dependencies "[]" | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
       containers:
-{{- range $key1, $osServiceType := tuple "orchestrator" }}
+{{- range $key1, $osServiceType := tuple "shipyard" }}
         - name: {{ $osServiceType }}-ks-service-registration
           image: {{ $envAll.Values.images.ks_service }}
           imagePullPolicy: {{ $envAll.Values.images.pull_policy }}

@@ -45,7 +45,7 @@ spec:
 {{- include "helm-toolkit.snippets.keystone_openrc_env_vars" $env | indent 12 }}
 {{- end }}
             - name: SERVICE_OS_SERVICE_NAME
-              value: {{ $envAll.Values.endpoints.orchestrator.name | quote }}
+              value: {{ $envAll.Values.endpoints.shipyard.name | quote }}
             - name: SERVICE_OS_DOMAIN_NAME
               value: {{ $envAll.Values.endpoints.identity.auth.user.project_domain_name | quote }}
 {{- with $env := dict "ksUserSecret" $ksUserSecret }}
