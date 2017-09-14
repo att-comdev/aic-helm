@@ -109,7 +109,7 @@ endpoints:
         default: 80
     host_fqdn_override:
       default: null
-  orchestrator:
+  shipyard:
     name: shipyard
     hosts:
       default: shipyard-int
@@ -147,10 +147,8 @@ endpoints:
         password: password
     hosts:
       default: postgresql
-    path:
-      default: /shipyard
-    scheme:
-      default: postgresql+psycopg2
+    path: /shipyard
+    scheme: postgresql+psycopg2
     port:
       postgresql:
         default: 5432
@@ -167,10 +165,8 @@ endpoints:
         password: password
     hosts:
       default: postgresql
-    path:
-      default: /airflow
-    scheme:
-      default: postgresql+psycopg2
+    path: /airflow
+    scheme: postgresql+psycopg2
     port:
       postgresql:
         default: 5432
