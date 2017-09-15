@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6dba0d9_c3e946b1",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-15T13:44:29Z",
+      "side": 1,
+      "message": "Ok, that is a good point.  I am currently waiting for Felipe to be back in office for further discussions.",
+      "parentUuid": "3d250d06_47cc70c7",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "6bd5167f7059ebc68a100882a6525222fc099987",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b87c5030_94fc44b0",
         "filename": "deckhand/values.yaml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-15T05:23:36Z",
       "side": 1,
       "message": "these limits and requests resources are identical",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 21
+      },
+      "revId": "6bd5167f7059ebc68a100882a6525222fc099987",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd24859c_750270f0",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-15T13:44:29Z",
+      "side": 1,
+      "message": "We are not really enabling limits at the moment and most of the values are placeholders.  We can definitely fine-tune it if need be.",
+      "parentUuid": "b87c5030_94fc44b0",
       "range": {
         "startLine": 194,
         "startChar": 0,
