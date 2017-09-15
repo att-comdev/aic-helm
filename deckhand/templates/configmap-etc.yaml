@@ -1,0 +1,80 @@
+# Copyright 2017 The Openstack-Helm Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+{{- $envAll := . }}
+
+{{ include "deckhand.conf.deckhand_values_skeleton" .Values.conf.deckhand | trunc 0 }}
+
+{{- if empty .Values.conf.deckhand.keystone_authtoken.keystonemiddleware.auth_token.auth_uri -}}
+{{- tuple "identity" "internal" "api" . | include "helm-toolkit.endpoints.keystone_endpoint_uri_lookup" | set .Values.conf.deckhand.keystone_authtoken.keystonemiddleware.auth_token "auth_uri" | quote | trunc 0 -}}
+{{- end -}}
+
+# FIXME fix for broken keystonemiddleware oslo config gen in newton - will remove in future
+{{- if empty .Values.conf.deckhand.keystone_authtoken.processing_engine.auth_url -}}
+{{- tuple "identity" "internal" "api" . | include "helm-toolkit.endpoints.keystone_endpoint_uri_lookup"| set .Values.conf.deckhand.keystone_authtoken.processing_engine "auth_url" | quote | trunc 0 -}}
+{{- end -}}
+
+# Add endpoint URI lookup for Deckhand Postgresql DB Connection
+{{- if empty .Values.conf.deckhand.database.connection -}}
+{{- tuple "postgresql" "internal" "user" "postgresql" . | include "helm-toolkit.endpoints.authenticated_endpoint_uri_lookup"| set .Values.conf.deckhand.database "connection" | quote | trunc 0 -}}
+{{- end -}}
+
+{{- $userIdentity := .Values.endpoints.identity.auth.user -}}
+
+{{- if empty .Values.conf.deckhand.keystone_authtoken.processing_engine.project_name -}}
+{{- set .Values.conf.deckhand.keystone_authtoken.processing_engine "project_name" $userIdentity.project_name | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.deckhand.keystone_authtoken.processing_engine.project_domain_name -}}
+{{- set .Values.conf.deckhand.keystone_authtoken.processing_engine "project_domain_name" $userIdentity.project_domain_name | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.deckhand.keystone_authtoken.processing_engine.user_domain_name -}}
+{{- set .Values.conf.deckhand.keystone_authtoken.processing_engine "user_domain_name" $userIdentity.user_domain_name | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.deckhand.keystone_authtoken.processing_engine.username -}}
+{{- set .Values.conf.deckhand.keystone_authtoken.processing_engine "username" $userIdentity.username | quote | trunc 0 -}}
+{{- end -}}
+{{- if empty .Values.conf.deckhand.keystone_authtoken.processing_engine.password -}}
+{{- set .Values.conf.deckhand.keystone_authtoken.processing_engine "password" $userIdentity.password | quote | trunc 0 -}}
+{{- end -}}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deckhand-etc
+data:
+  deckhand.conf: |+
+{{ if .Values.conf.deckhand.override -}}
+{{ .Values.conf.deckhand.override | indent 4 }}
+{{- else -}}
+{{- if .Values.conf.deckhand.prefix -}}
+{{ .Values.conf.deckhand.prefix | indent 4 }}
+{{- end }}
+{{ tuple "etc/_deckhand.conf.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+{{- end }}
+{{- if .Values.conf.deckhand.append -}}
+{{ .Values.conf.deckhand.append | indent 4 }}
+{{- end }}
+  logging.conf: |+
+{{ if .Values.conf.paste.override -}}
+{{ .Values.conf.paste.override | indent 4 }}
+{{- else -}}
+{{- if .Values.conf.paste.prefix -}}
+{{ .Values.conf.paste.prefix | indent 4 }}
+{{- end }}
+{{ tuple "etc/_logging.conf.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+{{- if .Values.conf.paste.append -}}
+{{ .Values.conf.paste.append | indent 4 }}
+{{- end }}
+{{- end }}
