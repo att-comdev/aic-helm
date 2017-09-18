@@ -44,11 +44,13 @@ dependencies:
   db_init:
     services:
     - service: postgresql
+      endpoint: internal
   db_sync:
     jobs:
     - shipyard-db-init
     services:
     - service: postgresql
+      endpoint: internal
   ks_user:
     services:
     - service: identity
