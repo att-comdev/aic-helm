@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da579a86_67ff745b",
+        "filename": "deckhand/templates/etc/_deckhand.conf.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-18T21:36:38Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "1a7af346_927f6c05",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49711eaf_888b06a2",
         "filename": "deckhand/templates/etc/_logging.conf.tpl",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T18:35:25Z",
       "side": 1,
       "message": "Do we want to make this overridable depending on the values.yaml?",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a81557d3_208ddacb",
+        "filename": "deckhand/templates/etc/_logging.conf.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-18T21:36:38Z",
+      "side": 1,
+      "message": "Agree. Have changed this file into a template.",
+      "parentUuid": "49711eaf_888b06a2",
       "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4b3768c6_4414f59f",
+        "filename": "deckhand/templates/etc/_logging.conf.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-18T21:36:38Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "5eb69406_564cc2a6",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a8e0313_6c7427f0",
         "filename": "deckhand/values.yaml",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-18T18:35:25Z",
       "side": 1,
       "message": "Does this accept https as a default?",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ea16683_905b50c8",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-18T21:36:38Z",
+      "side": 1,
+      "message": "This is coming from the default configurations from OSH. It seems to be \u0027http\u0027 at the moment.",
+      "parentUuid": "1a8e0313_6c7427f0",
       "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
@@ -110,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "55607674_705087fc",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-18T21:36:38Z",
+      "side": 1,
+      "message": "Ok, will change it to deckhand.log",
+      "parentUuid": "0976cf2c_fdced475",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42444aa8_2d2e81f2",
         "filename": "deckhand/values.yaml",
         "patchSetId": 6
@@ -121,6 +217,24 @@
       "writtenOn": "2017-09-18T18:35:25Z",
       "side": 1,
       "message": "Are we never going to use syslog?",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c881cac_e2957420",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-18T21:36:38Z",
+      "side": 1,
+      "message": "Have changed it to \u0027True\u0027",
+      "parentUuid": "42444aa8_2d2e81f2",
       "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
