@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7af346_927f6c05",
+        "filename": "deckhand/templates/etc/_deckhand.conf.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T18:35:25Z",
+      "side": 1,
+      "message": "In the future, we might not need any of these below here; but I wasn\u0027t sure how people wanted barbican to communicate with keystone, so included these options below.",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49711eaf_888b06a2",
+        "filename": "deckhand/templates/etc/_logging.conf.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T18:35:25Z",
+      "side": 1,
+      "message": "Do we want to make this overridable depending on the values.yaml?",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5eb69406_564cc2a6",
+        "filename": "deckhand/templates/etc/_logging.conf.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T18:35:25Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a8e0313_6c7427f0",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T18:35:25Z",
+      "side": 1,
+      "message": "Does this accept https as a default?",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "304b5f57_ac982fd7",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T18:35:25Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0976cf2c_fdced475",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T18:35:25Z",
+      "side": 1,
+      "message": "deckhand.log",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42444aa8_2d2e81f2",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T18:35:25Z",
+      "side": 1,
+      "message": "Are we never going to use syslog?",
+      "revId": "0f4683c745fd03b2b75d376dafbb20fa8d5e08ba",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
