@@ -22,6 +22,30 @@
       "revId": "33f64919462d1ecfa6b19f76098ab1ade6c00fb2",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23f2218c_cbed2f7c",
+        "filename": "deckhand/templates/bin/_db-init.sh.tpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-18T15:00:56Z",
+      "side": 1,
+      "message": "Agree. Have removed the duplicated function.",
+      "parentUuid": "ace907aa_25262360",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "33f64919462d1ecfa6b19f76098ab1ade6c00fb2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
