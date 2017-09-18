@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ace907aa_25262360",
+        "filename": "deckhand/templates/bin/_db-init.sh.tpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-18T14:10:01Z",
+      "side": 1,
+      "message": "Looks like this function is repeated.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "33f64919462d1ecfa6b19f76098ab1ade6c00fb2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
