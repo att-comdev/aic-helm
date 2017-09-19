@@ -179,29 +179,32 @@ conf:
     oslo_middleware:
   logging:
     loggers:
-      keys: root
+      keys: 'root, deckhand'
     handlers:
-      keys: 'file,devel,syslog'
+      keys: 'file, null, syslog'
     formatters:
-      keys: 'simple,tests'
-    logger_root:
+      keys: 'simple, context'
+    logger_deckhand:
       level: DEBUG
       handlers: file
+      qualname: deckhand
+    logger_root:
+      level: WARNING
+      handlers: null
     handler_file:
       class: FileHandler
       level: DEBUG
       args: "('deckhand.log', 'w+')"
-      formatter: tests
+      formatter: context
+    handler_null:
+      class: 'logging.NullHandler'
+      formatter: context
+      args: '()'
     handler_syslog:
       class: 'handlers.SysLogHandler'
       level: ERROR
       args: "('/dev/log', handlers.SysLogHandler.LOG_USER)"
-    handler_devel:
-      class: StreamHandler
-      level: DEBUG
-      args: "(sys.stdout,)"
-      formatter: simple
-    formatter_tests:
+    formatter_context:
       class: 'oslo_log.formatters.ContextFormatter'
     formatter_simple:
       format: "%(asctime)s.%(msecs)03d %(process)d %(levelname)s: %(message)s"

@@ -280,11 +280,15 @@
 # (boolean value)
 {{ if not .database.mysql_enable_ndb }}#{{ end }}mysql_enable_ndb = {{ .database.mysql_enable_ndb | default "false" }}
 
-# Timeout before idle SQL connections are reaped. (integer value)
+# Connections which have been present in the connection pool longer than this
+# number of seconds will be replaced with a new one the next time they are
+# checked out from the pool. (integer value)
+# Deprecated group/name - [DATABASE]/idle_timeout
+# Deprecated group/name - [database]/idle_timeout
 # Deprecated group/name - [DEFAULT]/sql_idle_timeout
 # Deprecated group/name - [DATABASE]/sql_idle_timeout
 # Deprecated group/name - [sql]/idle_timeout
-{{ if not .database.idle_timeout }}#{{ end }}idle_timeout = {{ .database.idle_timeout | default "3600" }}
+{{ if not .database.connection_recycle_time }}#{{ end }}connection_recycle_time = {{ .database.connection_recycle_time | default "3600" }}
 
 # Minimum number of SQL connections to keep open in a pool. (integer value)
 # Deprecated group/name - [DEFAULT]/sql_min_pool_size
