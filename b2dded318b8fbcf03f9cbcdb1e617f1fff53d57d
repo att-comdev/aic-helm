@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf60bab_c6db79ca",
+        "filename": "deckhand/templates/etc/_deckhand.conf.tpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-09-19T20:25:20Z",
+      "side": 1,
+      "message": "This is all auto-generated from oslo changes but I\u0027m assuming the image should keep getting rebuilt off master so I guess we\u0027re covered there.",
+      "revId": "b2dded318b8fbcf03f9cbcdb1e617f1fff53d57d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
