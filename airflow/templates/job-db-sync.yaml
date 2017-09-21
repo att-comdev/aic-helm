@@ -45,11 +45,15 @@ spec:
               mountPath: /tmp/db-sync.sh
               subPath: db-sync.sh
               readOnly: true
+            - name: etc-airflow
+              mountPath: /etc/airflow
             - name: airflow-etc
-              mountPath: /usr/local/airflow/airflow.cfg
+              mountPath: /etc/airflow/airflow.cfg
               subPath: airflow.cfg
               readOnly: true
       volumes:
+        - name: etc-airflow
+          emptyDir: {}
         - name: airflow-etc
           configMap:
             name: airflow-etc
