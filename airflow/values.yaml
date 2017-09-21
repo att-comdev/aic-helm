@@ -14,15 +14,19 @@
 
 # This file provides defaults for airflow-helm
 
+# radosgw, rbd, swift or pvc
+storage: pvc
+
 labels:
   node_selector_key: ucp-control-plane
   node_selector_value: enabled
 
 images:
   airflow: docker.io/eanylin/airflow-helm:1.8.1-1.6.8-v0.6.0
-  dep_check: quay.io/stackanetes/kubernetes-entrypoint:v0.1.1
+  dep_check: docker.io/kolla/ubuntu-source-kubernetes-entrypoint:4.0.0
   db_init: docker.io/postgres:9.5
   db_sync: docker.io/eanylin/airflow-helm:1.8.1-1.6.8-v0.6.0
+  storage_init: quay.io/attcomdev/ceph-daemon:tag-build-master-jewel-ubuntu-16.04
   pull_policy: "IfNotPresent"
 
 release_group: null
@@ -45,7 +49,13 @@ network:
       port: 8793
       enable_node_port: false
 
+volume:
+  class_name: general
+  size: 5Gi
+
 dependencies:
+  storage_init:
+    services:
   db_init:
     services:
     - service: postgresql
@@ -60,15 +70,33 @@ dependencies:
     jobs:
     - airflow-db-init
     - airflow-db-sync
+    - airflow-storage-init
     services:
     - service: postgresql
       endpoint: internal
+    - service: messaging
+      endpoint: internal
 
 conf:
+  ceph:
+    monitors: []
+    keyring: null
+    override:
+    append:
+  ceph_client:
+    override:
+    append:
   airflow:
     override:
     append:
     prefix:
+    airflow_store:
+      airflow:
+        store:
+          rbd_store_chunk_size: 8
+          rbd_store_pool: images
+          rbd_store_user: images
+          rbd_store_ceph_conf: /etc/ceph/ceph.conf
     core:
       airflow_home: /usr/local/airflow
       dags_folder: /usr/local/airflow/dags
@@ -228,11 +256,31 @@ endpoints:
       default: http
     host_fqdn_override:
       default: null
+  ceph_airflow_store:
+    name: radosgw
+    namespace: ceph
+    auth:
+      user:
+        username: airflow
+        password: password
+        tmpurlkey: supersecret
+    hosts:
+      default: ceph-rgw
+    host_fqdn_override:
+      default: null
+    path:
+      default: /auth/v1.0
+    scheme:
+      default: http
+    port:
+      api:
+        default: 8088
 
 secrets:
   postgresql:
     admin: airflow-db-admin
     user: airflow-db-user
+  rbd: images-rbd-keyring
 
 database:
   postgresql:
@@ -240,6 +288,9 @@ database:
     db_root_user: postgres
 
 pod:
+  user:
+    airflow:
+      uid: 1000
   mounts:
     dag_path: /home/ubuntu/workbench/dags
     plugin_path: /home/ubuntu/workbench/plugins
@@ -305,6 +356,13 @@ pod:
           memory: "128Mi"
           cpu: "100m"
     jobs:
+      storage_init:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "1024Mi"
+          cpu: "2000m"
       db_sync:
         limits:
           memory: "128Mi"
@@ -330,6 +388,8 @@ manifests:
   ingress_api: true
   job_db_init: true
   job_db_sync: true
+  job_storage_init: true
+  pvc_airflow: true
   secret_db: true
   service_flower: true
   service_ingress: true
