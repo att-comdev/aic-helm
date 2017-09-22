@@ -13,15 +13,17 @@
 # limitations under the License.
 
 apiVersion: v1
-description: A Helm chart for Shipyard
-name: shipyard
+description: A Helm chart for Shipyard and Airflow
+name: shipyard-airflow
 version: 0.1.0
 keywords:
 - shipyard
+- airflow
 home: https://github.com/att-comdev/shipyard
 sources:
+- https://github.com/apache/incubator-airflow
 - https://github.com/att-comdev/aic-helm
 - https://git.openstack.org/cgit/openstack/openstack-helm
 maintainers:
-- name: att-comdev
+- name: OpenStack-Helm Authors
 engine: gotpl

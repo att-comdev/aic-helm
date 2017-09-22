@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */}}
 
-{{- if .Values.manifests.service_ingress }}
+{{- if .Values.manifests.service_airflow_ingress }}
 {{- $envAll := . }}
-{{- if .Values.network.ingress.public }}
+{{- if .Values.network.airflow.ingress.public }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ tuple "shipyard" "public" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
+  name: {{ tuple "airflow_web" "public" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
 spec:
   ports:
   - name: http
-    port: 9000
+    port: 8080
   selector:
     app: ingress-api
 {{- end }}

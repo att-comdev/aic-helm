@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#PasteDeploy Configuration File
+#Used to configure uWSGI middleware pipeline
+
 [app:shipyard-api]
 paste.app_factory = shipyard_airflow.shipyard:paste_start_shipyard
 

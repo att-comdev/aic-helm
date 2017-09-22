@@ -18,6 +18,11 @@
 {{- define "shipyard.conf.shipyard_values_skeleton" -}}
 
 {{- if not .base -}}{{- set . "base" dict -}}{{- end -}}
+{{- if not .shipyard -}}{{- set . "shipyard" dict -}}{{- end -}}
+{{- if not .deckhand -}}{{- set . "deckhand" dict -}}{{- end -}}
+{{- if not .armada -}}{{- set . "armada" dict -}}{{- end -}}
+{{- if not .drydock -}}{{- set . "drydock" dict -}}{{- end -}}
+{{- if not .healthcheck -}}{{- set . "healthcheck" dict -}}{{- end -}}
 {{- if not .keystone_authtoken -}}{{- set . "keystone_authtoken" dict -}}{{- end -}}
 {{- if not .keystone_authtoken.keystonemiddleware -}}{{- set .keystone_authtoken "keystonemiddleware" dict -}}{{- end -}}
 {{- if not .keystone_authtoken.keystonemiddleware.auth_token -}}{{- set .keystone_authtoken.keystonemiddleware "auth_token" dict -}}{{- end -}}
@@ -28,14 +33,32 @@
 
 {{- end -}}
 
-
 {{- define "shipyard.conf.shipyard" -}}
-
 
 [base]
 {{ if not .base.web_server }}#{{ end }}web_server = {{ .base.web_server | default "<None>" }}
 {{ if not .base.postgresql_db }}#{{ end }}postgresql_db = {{ .base.postgresql_db | default "<None>" }}
 {{ if not .base.postgresql_airflow_db }}#{{ end }}postgresql_airflow_db = {{ .base.postgresql_airflow_db | default "<None>" }}
+
+[shipyard]
+{{ if not .shipyard.host }}#{{ end }}host = {{ .shipyard.host | default "<None>" }}
+{{ if not .shipyard.port }}#{{ end }}port = {{ .shipyard.port | default "<None>" }}
+
+[deckhand]
+{{ if not .deckhand.host }}#{{ end }}host = {{ .deckhand.host | default "<None>" }}
+{{ if not .deckhand.port }}#{{ end }}port = {{ .deckhand.port | default "<None>" }}
+
+[armada]
+{{ if not .armada.host }}#{{ end }}host = {{ .armada.host | default "<None>" }}
+{{ if not .armada.port }}#{{ end }}port = {{ .armada.port | default "<None>" }}
+
+[drydock]
+{{ if not .drydock.host }}#{{ end }}host = {{ .drydock.host | default "<None>" }}
+{{ if not .drydock.port }}#{{ end }}port = {{ .drydock.port | default "<None>" }}
+
+[healthcheck]
+{{ if not .healthcheck.schema }}#{{ end }}schema = {{ .healthcheck.schema | default "<None>" }}
+{{ if not .healthcheck.endpoint }}#{{ end }}endpoint = {{ .healthcheck.endpoint | default "<None>" }}
 
 [keystone_authtoken]
 

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */}}
 
-{{- if .Values.manifests.ingress_api }}
+{{- if .Values.manifests.ingress_airflow_api }}
 {{- $envAll := . }}
-{{- if .Values.network.ingress.public }}
-{{- $backendServiceType := "shipyard" }}
+{{- if .Values.network.airflow.ingress.public }}
+{{- $backendServiceType := "airflow_web" }}
 {{- $backendPort := "http" }}
 {{- $ingressName := tuple $backendServiceType "public" $envAll | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
 {{- $backendName := tuple $backendServiceType "internal" $envAll | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
