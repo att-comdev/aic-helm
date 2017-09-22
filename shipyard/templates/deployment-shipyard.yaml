@@ -19,15 +19,15 @@ kind: Deployment
 metadata:
   name: shipyard
 spec:
-  replicas: {{ .Values.replicas.shipyard }}
+  replicas: {{ .Values.pod.replicas.shipyard }}
 {{ tuple $envAll | include "helm-toolkit.snippets.kubernetes_upgrades_deployment" | indent 2 }}
   template:
     metadata:
       labels:
 {{ tuple $envAll "shipyard-api" "server" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
-        configmap-bin-hash: {{ tuple "configmap-bin.yaml" . | include "helm-toolkit.utils.hash" }}
-        configmap-etc-hash: {{ tuple "configmap-etc.yaml" . | include "helm-toolkit.utils.hash" }}
+        configmap-bin-hash: {{ tuple "configmap-shipyard-bin.yaml" . | include "helm-toolkit.utils.hash" }}
+        configmap-etc-hash: {{ tuple "configmap-shipyard-etc.yaml" . | include "helm-toolkit.utils.hash" }}
     spec:
       nodeSelector:
         {{ .Values.labels.node_selector_key }}: {{ .Values.labels.node_selector_value }}
@@ -37,12 +37,12 @@ spec:
         - name: shipyard
           image: {{ .Values.images.shipyard }}
           imagePullPolicy: {{ .Values.images.pull_policy }}
-{{ tuple $envAll $envAll.Values.pod.resources.api | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+{{ tuple $envAll $envAll.Values.pod.resources.shipyard_api | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
           ports:
-            - containerPort: {{ .Values.network.port }}
+            - containerPort: {{ .Values.network.shipyard.port }}
           readinessProbe:
             tcpSocket:
-              port: {{ .Values.network.port }}
+              port: {{ .Values.network.shipyard.port }}
           volumeMounts:
             - name: etc-shipyard
               mountPath: /etc/shipyard

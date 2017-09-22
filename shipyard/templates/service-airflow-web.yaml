@@ -14,30 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */}}
 
-{{- if .Values.manifests.service }}
+{{- if .Values.manifests.service_airflow_web }}
 {{- $envAll := . }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ tuple "shipyard" "internal" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
+  name: {{ tuple "airflow_web" "internal" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
 spec:
   ports:
-    {{ if .Values.network.enable_node_port }}
+    {{ if .Values.network.airflow.web.enable_node_port }}
     - name: http
-      nodePort: {{ .Values.network.node_port }}
-      port: {{ .Values.network.port }}
+      nodePort: {{ .Values.network.airflow.web.node_port }}
+      port: {{ .Values.network.airflow.web.port }}
       protocol: TCP
-      targetPort: {{ .Values.network.port }}
+      targetPort: {{ .Values.network.airflow.web.port }}
     {{ else }}
     - name: http
-      port: {{ .Values.network.port }}
+      port: {{ .Values.network.airflow.web.port }}
       protocol: TCP
-      targetPort: {{ .Values.network.port }}
+      targetPort: {{ .Values.network.airflow.web.port }}
     {{ end }}
   selector:
-{{ tuple $envAll "shipyard-api" "server" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 4 }}
-  {{ if .Values.network.enable_node_port }}
+{{ tuple $envAll "airflow" "web" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 4 }}
+  {{ if .Values.network.airflow.web.enable_node_port }}
   type: NodePort
   {{ end }}
 {{- end }}

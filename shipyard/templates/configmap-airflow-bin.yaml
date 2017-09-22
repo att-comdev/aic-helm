@@ -10,20 +10,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- if .Values.manifests.configmap_airflow_bin }}
+{{- $envAll := . }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: shipyard-bin
+  name: airflow-bin
 data:
-  ks-service.sh: |
-{{- include "helm-toolkit.scripts.keystone_service" . | indent 4 }}
-  ks-endpoints.sh: |
-{{- include "helm-toolkit.scripts.keystone_endpoints" . | indent 4 }}
-  ks-user.sh: |
-{{- include "helm-toolkit.scripts.keystone_user" . | indent 4 }}
-  ks-domain-user.sh: |
-{{- include "helm-toolkit.scripts.keystone_domain_user" . | indent 4 }}
-  db-init.sh: |+
-{{ tuple "bin/_db-init.sh.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
-  db-sync.sh: |+
-{{ tuple "bin/_db-sync.sh.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+  airflow-db-init.sh: |+
+{{ tuple "bin/_airflow-db-init.sh.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+  airflow-db-sync.sh: |+
+{{ tuple "bin/_airflow-db-sync.sh.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+{{- end }}

@@ -14,17 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */}}
 
-{{- if .Values.manifests.secret_airflow_db }}
+{{- if .Values.manifests.shipyard_service_ingress }}
 {{- $envAll := . }}
-{{- range $key1, $userClass := tuple "admin" "user" }}
-{{- $secretName := index $envAll.Values.secrets.postgresql_airflow_db $userClass }}
+{{- if .Values.network.shipyard.ingress.public }}
 ---
 apiVersion: v1
-kind: Secret
+kind: Service
 metadata:
-  name: {{ $secretName }}
-type: Opaque
-data:
-  DB_CONNECTION_AIRFLOW: {{ tuple "postgresql_airflow_db" "internal" $userClass "postgresql" $envAll | include "helm-toolkit.endpoints.authenticated_endpoint_uri_lookup" | b64enc -}}
+  name: {{ tuple "shipyard" "public" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" }}
+spec:
+  ports:
+  - name: http
+    port: 9000
+  selector:
+    app: ingress-api
 {{- end }}
 {{- end }}

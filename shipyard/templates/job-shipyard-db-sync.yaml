@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */}}
 
-{{- if .Values.manifests.job_db_sync }}
+{{- if .Values.manifests.job_shipyard_db_sync }}
 {{- $envAll := . }}
-{{- $dependencies := .Values.dependencies.db_sync }}
+{{- $dependencies := .Values.dependencies.shipyard_db_sync }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -35,29 +35,29 @@ spec:
 {{ tuple $envAll $dependencies "[]" | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
       containers:
         - name: shipyard-db-sync
-          image: {{ .Values.images.db_sync }}
+          image: {{ .Values.images.shipyard_db_sync }}
           imagePullPolicy: {{ .Values.images.pull_policy }}
-{{ tuple $envAll $envAll.Values.pod.resources.jobs.db_sync | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+{{ tuple $envAll $envAll.Values.pod.resources.jobs.shipyard_db_sync | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
           env:
             - name: ROOT_DB_CONNECTION
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.postgresql_db.admin }}
-                  key: DB_CONNECTION_POSTGRESQL
+                  name: {{ .Values.secrets.postgresql_shipyard_db.admin }}
+                  key: DB_CONNECTION_SHIPYARD
             - name: SHIPYARD_CONFIG_FILE
               value: /etc/shipyard/shipyard.conf
             - name: DB_NAME
-              value: {{ .Values.database.postgresql.db_name }}
+              value: {{ .Values.database.postgresql_shipyard.db_name }}
             - name: DB_USER
-              value: {{ .Values.endpoints.postgresql_db.auth.user.username }}
+              value: {{ .Values.endpoints.postgresql_shipyard_db.auth.user.username }}
             - name: DB_PASS
-              value: {{ .Values.endpoints.postgresql_db.auth.user.password }}
+              value: {{ .Values.endpoints.postgresql_shipyard_db.auth.user.password }}
           command:
-            - /tmp/db-sync.sh
+            - /tmp/shipyard-db-sync.sh
           volumeMounts:
             - name: shipyard-bin
-              mountPath: /tmp/db-sync.sh
-              subPath: db-sync.sh
+              mountPath: /tmp/shipyard-db-sync.sh
+              subPath: shipyard-db-sync.sh
               readOnly: true
             - name: etc-shipyard
               mountPath: /etc/shipyard

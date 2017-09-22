@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */}}
 
-{{- if .Values.manifests.job_db_init }}
+{{- if .Values.manifests.job_shipyard_db_init }}
 {{- $envAll := . }}
-{{- $dependencies := .Values.dependencies.db_init }}
+{{- $dependencies := .Values.dependencies.shipyard_db_init }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -35,31 +35,31 @@ spec:
 {{ tuple $envAll $dependencies "[]" | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
       containers:
         - name: shipyard-db-init
-          image: {{ .Values.images.db_init | quote }}
+          image: {{ .Values.images.shipyard_db_init | quote }}
           imagePullPolicy: {{ .Values.images.pull_policy | quote }}
-{{ tuple $envAll $envAll.Values.pod.resources.jobs.db_init | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+{{ tuple $envAll $envAll.Values.pod.resources.jobs.shipyard_db_init | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
           env:
             - name: ROOT_DB_CONNECTION
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.postgresql_db.admin }}
-                  key: DB_CONNECTION_POSTGRESQL
+                  name: {{ .Values.secrets.postgresql_shipyard_db.admin }}
+                  key: DB_CONNECTION_SHIPYARD
             - name: SHIPYARD_CONFIG_FILE
               value: /etc/shipyard/shipyard.conf
             - name: DB_NAME
-              value: {{ .Values.database.postgresql.db_name }}
+              value: {{ .Values.database.postgresql_shipyard.db_name }}
             - name: DB_USER
-              value: {{ .Values.endpoints.postgresql_db.auth.user.username }}
+              value: {{ .Values.endpoints.postgresql_shipyard_db.auth.user.username }}
             - name: DB_PASS
-              value: {{ .Values.endpoints.postgresql_db.auth.user.password }}
+              value: {{ .Values.endpoints.postgresql_shipyard_db.auth.user.password }}
             - name: ROOT_DB_USER
-              value: {{ .Values.database.postgresql.db_root_user }}
+              value: {{ .Values.database.postgresql_shipyard.db_root_user }}
           command:
-            - /tmp/db-init.sh
+            - /tmp/shipyard-db-init.sh
           volumeMounts:
             - name: shipyard-bin
-              mountPath: /tmp/db-init.sh
-              subPath: db-init.sh
+              mountPath: /tmp/shipyard-db-init.sh
+              subPath: shipyard-db-init.sh
               readOnly: true
             - name: etc-shipyard
               mountPath: /etc/shipyard
