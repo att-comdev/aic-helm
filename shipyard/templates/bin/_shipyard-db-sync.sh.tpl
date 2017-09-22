@@ -1,3 +1,5 @@
+#!/bin/bash
+
 {{/*
 Copyright 2017 The Openstack-Helm Authors.
 
@@ -14,17 +16,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */}}
 
-{{- if .Values.manifests.secret_airflow_db }}
-{{- $envAll := . }}
-{{- range $key1, $userClass := tuple "admin" "user" }}
-{{- $secretName := index $envAll.Values.secrets.postgresql_airflow_db $userClass }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ $secretName }}
-type: Opaque
-data:
-  DB_CONNECTION_AIRFLOW: {{ tuple "postgresql_airflow_db" "internal" $userClass "postgresql" $envAll | include "helm-toolkit.endpoints.authenticated_endpoint_uri_lookup" | b64enc -}}
-{{- end }}
-{{- end }}
+set -ex
