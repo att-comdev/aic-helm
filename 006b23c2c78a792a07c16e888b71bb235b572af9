@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34023c8e_1ef60dd1",
+        "filename": "shipyard/Chart.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1011940
+      },
+      "writtenOn": "2017-09-24T23:57:38Z",
+      "side": 1,
+      "message": "I\u0027m happy with this being the value here if it is right - is this what we\u0027re using for UCP stuff?",
+      "revId": "006b23c2c78a792a07c16e888b71bb235b572af9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
