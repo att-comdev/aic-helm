@@ -92,9 +92,13 @@ dependencies:
     services:
     - service: identity
       endpoint: internal
+    - service: shipyard
+      endpoint: internal
   ks_service:
     services:
     - service: identity
+      endpoint: internal
+    - service: shipyard
       endpoint: internal
   ks_endpoints:
     jobs:
@@ -102,13 +106,18 @@ dependencies:
     services:
     - service: identity
       endpoint: internal
+    - service: shipyard
+      endpoint: internal
   shipyard:
     jobs:
-    - shipyard-ks-endpoints
-    - shipyard-ks-user
-    - shipyard-ks-endpoints
+    - shipyard-db-init
+    - shipyard-db-sync
     services:
-    - service: identity
+    - service: postgresql_shipyard_db
+      endpoint: internal
+    - service: airflow_flower
+      endpoint: internal
+    - service: airflow_web
       endpoint: internal
   airflow_server:
     jobs:
