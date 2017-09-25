@@ -16,6 +16,24 @@
       "revId": "006b23c2c78a792a07c16e888b71bb235b572af9",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6483cd27_6363abd4",
+        "filename": "shipyard/Chart.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-09-25T00:43:04Z",
+      "side": 1,
+      "message": "I was following the convention used by the OSH team.  I think we can discuss on what value to put here.",
+      "parentUuid": "34023c8e_1ef60dd1",
+      "revId": "006b23c2c78a792a07c16e888b71bb235b572af9",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
