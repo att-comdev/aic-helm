@@ -73,7 +73,7 @@ dependencies:
     services:
     - service: identity
       endpoint: internal
-    - service: barbican
+    - service: key_manager
       endpoint: internal
 
 # typically overriden by environmental
@@ -145,6 +145,21 @@ endpoints:
         default: 5432
     host_fqdn_override:
       default: null
+  key_manager:
+    name: barbican
+    hosts:
+      default: barbican-api
+      public: barbican
+    host_fqdn_override:
+      default: null
+    path:
+      default: /v1
+    scheme:
+      default: http
+    port:
+      api:
+        default: 9311
+        public: 80
 
 secrets:
   identity:
@@ -216,6 +231,16 @@ conf:
     append:
 
 pod:
+  mounts:
+    deckhand_db_init:
+      init_container: null
+      deckhand_db_init:
+    deckhand_db_sync:
+      init_container: null
+      deckhand_db_sync:
+    deckhand:
+      init_container: null
+      deckhand:
   lifecycle:
     upgrades:
       deployments:
@@ -227,6 +252,8 @@ pod:
     termination_grace_period:
       deckhand:
         timeout: 30
+  replicas:
+    deckhand: 1
   resources:
     enabled: false
     api:
@@ -262,6 +289,7 @@ pod:
 manifests:
   configmap_bin: true
   configmap_etc: true
+  deployment: true
   job_db_init: true
   job_db_sync: true
   job_ks_endpoints: true
