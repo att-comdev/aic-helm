@@ -12,14 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{- $envAll := . -}}
+{{- if .Values.manifests.deployment }}
+{{- $envAll := . }}
+{{- $dependencies := .Values.dependencies.deckhand }}
+{{- $mounts_deckhand := .Values.pod.mounts.deckhand.deckhand }}
+{{- $mounts_deckhand_init := .Values.pod.mounts.deckhand.init_container }}
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: deckhand
 spec:
-  replicas: {{ .Values.replicas.deckhand }}
+  replicas: {{ .Values.pod.replicas.deckhand }}
 {{ tuple $envAll | include "helm-toolkit.snippets.kubernetes_upgrades_deployment" | indent 2 }}
   template:
     metadata:
@@ -33,6 +37,8 @@ spec:
         {{ .Values.labels.node_selector_key }}: {{ .Values.labels.node_selector_value }}
       terminationGracePeriodSeconds: {{ .Values.pod.lifecycle.termination_grace_period.deckhand.timeout | default "30" }}
       restartPolicy: Always
+      initContainers:
+{{ tuple $envAll $dependencies $mounts_deckhand_init | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
       containers:
         - name: deckhand
           image: {{ .Values.images.deckhand }}
@@ -54,6 +60,7 @@ spec:
               mountPath: /etc/deckhand/logging.conf
               subPath: logging.conf
               readOnly: true
+{{ if $mounts_deckhand.volumeMounts }}{{ toYaml $mounts_deckhand.volumeMounts | indent 12 }}{{ end }}
       volumes:
         - name: etc-deckhand
           emptyDir: {}
@@ -61,3 +68,5 @@ spec:
           configMap:
             name: deckhand-etc
             defaultMode: 0444
+{{ if $mounts_deckhand.volumes }}{{ toYaml $mounts_deckhand.volumes | indent 8 }}{{ end }}
+{{- end }}

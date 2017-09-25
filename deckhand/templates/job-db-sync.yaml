@@ -17,6 +17,8 @@ limitations under the License.
 {{- if .Values.manifests.job_db_sync }}
 {{- $envAll := . }}
 {{- $dependencies := .Values.dependencies.db_sync }}
+{{- $mounts_deckhand_db_sync := .Values.pod.mounts.deckhand_db_sync.deckhand_db_sync }}
+{{- $mounts_deckhand_db_sync_init := .Values.pod.mounts.deckhand_db_sync.init_container }}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -32,7 +34,7 @@ spec:
       nodeSelector:
         {{ .Values.labels.node_selector_key }}: {{ .Values.labels.node_selector_value }}
       initContainers:
-{{ tuple $envAll $dependencies "[]" | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
+{{ tuple $envAll $dependencies $mounts_deckhand_db_sync_init | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
       containers:
         - name: deckhand-db-sync
           image: {{ .Values.images.db_sync }}
@@ -65,6 +67,7 @@ spec:
               mountPath: /etc/deckhand/deckhand.conf
               subPath: deckhand.conf
               readOnly: true
+{{ if $mounts_deckhand_db_sync.volumeMounts }}{{ toYaml $mounts_deckhand_db_sync.volumeMounts | indent 10 }}{{ end }}
       volumes:
         - name: etc-deckhand
           emptyDir: {}
@@ -76,4 +79,5 @@ spec:
           configMap:
             name: deckhand-bin
             defaultMode: 0555
+{{ if $mounts_deckhand_db_sync.volumes }}{{ toYaml $mounts_deckhand_db_sync.volumes | indent 6 }}{{ end }}
 {{- end }}
