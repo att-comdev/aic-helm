@@ -104,11 +104,19 @@ dependencies:
       endpoint: internal
   shipyard:
     jobs:
+    - shipyard-db-init
+    - shipyard-db-sync
     - shipyard-ks-endpoints
     - shipyard-ks-user
     - shipyard-ks-endpoints
     services:
+    - service: airflow_flower
+      endpoint: internal
+    - service: airflow_web
+      endpoint: internal
     - service: identity
+      endpoint: internal
+    - service: postgresql_shipyard_db
       endpoint: internal
   airflow_server:
     jobs:
@@ -202,7 +210,7 @@ endpoints:
     name: postgresql_shipyard_db
     auth:
       admin:
-        username: root
+        username: shipyard
         password: password
       user:
         username: shipyard
@@ -220,7 +228,7 @@ endpoints:
     name: postgresql_airflow_db
     auth:
       admin:
-        username: root
+        username: airflow
         password: password
       user:
         username: airflow
