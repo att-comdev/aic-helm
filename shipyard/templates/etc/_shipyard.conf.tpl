@@ -30,6 +30,7 @@
 {{- if not .oslo_policy -}}{{- set . "oslo_policy" dict -}}{{- end -}}
 {{- if not .oslo_policy.oslo -}}{{- set .oslo_policy "oslo" dict -}}{{- end -}}
 {{- if not .oslo_policy.oslo.policy -}}{{- set .oslo_policy.oslo "policy" dict -}}{{- end -}}
+{{- if not .logging -}}{{- set . "logging" dict -}}{{- end -}}
 
 {{- end -}}
 
@@ -123,7 +124,12 @@
 # from .keystone_authtoken.keystonemiddleware.auth_token.region_name
 {{ if not .keystone_authtoken.keystonemiddleware.auth_token.region_name }}#{{ end }}region_name = {{ .keystone_authtoken.keystonemiddleware.auth_token.region_name | default "<None>" }}
 
-# Directory used to cache files related to PKI tokens. (string value)
+# DEPRECATED: Directory used to cache files related to PKI tokens. This option
+# has been deprecated in the Ocata release and will be removed in the P
+# release. (string value)
+# This option is deprecated for removal since Ocata.
+# Its value may be silently ignored in the future.
+# Reason: PKI token format is no longer supported.
 # from .keystone_authtoken.keystonemiddleware.auth_token.signing_dir
 {{ if not .keystone_authtoken.keystonemiddleware.auth_token.signing_dir }}#{{ end }}signing_dir = {{ .keystone_authtoken.keystonemiddleware.auth_token.signing_dir | default "<None>" }}
 
@@ -139,10 +145,14 @@
 # from .keystone_authtoken.keystonemiddleware.auth_token.token_cache_time
 {{ if not .keystone_authtoken.keystonemiddleware.auth_token.token_cache_time }}#{{ end }}token_cache_time = {{ .keystone_authtoken.keystonemiddleware.auth_token.token_cache_time | default "300" }}
 
-# Determines the frequency at which the list of revoked tokens is retrieved from
-# the Identity service (in seconds). A high number of revocation events combined
-# with a low cache duration may significantly reduce performance. Only valid for
-# PKI tokens. (integer value)
+# DEPRECATED: Determines the frequency at which the list of revoked tokens is
+# retrieved from the Identity service (in seconds). A high number of revocation
+# events combined with a low cache duration may significantly reduce
+# performance. Only valid for PKI tokens. This option has been deprecated in
+# the Ocata release and will be removed in the P release. (integer value)
+# This option is deprecated for removal since Ocata.
+# Its value may be silently ignored in the future.
+# Reason: PKI token format is no longer supported.
 # from .keystone_authtoken.keystonemiddleware.auth_token.revocation_cache_time
 {{ if not .keystone_authtoken.keystonemiddleware.auth_token.revocation_cache_time }}#{{ end }}revocation_cache_time = {{ .keystone_authtoken.keystonemiddleware.auth_token.revocation_cache_time | default "10" }}
 
@@ -206,21 +216,44 @@
 # from .keystone_authtoken.keystonemiddleware.auth_token.enforce_token_bind
 {{ if not .keystone_authtoken.keystonemiddleware.auth_token.enforce_token_bind }}#{{ end }}enforce_token_bind = {{ .keystone_authtoken.keystonemiddleware.auth_token.enforce_token_bind | default "permissive" }}
 
-# If true, the revocation list will be checked for cached tokens. This requires
-# that PKI tokens are configured on the identity server. (boolean value)
+# DEPRECATED: If true, the revocation list will be checked for cached tokens.
+# This requires that PKI tokens are configured on the identity server. (boolean
+# value)
+# This option is deprecated for removal since Ocata.
+# Its value may be silently ignored in the future.
+# Reason: PKI token format is no longer supported.
 # from .keystone_authtoken.keystonemiddleware.auth_token.check_revocations_for_cached
 {{ if not .keystone_authtoken.keystonemiddleware.auth_token.check_revocations_for_cached }}#{{ end }}check_revocations_for_cached = {{ .keystone_authtoken.keystonemiddleware.auth_token.check_revocations_for_cached | default "false" }}
 
-# Hash algorithms to use for hashing PKI tokens. This may be a single algorithm
-# or multiple. The algorithms are those supported by Python standard
-# hashlib.new(). The hashes will be tried in the order given, so put the
-# preferred one first for performance. The result of the first hash will be
+# DEPRECATED: Hash algorithms to use for hashing PKI tokens. This may be a
+# single algorithm or multiple. The algorithms are those supported by Python
+# standard hashlib.new(). The hashes will be tried in the order given, so put
+# the preferred one first for performance. The result of the first hash will be
 # stored in the cache. This will typically be set to multiple values only while
 # migrating from a less secure algorithm to a more secure one. Once all the old
 # tokens are expired this option should be set to a single value for better
 # performance. (list value)
+# This option is deprecated for removal since Ocata.
+# Its value may be silently ignored in the future.
+# Reason: PKI token format is no longer supported.
 # from .keystone_authtoken.keystonemiddleware.auth_token.hash_algorithms
 {{ if not .keystone_authtoken.keystonemiddleware.auth_token.hash_algorithms }}#{{ end }}hash_algorithms = {{ .keystone_authtoken.keystonemiddleware.auth_token.hash_algorithms | default "md5" }}
+
+# A choice of roles that must be present in a service token. Service tokens are
+# allowed to request that an expired token can be used and so this check should
+# tightly control that only actual services should be sending this token. Roles
+# here are applied as an ANY check so any role in this list must be present.
+# For backwards compatibility reasons this currently only affects the
+# allow_expired check. (list value)
+# from .keystone_authtoken.keystonemiddleware.auth_token.service_token_roles
+{{ if not .keystone_authtoken.keystonemiddleware.auth_token.service_token_roles }}#{{ end }}service_token_roles = {{ .keystone_authtoken.keystonemiddleware.auth_token.service_token_roles | default "service" }}
+
+# For backwards compatibility reasons we must let valid service tokens pass
+# that don't pass the service_token_roles check as valid. Setting this true
+# will become the default in a future release and should be enabled if
+# possible. (boolean value)
+# from .keystone_authtoken.keystonemiddleware.auth_token.service_token_roles_required
+{{ if not .keystone_authtoken.keystonemiddleware.auth_token.service_token_roles_required }}#{{ end }}service_token_roles_required = {{ .keystone_authtoken.keystonemiddleware.auth_token.service_token_roles_required | default "false" }}
 
 # Authentication type to load (string value)
 # Deprecated group/name - [keystone_authtoken]/auth_plugin
@@ -330,6 +363,17 @@
 # from .oslo_policy.oslo.policy.policy_dirs (multiopt)
 {{ if not .oslo_policy.oslo.policy.policy_dirs }}#policy_dirs = {{ .oslo_policy.oslo.policy.policy_dirs | default "policy.d" }}{{ else }}{{ range .oslo_policy.oslo.policy.policy_dirs }}policy_dirs = {{ . }}
 {{ end }}{{ end }}
+
+
+
+[logging]
+
+#
+# From shipyard_airflow
+#
+# The default logging level for the root logger. ERROR=40, WARNING=30, INFO=20,
+# DEBUG=10 (integer value)
+{{ if not .logging.log_level }}#{{ end }}log_level = {{ .logging.log_level | default "10" }}
 
 {{- end -}}
 
