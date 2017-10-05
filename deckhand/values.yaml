@@ -32,10 +32,10 @@ release_group: null
 
 network:
   ingress:
-    public: true
+    public: false
   port: 9000
   node_port: 31902
-  enable_node_port: true
+  enable_node_port: false
 
 dependencies:
   db_init:
@@ -157,6 +157,14 @@ endpoints:
       api:
         default: 9311
         public: 80
+  oslo_cache:
+    hosts:
+      default: memcached
+    host_fqdn_override:
+      default: null
+    port:
+      memcache:
+        default: 11211
 
 secrets:
   identity:
@@ -188,6 +196,8 @@ conf:
           delay_auth_decision: 'True'
           auth_type: password
           auth_section: keystone_authtoken
+          auth_version: v3
+          memcache_security_strategy: ENCRYPT
     oslo_middleware:
   logging:
     loggers:
