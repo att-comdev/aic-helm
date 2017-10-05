@@ -39,13 +39,13 @@ release_group: null
 network:
   shipyard:
     ingress:
-      public: true
+      public: false
     port: 9000
     node_port: 31901
-    enable_node_port: true
+    enable_node_port: false
   airflow:
     ingress:
-      public: true
+      public: false
     flower:
       name: airflow-flower
       port: 5555
@@ -54,7 +54,7 @@ network:
       name: airflow-web
       port: 8080
       node_port: 32080
-      enable_node_port: true
+      enable_node_port: false
     worker:
       name: airflow-worker
       port: 8793
@@ -259,6 +259,14 @@ endpoints:
     port:
       amqp:
         default: 5672
+  oslo_cache:
+    hosts:
+      default: memcached
+    host_fqdn_override:
+      default: null
+    port:
+      memcache:
+        default: 11211
 
 secrets:
   identity:
@@ -303,6 +311,8 @@ conf:
           delay_auth_decision: true
           auth_type: password
           auth_section: keystone_authtoken
+          auth_version: v3
+          memcache_security_strategy: ENCRYPT
   paste:
     override:
     append:
