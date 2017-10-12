@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d408ab11_a23ba0e3",
+        "filename": "shipyard/templates/etc/_shipyard.conf.tpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1008770
+      },
+      "writtenOn": "2017-10-12T03:50:16Z",
+      "side": 1,
+      "message": "Pete has moved this kind of configuration to a simplified state in the values.yaml.\n\nhttps://github.com/openstack/openstack-helm/blob/master/keystone/values.yaml#L254-L268\n\nThe .conf.tpl was subsequently removed:  https://github.com/openstack/openstack-helm/tree/master/keystone/templates/etc",
+      "revId": "41d11673da027c74e6758af08025aa12f76ad22a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
