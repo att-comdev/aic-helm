@@ -54,6 +54,8 @@ spec:
               value: {{ .Values.endpoints.postgresql_shipyard_db.auth.user.password }}
             - name: ROOT_DB_USER
               value: {{ .Values.database.postgresql_shipyard.db_root_user }}
+            - name: AIRFLOW_DB_USER
+              value: {{ .Values.endpoints.postgresql_airflow_db.auth.user.username }}
           command:
             - /tmp/shipyard-db-init.sh
           volumeMounts:

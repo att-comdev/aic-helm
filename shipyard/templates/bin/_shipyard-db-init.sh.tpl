@@ -43,11 +43,12 @@ pgsql_superuser_cmd "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" | gre
 
 # Create db user
 pgsql_superuser_cmd "SELECT * FROM pg_roles WHERE rolname = '$DB_USER';" | tail -n +3 | head -n -2 | grep -q 1 || \
-    pgsql_superuser_cmd "CREATE ROLE ${DB_USER} LOGIN PASSWORD '$DB_PASS';" && pgsql_superuser_cmd "ALTER USER ${DB_USER} WITH SUPERUSER"
+    pgsql_superuser_cmd "CREATE ROLE ${DB_USER} LOGIN PASSWORD '$DB_PASS'"
 
 # Grant permissions to user
 pgsql_superuser_cmd "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME to $DB_USER;"
 
-# Grant permissions to shipyard user for it to connect to airflow database
+# Grant permissions to shipyard user
 # This will allow shipyard user to query airflow database
-pgsql_superuser_cmd "GRANT CONNECT ON DATABASE airflow to $DB_USER;"
+psql -h $db_fqdn -p $db_port -U ${AIRFLOW_DB_USER} \
+--command="GRANT select, insert, update, delete on all tables in schema public to $DB_USER;"
