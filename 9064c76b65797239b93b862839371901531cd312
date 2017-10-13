@@ -16,6 +16,24 @@
       "revId": "9064c76b65797239b93b862839371901531cd312",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f0c0d73_4570f0ce",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1008770
+      },
+      "writtenOn": "2017-10-13T22:45:53Z",
+      "side": 1,
+      "message": "This gets autogen\u0027ed by helm if it is empty - I suppose I can remove connection: all together, but would keep database:.  See [0]\n\n[0] https://github.com/att-comdev/aic-helm/blob/master/deckhand/templates/configmap-etc.yaml#L31-L33",
+      "parentUuid": "1c27aab5_2e4ff145",
+      "revId": "9064c76b65797239b93b862839371901531cd312",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
