@@ -210,8 +210,8 @@ endpoints:
     name: postgresql_shipyard_db
     auth:
       admin:
-        username: shipyard
-        password: password
+        username: postgres
+        password: postgres
       user:
         username: shipyard
         password: password
@@ -228,8 +228,8 @@ endpoints:
     name: postgresql_airflow_db
     auth:
       admin:
-        username: airflow
-        password: password
+        username: postgres
+        password: postgres
       user:
         username: airflow
         password: password
@@ -291,17 +291,13 @@ conf:
   shipyard:
     base:
     shipyard:
-      host: shipyard-int.ucp
-      port: 9000
+      service_type: shipyard
     deckhand:
-      host: deckhand-int.ucp
-      port: 9000
+      service_type: deckhand
     armada:
-      host: armada-api.ucp
-      port: 8000
+      service_type: armada
     drydock:
-      host: drydock-api.ucp
-      port: 9000
+      service_type: drydock
     healthcheck:
       schema: http
       endpoint: /api/v1.0/health
