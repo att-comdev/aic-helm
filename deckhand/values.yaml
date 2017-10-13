@@ -182,23 +182,15 @@ database:
 conf:
   deckhand:
     DEFAULT:
-      debug: 'True'
+      debug: true
       log_file: deckhand.log
-      use_stderr: 'True'
-      use_syslog: 'True'
-    barbican:
-    cors:
-    database:
-    healthcheck:
+      use_stderr: true
+      use_syslog: true
     keystone_authtoken:
-      keystonemiddleware:
-        auth_token:
-          delay_auth_decision: 'True'
-          auth_type: password
-          auth_section: keystone_authtoken
-          auth_version: v3
-          memcache_security_strategy: ENCRYPT
-    oslo_middleware:
+      delay_auth_decision: true
+      auth_type: password
+      auth_version: v3
+      memcache_security_strategy: ENCRYPT
   logging:
     loggers:
       keys: 'root, deckhand'
