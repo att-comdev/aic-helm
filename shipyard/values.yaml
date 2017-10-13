@@ -290,6 +290,7 @@ database:
 conf:
   shipyard:
     base:
+      web_server:
     shipyard:
       host: shipyard-int.ucp
       port: 9000
@@ -306,13 +307,11 @@ conf:
       schema: http
       endpoint: /api/v1.0/health
     keystone_authtoken:
-      keystonemiddleware:
-        auth_token:
-          delay_auth_decision: true
-          auth_type: password
-          auth_section: keystone_authtoken
-          auth_version: v3
-          memcache_security_strategy: ENCRYPT
+      delay_auth_decision: true
+      auth_type: password
+      auth_section: keystone_authtoken
+      auth_version: v3
+      memcache_security_strategy: ENCRYPT
   paste:
     override:
     append:
