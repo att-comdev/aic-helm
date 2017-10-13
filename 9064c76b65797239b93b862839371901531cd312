@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c27aab5_2e4ff145",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-10-13T20:48:15Z",
+      "side": 1,
+      "message": "Is a default value not needed for connection?",
+      "revId": "9064c76b65797239b93b862839371901531cd312",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
