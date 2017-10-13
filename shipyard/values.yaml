@@ -22,13 +22,13 @@ labels:
   node_selector_value: enabled
 
 images:
-  airflow: docker.io/eanylin/airflow-helm:1.8.1-1.6.8-v0.6.0
+  airflow: quay.io/attcomdev/airflow:latest
   shipyard: quay.io/attcomdev/shipyard:latest
   dep_check: docker.io/kolla/ubuntu-source-kubernetes-entrypoint:4.0.0
   shipyard_db_init: docker.io/postgres:9.5
   shipyard_db_sync: docker.io/postgres:9.5
   airflow_db_init: docker.io/postgres:9.5
-  airflow_db_sync: docker.io/eanylin/airflow-helm:1.8.1-1.6.8-v0.6.0
+  airflow_db_sync: quay.io/attcomdev/airflow:latest
   ks_user: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
   ks_service: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
   ks_endpoints: docker.io/kolla/ubuntu-source-kolla-toolbox:3.0.3
@@ -42,7 +42,7 @@ network:
       public: true
     port: 9000
     node_port: 31901
-    enable_node_port: true
+    enable_node_port: false
   airflow:
     ingress:
       public: true
@@ -54,7 +54,7 @@ network:
       name: airflow-web
       port: 8080
       node_port: 32080
-      enable_node_port: true
+      enable_node_port: false
     worker:
       name: airflow-worker
       port: 8793
@@ -259,6 +259,14 @@ endpoints:
     port:
       amqp:
         default: 5672
+  oslo_cache:
+    hosts:
+      default: memcached
+    host_fqdn_override:
+      default: null
+    port:
+      memcache:
+        default: 11211
 
 secrets:
   identity:
@@ -303,6 +311,8 @@ conf:
           delay_auth_decision: true
           auth_type: password
           auth_section: keystone_authtoken
+          auth_version: v3
+          memcache_security_strategy: ENCRYPT
   paste:
     override:
     append:
