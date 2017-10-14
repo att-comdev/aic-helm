@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a31593_e4ddd169",
+        "filename": "shipyard/templates/configmap-shipyard-etc.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-10-14T00:09:12Z",
+      "side": 1,
+      "message": "See comments here: https://review.gerrithub.io/#/c/382408/",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "a152ae5ce29c1dabe00c4e4d08918ffc7d144dd1",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
