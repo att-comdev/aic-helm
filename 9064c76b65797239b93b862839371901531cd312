@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c721c293_a2ce6d17",
+        "filename": "deckhand/templates/configmap-etc.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1008770
+      },
+      "writtenOn": "2017-10-14T19:38:47Z",
+      "side": 1,
+      "message": "I made the same mistake before in commenting about duplicating code - but this is auth_url, not auth_uri (in L19-21).  The L and I start to look the same.  This terrible confusion in oslo.conf should be fixed in Q.  For those who follows, see the subtle difference:\n\nhttps://adam.younglogic.com/2016/06/auth_uri-vs-auth_url/",
+      "parentUuid": "8f58d85a_745f8b0f",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "9064c76b65797239b93b862839371901531cd312",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9097a76d_9e0c67b0",
         "filename": "deckhand/templates/configmap-etc.yaml",
         "patchSetId": 3
