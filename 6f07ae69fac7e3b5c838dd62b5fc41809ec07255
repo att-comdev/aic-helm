@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b60f6fb_103a6472",
+        "filename": "shipyard/templates/etc/_shipyard.conf.tpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-10-15T01:59:31Z",
+      "side": 1,
+      "message": "in a future PS we can remove this file and leverage the to_oslo_conf function in helm-toolkit.",
+      "revId": "6f07ae69fac7e3b5c838dd62b5fc41809ec07255",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf46dc45_476cbf8f",
+        "filename": "shipyard/templates/etc/_shipyard.conf.tpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010324
+      },
+      "writtenOn": "2017-10-15T01:59:31Z",
+      "side": 1,
+      "message": "In a future PS we can remove this file and leverage helm toolkits to_oslo_conf helper to generate these files dynamically.",
+      "revId": "6f07ae69fac7e3b5c838dd62b5fc41809ec07255",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
