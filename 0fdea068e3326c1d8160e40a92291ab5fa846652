@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5353244_f47f700d",
+        "filename": "shipyard/templates/configmap-shipyard-etc.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-10-16T20:13:11Z",
+      "side": 1,
+      "message": "I\u0027m guessing this was Anthony\u0027s comment for shipyard_orchestrator being added. I\u0027m thinking this comment no longeer applies?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 91
+      },
+      "revId": "0fdea068e3326c1d8160e40a92291ab5fa846652",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
