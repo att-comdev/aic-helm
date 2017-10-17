@@ -27,6 +27,7 @@
 {{- if not .keystone_authtoken.keystonemiddleware.auth_token -}}{{- set .keystone_authtoken.keystonemiddleware "auth_token" dict -}}{{- end -}}
 {{- if not .keystone_authtoken.processing_engine -}}{{- set .keystone_authtoken "processing_engine" dict -}}{{- end -}}
 {{- if not .oslo_middleware -}}{{- set . "oslo_middleware" dict -}}{{- end -}}
+{{- if not .oslo_policy -}}{{- set . "oslo_policy" dict -}}{{- end -}}
 
 {{- end -}}
 
@@ -35,6 +36,24 @@
 
 
 [DEFAULT]
+#
+# From deckhand.conf
+#
+
+#
+# Allow limited access to unauthenticated users.
+#
+# Assign a boolean to determine API access for unathenticated
+# users. When set to False, the API cannot be accessed by
+# unauthenticated users. When set to True, unauthenticated users can
+# access the API with read-only privileges. This however only applies
+# when using ContextMiddleware.
+#
+# Possible values:
+#     * True
+#     * False
+#  (boolean value)
+{{ if not .DEFAULT.allow_anonymous_access }}#{{ end }}allow_anonymous_access = {{ .DEFAULT.allow_anonymous_access | default "false" }}
 
 #
 # From oslo.log
@@ -153,6 +172,7 @@
 #
 
 # URL override for the Barbican API endpoint. (string value)
+#api_endpoint = http://barbican.example.org:9311/
 {{ if not .barbican.api_endpoint }}#{{ end }}api_endpoint = {{ .barbican.api_endpoint | default "<None>" }}
 
 # PEM encoded Certificate Authority to use when verifying HTTPs connections.
@@ -642,5 +662,24 @@
 # Whether the application is behind a proxy or not. This determines if the
 # middleware should parse the headers or not. (boolean value)
 {{ if not .oslo_middleware.enable_proxy_headers_parsing }}#{{ end }}enable_proxy_headers_parsing = {{ .oslo_middleware.enable_proxy_headers_parsing | default "false" }}
+
+[oslo_policy]
+
+#
+# From oslo.policy
+#
+
+# The file that defines policies. (string value)
+{{ if not .oslo_policy.policy_file }}#{{ end }}policy_file = {{ .oslo_policy.policy_file | default "policy.yaml" }}
+
+# Default rule. Enforced when a requested rule is not found. (string value)
+{{ if not .oslo_policy.policy_default_rule }}#{{ end }}policy_default_rule = {{ .oslo_policy.policy_default_rule | default "default" }}
+
+# Directories where policy configuration files are stored. They can be relative
+# to any directory in the search path defined by the config_dir option, or
+# absolute paths. The file defined by policy_file must exist for these
+# directories to be searched.  Missing or empty directories are ignored. (multi
+# valued)
+{{ if not .oslo_policy.policy_dirs }}#{{ end }}policy_dirs = {{ .oslo_policy.policy_dirs | default "policy.d" }}
 
 {{- end -}}

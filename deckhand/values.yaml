@@ -199,6 +199,10 @@ conf:
           auth_version: v3
           memcache_security_strategy: ENCRYPT
     oslo_middleware:
+    oslo_policy:
+      policy_file: policy.yaml
+      policy_default_rule: default
+      policy_dirs: policy.d
   logging:
     loggers:
       keys: 'root, deckhand'
