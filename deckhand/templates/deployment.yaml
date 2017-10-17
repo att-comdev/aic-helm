@@ -60,6 +60,14 @@ spec:
               mountPath: /etc/deckhand/logging.conf
               subPath: logging.conf
               readOnly: true
+            - name: deckhand-etc
+              mountPath: /etc/deckhand/deckhand-paste.ini
+              subPath: deckhand-paste.ini
+              readOnly: true
+            - name: deckhand-etc
+              mountPath: /etc/deckhand/policy.yaml
+              subPath: policy.yaml
+              readOnly: true
 {{ if $mounts_deckhand.volumeMounts }}{{ toYaml $mounts_deckhand.volumeMounts | indent 12 }}{{ end }}
       volumes:
         - name: etc-deckhand
