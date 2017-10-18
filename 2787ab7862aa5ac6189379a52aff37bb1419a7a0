@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4974de9_8c1e67c4",
+        "filename": "deckhand/values.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-10-18T15:14:21Z",
+      "side": 1,
+      "message": "If we want a default rule it needs to be added to Deckhand as default\u003drole:admin first.\n\nBut this appears to be the default anyway, so I\u0027m fine with it.",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 34
+      },
+      "revId": "2787ab7862aa5ac6189379a52aff37bb1419a7a0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
