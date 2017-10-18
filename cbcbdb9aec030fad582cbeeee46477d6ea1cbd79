@@ -16,6 +16,24 @@
       "revId": "cbcbdb9aec030fad582cbeeee46477d6ea1cbd79",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "416cc52d_bc8b560b",
+        "filename": "deckhand/templates/etc/_policy.yaml.tpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1011947
+      },
+      "writtenOn": "2017-10-18T00:47:48Z",
+      "side": 1,
+      "message": "I will un-comment these rules in the next P.S.",
+      "parentUuid": "12f6ebc9_063fd2b8",
+      "revId": "cbcbdb9aec030fad582cbeeee46477d6ea1cbd79",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
