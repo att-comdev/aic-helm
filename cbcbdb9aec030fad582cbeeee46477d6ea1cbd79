@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f6ebc9_063fd2b8",
+        "filename": "deckhand/templates/etc/_policy.yaml.tpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1011942
+      },
+      "writtenOn": "2017-10-18T00:24:11Z",
+      "side": 1,
+      "message": "Does openstack-helm or helm have tooling to include un-comment out these rules?",
+      "revId": "cbcbdb9aec030fad582cbeeee46477d6ea1cbd79",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
