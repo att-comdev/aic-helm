@@ -180,6 +180,35 @@ database:
     db_root_user: postgres
 
 conf:
+  policy:
+    admin_api: role:admin
+    deckhand:create_cleartext_documents: rule:admin_api
+    deckhand:create_encrypted_documents: rule:admin_api
+    deckhand:list_cleartext_documents: rule:admin_api
+    deckhand:list_encrypted_documents: rule:admin_api
+    deckhand:show_revision: rule:admin_api
+    deckhand:list_revisions: rule:admin_api
+    deckhand:delete_revisions: rule:admin_api
+    deckhand:show_revision_diff: rule:admin_api
+    deckhand:create_tag: rule:admin_api
+    deckhand:show_tag: rule:admin_api
+    deckhand:list_tags: rule:admin_api
+    deckhand:delete_tag: rule:admin_api
+    deckhand:delete_tags: rule:admin_api
+  paste:
+    filter:authtoken:
+      paste.filter_factory: keystonemiddleware.auth_token:filter_factory
+    filter:debug:
+      use: egg:oslo.middleware#debug
+    filter:cors:
+      paste.filter_factory: oslo_middleware.cors:filter_factory
+      oslo_config_project: deckhand
+    filter:request_id:
+      paste.filter_factory: oslo_middleware:RequestId.factory
+    app:api:
+      paste.app_factory: deckhand.service:deckhand_app_factory
+    pipeline:deckhand_api:
+      pipeline: authtoken api
   deckhand:
     DEFAULT:
       debug: 'True'
@@ -230,12 +259,6 @@ conf:
       class: 'oslo_log.formatters.ContextFormatter'
     formatter_simple:
       format: "%(asctime)s.%(msecs)03d %(process)d %(levelname)s: %(message)s"
-  paste:
-    override:
-    append:
-  policy:
-    override:
-    append:
 
 pod:
   mounts:
