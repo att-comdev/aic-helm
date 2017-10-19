@@ -67,17 +67,7 @@ data:
   deckhand.conf: |+
 {{ include "helm-toolkit.utils.to_oslo_conf" .Values.conf.deckhand | indent 4 }}
   logging.conf: |+
-{{ if .Values.conf.paste.override -}}
-{{ .Values.conf.paste.override | indent 4 }}
-{{- else -}}
-{{- if .Values.conf.paste.prefix -}}
-{{ .Values.conf.paste.prefix | indent 4 }}
-{{- end }}
-{{ tuple "etc/_logging.conf.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
-{{- if .Values.conf.paste.append -}}
-{{ .Values.conf.paste.append | indent 4 }}
-{{- end }}
-{{- end }}
+{{ include "helm-toolkit.utils.to_oslo_conf" .Values.conf.logging | indent 4 }}
   deckhand-paste.ini: |+
 {{ include "helm-toolkit.utils.to_oslo_conf" .Values.conf.paste | indent 4 }}
   policy.yaml: |+

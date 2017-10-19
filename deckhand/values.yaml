@@ -257,7 +257,6 @@ conf:
       class: 'oslo_log.formatters.ContextFormatter'
     formatter_simple:
       format: "%(asctime)s.%(msecs)03d %(process)d %(levelname)s: %(message)s"
-
 pod:
   mounts:
     deckhand_db_init:
@@ -313,7 +312,6 @@ pod:
         requests:
           memory: "128Mi"
           cpu: "100m"
-
 manifests:
   configmap_bin: true
   configmap_etc: true
